@@ -62,8 +62,12 @@
   width: 40px;
 }
 
-.employee-details > * {
-  margin-right: 12px;
+.employee-details div:nth-child(3) {
+  margin-left: 50px;
+}
+
+.employee-details div:nth-child(2) {
+  margin-left: 12px;
 }
 
 .employee-list .employee-details:hover {
@@ -75,6 +79,6 @@
 .employee-details .remove-icon {
   position: absolute;
   top: -6px;
-  right: -14px;
+  right: -3px;
   cursor: pointer;
 }
