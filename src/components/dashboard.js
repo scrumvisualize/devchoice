@@ -271,7 +271,7 @@ const Dashboard = props => {
                 </div>
                 <div className="column-2 box">
                     <div className="levelmain">
-                        <h3>Dev Choice Nominations</h3>
+                        
                         {
                             !nominationList.length && (<div className="nonominationdata">Sorry, no nominations to display !</div>)
                         }
@@ -356,7 +356,10 @@ const Dashboard = props => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> 
+            </div>
+            <div className="bottom level">
+                <h3>Bottom Level</h3>
             </div>
             <Modal
                 open={open}

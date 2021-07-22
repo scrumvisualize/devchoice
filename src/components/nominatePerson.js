@@ -14,6 +14,12 @@ const options = [
 
 const NominatePerson = () => {
 
+    //multiselectRef  = useRef();
+    const onNominate = () => {
+        alert("hello")
+        // ...
+    };
+
   
     return (
         <div className="App">
@@ -32,7 +38,7 @@ const NominatePerson = () => {
                 />
             </div>
             <div className="nominateButton">
-                <input type="button" value="Next"/>
+                <input type="button" value="Next" onClick={onNominate}/>
             </div>
             
             
