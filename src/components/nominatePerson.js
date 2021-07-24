@@ -5,6 +5,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import Multiselect from "multiselect-react-dropdown";
 import CancelIcon from "@material-ui/icons/Cancel";
 import EditIcon from "@material-ui/icons/Edit";
+import Modal from "react-modal";
 
 const NominatePerson = () => {
   const [hasScrollReachedBottom, setHasScrollReachedBottom] = useState(false);
@@ -26,6 +27,27 @@ const NominatePerson = () => {
       hasScrollReachedBottom = false;
     }
     setHasScrollReachedBottom(hasScrollReachedBottom);
+  };
+
+  const customStyles = {
+    overlay: {
+      backdropFilter: "blur(1px)",
+      backgroundColor: "rgba(191, 191, 191, 0.5)",
+    },
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      padding: "12px",
+      textAlign: "center",
+      height: "fit-content",
+      width: "fit-content",
+      minWidth: "25%",
+      minHeight: "25%",
+    },
   };
 
   const employees = [
@@ -104,42 +126,50 @@ const NominatePerson = () => {
   ];
 
   return (
-    <div className="nominate-panel">
-      <div className="employee-list-panel">
-        <h1>Employee list</h1>
-        <textarea
-          className="search-name"
-          placeholder="Search employee by name..."
-        ></textarea>
-        <div
-          className={
-            "employee-list " + (hasScrollReachedBottom ? "reached-bottom" : "")
-          }
-          onScroll={onScroll}
-          ref={empListRef}
-        >
-          {employees.map((employee, index) => (
-            <div className="employee-details" key={index}>
-              <img src={employee.image}></img>
-              <div>{employee.name}</div>
-              <div>{employee.email}</div>
-            </div>
-          ))}
+    <>
+      <div className="nominate-panel">
+        <div className="employee-list-panel">
+          <h1>Employee list</h1>
+          <input
+            className="search-name"
+            placeholder="Search employee by name..."
+          ></input>
+          <div
+            className={
+              "employee-list " +
+              (hasScrollReachedBottom ? "reached-bottom" : "")
+            }
+            onScroll={onScroll}
+            ref={empListRef}
+          >
+            {employees.map((employee, index) => (
+              <div className="employee-details" key={index}>
+                <img src={employee.image}></img>
+                <div>{employee.name}</div>
+                <div>{employee.email}</div>
+              </div>
+            ))}
+          </div>
+          <div id="scroll-indicator"></div>
         </div>
-        <div id="scroll-indicator"></div>
-      </div>
-      <div className="shortlist-panel">
-        <h1>Shortlisted employees</h1>
-        <div className="shortlist">
-          <div className="employee-details">
-            <img src="https://findicons.com/files/icons/1580/devine_icons_part_2/512/account_and_control.png"></img>
-            <div>Amy Dubanowski</div>
-            <CancelIcon className="remove-icon" />
-            <EditIcon className="edit-icon" />
+        <div className="shortlist-panel">
+          <h1>Shortlisted employees</h1>
+          <div className="shortlist">
+            <div className="employee-details">
+              <img src="https://findicons.com/files/icons/1580/devine_icons_part_2/512/account_and_control.png"></img>
+              <div>Amy Dubanowski</div>
+              <CancelIcon className="remove-icon" />
+              <EditIcon className="edit-icon" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <Modal isOpen={false} style={customStyles}>
+        <div className="question">Are you sure?</div>
+        <button className="confirm-button">Confirm</button>
+        <button className="cancel-button">Cancel</button>
+      </Modal>
+    </>
   );
 };
 

@@ -142,3 +142,26 @@
 .shortlist .employee-details {
   height: 75px;
 }
+
+.question {
+  margin-top: 40px;
+  font-size: inherit;
+  color: inherit;
+}
+
+.confirm-button,
+.cancel-button {
+  font-size: inherit;
+  padding: 6px;
+  margin: 12px 6px;
+  border-radius: 10px;
+  border: none;
+}
+
+.cancel-button {
+  background-color: #ff9999;
+}
+
+.confirm-button {
+  background-color: #99ff99;
+}
