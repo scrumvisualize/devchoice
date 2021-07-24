@@ -2,13 +2,12 @@
   display: flex;
   background-color: white;
   margin: 12px;
-  height: 600px;
-  width: 1250px;
+  height: 100%;
+  width: fit-content;
   box-sizing: border-box;
 }
 
 .employee-list-panel {
-  flex-grow: 2;
   background-color: grey;
   margin: 12px;
   border-radius: 10px;
@@ -17,10 +16,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-grow: 0;
 }
 
 .shortlist-panel {
-  flex-grow: 1;
   margin: 12px;
   border-radius: 10px;
   box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.5);
@@ -38,6 +37,11 @@
   border-radius: 10px;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  width: 500px;
+}
+
+.shortlist {
+  width: 350px;
 }
 
 .employee-list::-webkit-scrollbar {
@@ -50,11 +54,12 @@
   display: flex;
   align-items: center;
   padding: 12px;
-  justify-content: space-around;
   background-color: white;
   margin: 12px;
   border-radius: 10px;
   position: relative;
+  gap: 24px;
+  max-width: 100%;
 }
 
 .employee-details > img {
@@ -62,12 +67,18 @@
   width: 40px;
 }
 
+.employee-details > div {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .employee-details div:nth-child(3) {
-  margin-left: 50px;
+  flex: 0 0 180px;
 }
 
 .employee-details div:nth-child(2) {
-  margin-left: 12px;
+  flex: 0 0 180px;
 }
 
 .employee-list .employee-details:hover {
@@ -78,7 +89,18 @@
 
 .employee-details .remove-icon {
   position: absolute;
-  top: -6px;
-  right: -3px;
+  top: 1px;
+  right: 2px;
   cursor: pointer;
+}
+
+.employee-details .edit-icon {
+  position: absolute;
+  top: 1px;
+  right: 27px;
+  cursor: pointer;
+}
+
+.shortlist .employee-details {
+  height: 75px;
 }
