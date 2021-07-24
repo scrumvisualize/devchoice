@@ -160,7 +160,10 @@ const NominatePerson = () => {
               <EditIcon className="edit-icon" />
             </div>
           </div>
-          <button className="confirm-button">Submit</button>
+          <div>
+            <button className="confirm-button">Submit</button>
+            <button className="cancel-button">Cancel</button>
+          </div>
         </div>
       </div>
       <Modal isOpen={false} style={customStyles}>
