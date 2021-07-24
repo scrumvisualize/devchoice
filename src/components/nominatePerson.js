@@ -86,6 +86,10 @@ const NominatePerson = () => {
     <div className="nominate-panel">
       <div className="employee-list-panel">
         <h1>Employee list</h1>
+        <textarea
+          className="search-name"
+          placeholder="Search employee by name..."
+        ></textarea>
         <div className="employee-list">
           {employees.map((employee, index) => (
             <div className="employee-details" key={index}>
