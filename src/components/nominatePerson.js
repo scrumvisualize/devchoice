@@ -14,12 +14,10 @@ const NominatePerson = () => {
 
   const onScroll = () => {
     let hasScrollReachedBottom;
-    const distLeftToBottom = Math.floor(
+    const distLeftToBottom = Math.ceil(
       empListRef.current.scrollHeight - empListRef.current.scrollTop
     );
-    const empListHeight = Math.floor(empListRef.current.clientHeight);
-
-    console.log(empListHeight);
+    const empListHeight = empListRef.current.clientHeight;
 
     if (distLeftToBottom === empListHeight) {
       hasScrollReachedBottom = true;
