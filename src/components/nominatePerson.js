@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, createRef } from "react";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
 import { Link, useHistory, useParams } from "react-router-dom";
@@ -7,6 +7,27 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import EditIcon from "@material-ui/icons/Edit";
 
 const NominatePerson = () => {
+  const [hasScrollReachedBottom, setHasScrollReachedBottom] = useState(false);
+
+  const empListRef = React.createRef();
+
+  const onScroll = () => {
+    let hasScrollReachedBottom;
+    const distLeftToBottom = Math.floor(
+      empListRef.current.scrollHeight - empListRef.current.scrollTop
+    );
+    const empListHeight = Math.floor(empListRef.current.clientHeight);
+
+    console.log(empListHeight);
+
+    if (distLeftToBottom === empListHeight) {
+      hasScrollReachedBottom = true;
+    } else {
+      hasScrollReachedBottom = false;
+    }
+    setHasScrollReachedBottom(hasScrollReachedBottom);
+  };
+
   const employees = [
     {
       name: "Dwight Schrute",
@@ -90,7 +111,13 @@ const NominatePerson = () => {
           className="search-name"
           placeholder="Search employee by name..."
         ></textarea>
-        <div className="employee-list">
+        <div
+          className={
+            "employee-list " + (hasScrollReachedBottom ? "reached-bottom" : "")
+          }
+          onScroll={onScroll}
+          ref={empListRef}
+        >
           {employees.map((employee, index) => (
             <div className="employee-details" key={index}>
               <img src={employee.image}></img>
@@ -99,6 +126,7 @@ const NominatePerson = () => {
             </div>
           ))}
         </div>
+        <div id="scroll-indicator"></div>
       </div>
       <div className="shortlist-panel">
         <h1>Shortlisted employees</h1>
