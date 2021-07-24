@@ -151,8 +151,8 @@ const NominatePerson = () => {
           <div id="scroll-indicator"></div>
         </div>
         <div className="shortlist-panel">
-          <h1>Shortlisted employees</h1>
           <div className="shortlist">
+            <h1>Shortlisted employees</h1>
             <div className="employee-details">
               <img src="https://findicons.com/files/icons/1580/devine_icons_part_2/512/account_and_control.png"></img>
               <div>Amy Dubanowski</div>
@@ -160,6 +160,7 @@ const NominatePerson = () => {
               <EditIcon className="edit-icon" />
             </div>
           </div>
+          <button className="confirm-button">Submit</button>
         </div>
       </div>
       <Modal isOpen={false} style={customStyles}>
