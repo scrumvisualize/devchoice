@@ -144,8 +144,7 @@
   height: 75px;
 }
 
-.question {
-  margin-top: 40px;
+.modal-content .message {
   font-size: inherit;
   color: inherit;
 }
@@ -157,6 +156,9 @@
   margin: 12px 6px;
   border-radius: 5px;
   border: none;
+  cursor: pointer;
+  width: fit-content;
+  min-width: 75px;
 }
 
 .cancel-button {
@@ -165,4 +167,48 @@
 
 .confirm-button {
   background-color: #99ff99;
+}
+
+.close-icon {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  cursor: pointer;
+}
+
+.comments .comments-input {
+  border-radius: 5px;
+  border: 1px gray solid;
+  outline: none;
+  overflow: hidden;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  resize: none;
+  font: inherit;
+  font-size: inherit;
+  height: 115px;
+  width: 200px;
+}
+
+.modal-content {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-content .interaction {
+  text-align: center;
+}
+
+.modal-content .comments,
+.modal-content .employee-name {
+  display: flex;
+  gap: 6px;
+  width: fit-content;
+}
+
+.modal-content .comments {
+  align-items: center;
 }

@@ -6,9 +6,17 @@ import Multiselect from "multiselect-react-dropdown";
 import CancelIcon from "@material-ui/icons/Cancel";
 import EditIcon from "@material-ui/icons/Edit";
 import Modal from "react-modal";
+import CloseIcon from "@material-ui/icons/Close";
+import { findByLabelText } from "@testing-library/react";
+import { Directions } from "@material-ui/icons";
 
 const NominatePerson = () => {
   const [hasScrollReachedBottom, setHasScrollReachedBottom] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [shortListedEmps, setShortListedEmps] = useState([]);
+  const [modalType, setModalType] = useState(1); //0 for confirm modal; 1 for add/edit nomination modal
+  const [message, setMessage] = useState("");
+  const [activeEmployee, setActiveEmployee] = useState("");
 
   const empListRef = React.createRef();
 
@@ -40,7 +48,6 @@ const NominatePerson = () => {
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
       padding: "12px",
-      textAlign: "center",
       height: "fit-content",
       width: "fit-content",
       minWidth: "25%",
@@ -128,10 +135,10 @@ const NominatePerson = () => {
       <div className="nominate-panel">
         <div className="employee-list-panel">
           <h1>Employee list</h1>
-          <input
+          <textarea
             className="search-name"
             placeholder="Search employee by name..."
-          ></input>
+          ></textarea>
           <div
             className={
               "employee-list " +
@@ -166,10 +173,37 @@ const NominatePerson = () => {
           </div>
         </div>
       </div>
-      <Modal isOpen={false} style={customStyles}>
-        <div className="question">Are you sure?</div>
-        <button className="confirm-button">Confirm</button>
-        <button className="cancel-button">Cancel</button>
+      <Modal
+        isOpen={true}
+        style={customStyles}
+        type={modalType}
+        message={message}
+      >
+        <CloseIcon className="close-icon" />
+        <div className="modal-content">
+          {modalType ? (
+            <>
+              <div className="employee-name">
+                Employee:
+                <div>Amy Sosa</div>
+              </div>
+              <div className="comments">
+                Comments:
+                <textarea className="comments-input"></textarea>
+              </div>
+              <div className="interaction">
+                <button className="confirm-button">Confirm</button>
+                <button className="cancel-button">Cancel</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="message">{message}</div>
+              <button className="confirm-button">Confirm</button>
+              <button className="cancel-button">Cancel</button>
+            </>
+          )}
+        </div>
       </Modal>
     </>
   );
