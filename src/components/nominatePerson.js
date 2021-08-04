@@ -78,8 +78,15 @@ const NominatePerson = () => {
     setComments(e.target.value);
   };
 
-  const editComment = () => {
-    console.log(nominees);
+  const editComment = () => {};
+
+  const removeNominee = (email) => {
+    const nomineeList = [...nominees];
+    nomineeList.splice(
+      nomineeList.findIndex((nominee) => nominee.employee.email === email),
+      1
+    );
+    setNominees(nomineeList);
   };
 
   const employees = [
@@ -195,7 +202,10 @@ const NominatePerson = () => {
               <div className="employee-details" key={index}>
                 <img src={nominee.employee.image}></img>
                 <div>{nominee.employee.name}</div>
-                <CancelIcon className="remove-icon" />
+                <CancelIcon
+                  className="remove-icon"
+                  onClick={() => removeNominee(nominee.employee.email)}
+                />
                 <EditIcon className="edit-icon" onClick={editComment} />
               </div>
             ))}
