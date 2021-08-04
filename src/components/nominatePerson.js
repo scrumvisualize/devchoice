@@ -7,8 +7,6 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import EditIcon from "@material-ui/icons/Edit";
 import Modal from "react-modal";
 import CloseIcon from "@material-ui/icons/Close";
-import { findByLabelText } from "@testing-library/react";
-import { Directions } from "@material-ui/icons";
 
 const NominatePerson = () => {
   const [hasScrollReachedBottom, setHasScrollReachedBottom] = useState(false);
@@ -16,13 +14,15 @@ const NominatePerson = () => {
   const [shortListedEmps, setShortListedEmps] = useState([]);
   const [modalType, setModalType] = useState(1); //0 for confirm modal; 1 for add/edit nomination modal
   const [message, setMessage] = useState("");
-  const [activeEmployee, setActiveEmployee] = useState("");
+  const [activeEmployee, setActiveEmployee] = useState({});
+  const [nominees, setNominees] = useState([]);
+  const [comments, setComments] = useState("");
 
   const empListRef = React.createRef();
 
   const onScroll = () => {
     let hasScrollReachedBottom;
-    const distLeftToBottom = Math.ceil(
+    const distLeftToBottom = Math.floor(
       empListRef.current.scrollHeight - empListRef.current.scrollTop
     );
     const empListHeight = empListRef.current.clientHeight;
@@ -53,6 +53,33 @@ const NominatePerson = () => {
       minWidth: "25%",
       minHeight: "25%",
     },
+  };
+
+  const nomineeSelect = (nominee) => {
+    setActiveEmployee(nominee);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const addNominee = () => {
+    setNominees([
+      ...nominees,
+      { employee: activeEmployee, comments: comments },
+    ]);
+    setComments("");
+    setActiveEmployee({});
+    setIsModalOpen(false);
+  };
+
+  const commentChangedHandler = (e) => {
+    setComments(e.target.value);
+  };
+
+  const editComment = () => {
+    console.log(nominees);
   };
 
   const employees = [
@@ -148,7 +175,11 @@ const NominatePerson = () => {
             ref={empListRef}
           >
             {employees.map((employee, index) => (
-              <div className="employee-details" key={index}>
+              <div
+                className="employee-details"
+                key={index}
+                onClick={() => nomineeSelect(employee)}
+              >
                 <img src={employee.image}></img>
                 <div>{employee.name}</div>
                 <div>{employee.email}</div>
@@ -160,12 +191,14 @@ const NominatePerson = () => {
         <div className="shortlist-panel">
           <div className="shortlist">
             <h1>Shortlisted employees</h1>
-            <div className="employee-details">
-              <img src="https://findicons.com/files/icons/1580/devine_icons_part_2/512/account_and_control.png"></img>
-              <div>Amy Dubanowski</div>
-              <CancelIcon className="remove-icon" />
-              <EditIcon className="edit-icon" />
-            </div>
+            {nominees.map((nominee, index) => (
+              <div className="employee-details" key={index}>
+                <img src={nominee.employee.image}></img>
+                <div>{nominee.employee.name}</div>
+                <CancelIcon className="remove-icon" />
+                <EditIcon className="edit-icon" onClick={editComment} />
+              </div>
+            ))}
           </div>
           <div>
             <button className="confirm-button">Submit</button>
@@ -174,26 +207,36 @@ const NominatePerson = () => {
         </div>
       </div>
       <Modal
-        isOpen={true}
+        isOpen={isModalOpen}
         style={customStyles}
         type={modalType}
         message={message}
       >
-        <CloseIcon className="close-icon" />
+        <CloseIcon className="close-icon" onClick={closeModal} />
         <div className="modal-content">
           {modalType ? (
             <>
               <div className="employee-name">
                 Employee:
-                <div>Amy Sosa</div>
+                <div>{activeEmployee.name}</div>
               </div>
               <div className="comments">
                 Comments:
-                <textarea className="comments-input"></textarea>
+                <textarea
+                  className="comments-input"
+                  value={comments}
+                  placeholder="Enter comments"
+                  onChange={commentChangedHandler}
+                ></textarea>
+                <input />
               </div>
               <div className="interaction">
-                <button className="confirm-button">Confirm</button>
-                <button className="cancel-button">Cancel</button>
+                <button className="confirm-button" onClick={addNominee}>
+                  Confirm
+                </button>
+                <button className="cancel-button" onClick={closeModal}>
+                  Cancel
+                </button>
               </div>
             </>
           ) : (
