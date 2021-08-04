@@ -1,5 +1,6 @@
 const moment = require('moment');
 const express = require('express');
+const multer  = require('multer');
 const bodyParser = require("body-parser");
 require('dotenv').config();
 const { Sequelize, DataTypes } = require("sequelize");
@@ -52,6 +53,23 @@ app.use(cors({
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// The below define the folder location and storage of file using multer. File will be saved
+// with field name, date stamp and extension and then upload variable will have the below information.
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/csv')
+  },
+  filename: function (req, file, cb) {
+    var ext = file.originalname.split('.').pop();
+    cb(null, file.fieldname + '-' + Date.now() + '.' + ext);
+  }
+})
+
+var upload = multer({ storage: storage });
 
 
 /* This service is used to submit a nomination and will display invalid link if token expired */
@@ -230,6 +248,22 @@ app.post('/service/publishwinner', async (req, res) => {
         'Authorization': `Bearer ${mattermosttoken}`,
       },
     });
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
+
+
+/* This service is used to save the employees uploaded via csv file into database and populate the employees list into 
+the nominate person screen */
+app.put('/service/managenominees', upload.single('file'), async (req, res, next) => {
+  try {
+    if(req.body.file){
+      var name = req.file.Name;
+      var email = req.file.Email;
+    }
+    var nomineeData = {userName: name, userEmail: email};
+    res.status(200).send(nomineeData);
   } catch (e) {
     res.status(500).json({ fail: e.message });
   }

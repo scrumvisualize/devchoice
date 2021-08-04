@@ -24,9 +24,8 @@ body {
   width: 100%;
   margin: 0;
   padding: 1rem;
-  background-color:#e1e3e3;
-  
- 
+  background-color: #f0f2f5;;
+
 }
 
 .container{
@@ -56,7 +55,8 @@ body {
   background-color: #e1e3e3;
   padding: 10px 0px 0px 0px;
   margin-right: 15px;
-  height: 300px;
+  margin-top: 5px;
+  height: 324px;
   overflow: auto;
 }
 
@@ -70,7 +70,7 @@ body {
   padding: 50px;
   background-color: #fff;
   color: rgba(128, 130, 131, 0.808);
-  overflow: hidden;
+  overflow: hidden !important;
   box-shadow: 0px 5px 5px 0px rgb(153 151 151);
 }
 .space_1:hover {
@@ -136,7 +136,7 @@ body {
     color: #bcbdc2;
     font-size: 1.1rem;
     font-weight: medium;
-    margin: 10px 0px 0px 0px;
+    margin: 10px 20px 0px 10px !important;
     font-family: 'GT Flexa Variable', 'GT Flexa', sans-serif;
   }
   .winner .name{
@@ -236,7 +236,7 @@ p {
   color: #bcbdc2;
   font-size: 0.8rem;
   font-weight: medium;
-  margin: 10px 20px 0px 10px;
+  margin: 10px 20px 0px 10px !important;
   font-family: 'GT Flexa Variable', 'GT Flexa', sans-serif;
 }
 
@@ -250,7 +250,7 @@ p {
 .winnerIcon img{
   width:40px;
   border-radius: 20px;
-  margin: 0px 0px 0px 70px;
+  margin: 10px 0px 0px 10px !important;
   display: flex;
   float:left;
   padding: 0px 10px 10px 10px;
@@ -283,7 +283,7 @@ p {
 .count{
  display: grid;
  width:100px;
- background-color: rgba(130, 99, 201, 0.8);
+ background-color: #7b76db;
  margin: 5px 5px 15px 15px;
  border-radius: 3px;
  font-size: .8rem ;
@@ -313,7 +313,7 @@ p {
 .team-1, .team-2, .team-3, .team-4{
   flex-basis: 90%;
   width: 80px;
-  background-color: #a4d0ed;
+  background-color: #adabe0;
   margin: 0px 5px 20px 20px;
   overflow: auto;
 }
@@ -324,7 +324,7 @@ p {
   font-family: 'GT Flexa Variable', 'GT Flexa', sans-serif;
   font-size: .7rem ;
   font-weight: bold;
-  color: #323336;
+  color: #7a7c7d;
 }
 
 .nav-link {

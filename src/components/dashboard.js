@@ -269,35 +269,7 @@ const Dashboard = props => {
                         <span className="menuitem link" onClick={() => history.push('/nominatePerson')}>Nominate Person</span>
                     </div>
                 </div>
-                <div className="column-2 box">
-                    <div className="levelmain">
-                        
-                        {
-                            !nominationList.length && (<div className="nonominationdata">Sorry, no nominations to display !</div>)
-                        }
-
-                        <div className="grid-container">
-                            {
-                                searchResults.map(data => (
-                                    <div key={data.id} className="nomination item grid-item">
-                                        <div className="nominateIcon">
-                                            <img src="/images/nominate_icon.PNG"></img>
-                                        </div>
-                                        <span className="">
-                                            <label key={data.nomineename}><b>{data.nomineename}</b></label>
-                                        </span>
-                                        <span className="">
-                                            <p key={data.description}>{data.description}</p>
-                                        </span>
-                                        <div className="nominatedby user">
-                                            <span key={data.nominatedby}>Nominated by: {data.nominatedby}</span>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-
-                    </div>
+                <div className="column-2 box"> 
                     <div className="leveldown">
                         <div className="container">
                             <div className="space_1 tile">
@@ -355,6 +327,35 @@ const Dashboard = props => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="levelmain">
+                    <h3>Nominated members</h3>
+                        
+                        {
+                            !nominationList.length && (<div className="nonominationdata">Sorry, no nominations to display !</div>)
+                        }
+
+                        <div className="grid-container">
+                            {
+                                searchResults.map(data => (
+                                    <div key={data.id} className="nomination item grid-item">
+                                        <div className="nominateIcon">
+                                            <img src="/images/nominate_icon.PNG"></img>
+                                        </div>
+                                        <span className="">
+                                            <label key={data.nomineename}><b>{data.nomineename}</b></label>
+                                        </span>
+                                        <span className="">
+                                            <p key={data.description}>{data.description}</p>
+                                        </span>
+                                        <div className="nominatedby user">
+                                            <span key={data.nominatedby}>Nominated by: {data.nominatedby}</span>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+
                     </div>
                 </div> 
             </div>
