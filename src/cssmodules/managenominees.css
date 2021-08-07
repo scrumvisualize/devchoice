@@ -4,11 +4,12 @@
   width: 90%;
   margin-left: 5%;
   margin-right: 5%;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .managenominees th {
-  font-size: 12px !important;
+  font-size: 11px !important;
+  border: 1px solid #adabe0;
 }
 
 .managenominees td {
@@ -16,9 +17,18 @@
   text-align: left;
   padding: 5px;
   font-size: 11px;
-  background-color:rgb(129, 138, 148);
+  background-color: #adabe0;
 }
 
 .managenominees tr:nth-child(even) {
   background-color: rgb(156, 171, 189);
+}
+
+.employee_data{
+  width: 50%;
+  margin: 0 auto;
+}
+.upload_header{
+  width: 50%;
+  margin: 0 auto;
 }

@@ -6,15 +6,33 @@ import { Link, useHistory } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 
 const options = [
-    { key: 'Axe', id: 1},
-    { key: 'Bags', id: 2},
-    { key: 'Coat', id: 3},
-    { key: 'Drum', id: 4},
+    { key: 'Aaron', key1:"some@test.com", id: 1},
+    { key: 'Bader', id: 2},
+    { key: 'Crots', id: 3},
+    { key: 'Dan', id: 4},
+    { key: 'Elep', id: 5},
+    { key: 'Pal', id: 6},
+    { key: 'Quilt', id: 7}
   ];
 
 const NominatePerson = () => {
 
-    //multiselectRef  = useRef();
+    const maxOptions = 3;
+    const [selectedOption, setSelectedOption] = useState([]);
+
+    const handleTypeSelect = (e) => {
+        const copy = [...selectedOption];
+        copy.push(e);
+        setSelectedOption(copy);
+    };
+
+    const handleTypeRemove = (e) => {
+        const copy = [...selectedOption];
+        let index = copy.indexOf(e);
+        copy.splice(index, 1);
+        setSelectedOption(copy);
+    };
+
     const onNominate = () => {
         alert("hello")
         // ...
@@ -32,9 +50,13 @@ const NominatePerson = () => {
             </div>
             <h1>Nominate Person</h1>
             <div className="nomineeSelectBox">
-                <Multiselect options={options} 
-                displayValue="key"
-                showCheckbox={true}
+                <Multiselect
+                    onSelect={handleTypeSelect}
+                    onRemove={handleTypeRemove}
+                    options={selectedOption.length + 1 === maxOptions ? [] : options}
+                    displayValue="key"
+                    showCheckbox={true}
+                    emptyRecordMsg={"Maximum nominees selected !"}
                 />
             </div>
             <div className="nominateButton">

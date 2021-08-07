@@ -2,11 +2,15 @@ const moment = require('moment');
 const express = require('express');
 const multer  = require('multer');
 const bodyParser = require("body-parser");
+const csv = require('csv-parser');
+const fs = require('fs');
+const results = [];
 require('dotenv').config();
 const { Sequelize, DataTypes } = require("sequelize");
 const linkTokenSchema = require('./server/models/linktoken');
 const nominationSchema = require('./server/models/nominations');
 const nominationWinnerSchema = require('./server/models/nominationwinner');
+const manageNomineesSchema = require('./server/models/managenominees');
 const axios = require('axios');
 const path = require('path');
 const cors = require("cors");
@@ -45,6 +49,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
 const LinkTokenModel = linkTokenSchema(sequelize, DataTypes);
 const NominationModel = nominationSchema(sequelize, DataTypes);
 const NominationWinnerModel = nominationWinnerSchema(sequelize, DataTypes);
+const ManageNomineesModel  = manageNomineesSchema(sequelize, DataTypes);
 
 
 app.use(cors({
@@ -69,8 +74,24 @@ var storage = multer.diskStorage({
   }
 })
 
-var upload = multer({ storage: storage });
+/* csvFilter variable created, but not working*/
+const csvFilter = (req, file, cb) => {
+  if(file.mimetype.includes("text/csv")) {
+    cb(null, true);
+  } else {
+    cb("Please upload a csv file", false);
+  }
 
+}
+var upload = multer({ storage: storage});
+
+/* This is used try different upload variable setting with multer, but not working*/
+// var upload = multer({
+//   dest: 'public/csv/',
+//   fileFilter: function (req, file, cb) {
+//     file.mimetype === 'text/csv' ? cb(null, true) : cb(null, false)
+//   }
+// })
 
 /* This service is used to submit a nomination and will display invalid link if token expired */
 app.post('/service/nominateperson', async (req, res) => {
@@ -256,19 +277,56 @@ app.post('/service/publishwinner', async (req, res) => {
 
 /* This service is used to save the employees uploaded via csv file into database and populate the employees list into 
 the nominate person screen */
-app.put('/service/managenominees', upload.single('file'), async (req, res, next) => {
+app.post('/service/managenominees', upload.single('file'), async (req, res, next) => {
+
   try {
-    if(req.body.file){
-      var name = req.file.Name;
-      var email = req.file.Email;
-    }
-    var nomineeData = {userName: name, userEmail: email};
-    res.status(200).send(nomineeData);
+    if(req.file){
+      let filePath = req.file.path;
+      fs.createReadStream(filePath)
+          .pipe(csv())
+          .on('data', (data) => results.push(data))
+          .on('end', async () => {
+            console.log(results);
+            const allNominees = results.map(
+                nominees => {
+                  return {
+                    id:nominees.id,
+                    name: nominees.name,
+                    email: nominees.email
+                  }
+                });
+            //SELECT COUNT(email) from devchoice.managenominees;
+            const emailCount = await ManageNomineesModel.count({ col: 'email' });
+            if(emailCount == 0){
+              await ManageNomineesModel.bulkCreate(allNominees);
+              res.status(200).json({ message: "Nominees inserted successfully !"});
+            } else {
+              await ManageNomineesModel.bulkCreate({...allNominees},
+                  { updateOnDuplicate: ["name"]},
+                  {attributes: { exclude: ['createdAt'] },
+                  where: { id: ['id']}
+                  });
+              res.status(200).json({ message: "Nominee records updated successfully !"});
+            }
+            //let manageNominees = await ManageNomineesModel.create(results);
+          });
+      }
+
   } catch (e) {
     res.status(500).json({ fail: e.message });
   }
 });
 
+
+/* This service is used get and display all employees in the manageNominees screen from the managenominees table */
+app.get('/service/nomineeslist', async (req, res) => {
+  try {
+    const data = await ManageNomineesModel.findAll({ attributes: ['name', 'email', 'access'] });
+    res.status(200).send(data);
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
 
 (async () => {
   try {
