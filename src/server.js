@@ -277,7 +277,7 @@ app.post('/service/publishwinner', async (req, res) => {
 
 /* This service is used to save the employees uploaded via csv file into database and populate the employees list into 
 the nominate person screen */
-app.post('/service/managenominees', upload.single('file'), async (req, res, next) => {
+app.put('/service/managenominees', upload.single('file'), async (req, res, next) => {
 
   try {
     if(req.file){
@@ -302,8 +302,8 @@ app.post('/service/managenominees', upload.single('file'), async (req, res, next
               res.status(200).json({ message: "Nominees inserted successfully !"});
             } else {
               await ManageNomineesModel.bulkCreate({...allNominees},
-                  { updateOnDuplicate: ["name"]},
-                  {attributes: { exclude: ['createdAt'] },
+                  { updateOnDuplicate: ["name"],
+                  //{attributes: { exclude: ['createdAt'] },
                   where: { id: ['id']}
                   });
               res.status(200).json({ message: "Nominee records updated successfully !"});

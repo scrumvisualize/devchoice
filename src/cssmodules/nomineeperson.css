@@ -1,14 +1,79 @@
 .nomineeSelectBox {
     width: 400px;
-    height:80px;
+    height:50px;
     margin: 0 auto;
-    margin-top: 10px;
-    background-color: #c0c2c4;
+    float: left;
+    margin: 20px 50px 0px 50px;
+    background-color: #afc1de;
+    color: #71767a;
 }
 
 .nominateButton input {
     width: 5%;
     height: 30px;
     margin-top: 10px !important;
-    background-color:#1abc9c;;
+    background-color:#1abc9c;
 }
+
+.nomineesSelectedList {
+    width: 1000px;
+    height:350px;
+    background-color: #a8adad;
+    float: left;
+    margin: 20px 50px 0px 50px;
+    text-align: left;
+}
+
+
+.nomineesSelectedList input {
+    width: 400px;
+    height: 50px;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.nomineesSelectedList .nomlabel{
+    width:100px;
+    padding:10px;
+}
+
+.column {
+    float: left;
+    width: 20%;
+    padding: 1rem;
+    height: 50px;
+    margin-top: 10px;
+    color: #4287f5;
+    font-weight: bold;
+}
+
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
+
+.eachrecord{
+    border-color: #989a9e;
+    margin: 10px;
+}
+.nomineechoosed{
+    border-radius: 3px;
+    border-color: #eee !important;
+    background-color: #d1e6e8;
+}
+
+.buttongroup input{
+    width: 100px;
+    padding: 10px;
+    position: relative;
+    margin: 10px 10px 0px 10px !important;
+}
+

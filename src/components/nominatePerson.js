@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 
 const options = [
-    { key: 'Aaron', key1:"some@test.com", id: 1},
+    { key: 'Aaron', id: 1},
     { key: 'Bader', id: 2},
     { key: 'Crots', id: 3},
     { key: 'Dan', id: 4},
@@ -33,7 +33,7 @@ const NominatePerson = () => {
         setSelectedOption(copy);
     };
 
-    const onNominate = () => {
+    const sendNomination = () => {
         alert("hello")
         // ...
     };
@@ -41,14 +41,12 @@ const NominatePerson = () => {
   
     return (
         <div className="App">
-            
             <div className="navbar-nav">
-            
                 <div className="leftNavItem">
                     <a><Link to={'/dashboard'} className="nav-link"> <b>Dashboard</b> </Link></a>
                 </div>
             </div>
-            <h1>Nominate Person</h1>
+            <h1>Nominate a person</h1>
             <div className="nomineeSelectBox">
                 <Multiselect
                     onSelect={handleTypeSelect}
@@ -58,10 +56,41 @@ const NominatePerson = () => {
                     showCheckbox={true}
                     emptyRecordMsg={"Maximum nominees selected !"}
                 />
+
             </div>
-            <div className="nominateButton">
-                <input type="button" value="Next" onClick={onNominate}/>
+            <div className="nomineesSelectedList">
+                <h3>Selected Nominees</h3>
+                {/*<div className="row">*/}
+                {/*    <div className="column" >*/}
+                {/*        <h2>Column 1</h2>*/}
+                {/*        <p>Some text..</p>*/}
+                {/*    </div>*/}
+                {/*    <div className="column" >*/}
+                {/*        <h2>Column 2</h2>*/}
+                {/*        <p>Some text..</p>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+                {selectedOption.map((x, i) =>
+                    <div key={i}>
+                        <div className="row eachrecord">
+                        <div className="column" >
+                            <span className="nomlabel">{x[i].key}</span>
+                        </div>
+                        <input type='textarea' className='nomineechoosed' />
+                        </div>
+                    </div>
+                )}
+                <div className="row">
+                    <div className="buttongroup">
+                        <input type="button" value="Cancel"/>
+                        <input type="button" value="Submit" onClick={sendNomination}/>
+                    </div>
+
+                </div>
             </div>
+            {/*<div className="nominateButton">*/}
+            {/*    <input type="button" value="Next" onClick={onNominate}/>*/}
+            {/*</div>*/}
             
             
         </div>

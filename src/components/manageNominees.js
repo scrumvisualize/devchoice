@@ -42,7 +42,7 @@ const ManageNominees = () => {
                 fileArr.push(file[i]);
             }
             formData.append('file', fileArr);
-            const res = Axios.post("http://localhost:8000/service/managenominees", formData, {
+            const res = Axios.put("http://localhost:8000/service/managenominees", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
