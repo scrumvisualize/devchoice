@@ -46,12 +46,12 @@ const Login = () => {
                 </button><br></br><br></br>
                 <div className="loginDevchoice">
                 </div>
-            </div><br></br>
+            </div>
             <div loginForm part2>
-                <img src="images/onlineaward.jpg" className="loginAward"/>
-                <span className="loginbanner">
-                    <pre>Dev Choice Awards !</pre>
-                </span>
+                <img src="images/devchoice.PNG" className="loginAward"/>
+                {/*<span className="loginbanner">*/}
+                {/*    <pre>Dev Choice Awards !</pre>*/}
+                {/*</span>*/}
             </div>
         </div>
 

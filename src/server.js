@@ -301,14 +301,13 @@ app.put('/service/managenominees', upload.single('file'), async (req, res, next)
               await ManageNomineesModel.bulkCreate(allNominees);
               res.status(200).json({ message: "Nominees inserted successfully !"});
             } else {
-              await ManageNomineesModel.bulkCreate({...allNominees},
+              await ManageNomineesModel.bulkCreate(allNominees,
                   { updateOnDuplicate: ["name"],
                   //{attributes: { exclude: ['createdAt'] },
                   where: { id: ['id']}
                   });
               res.status(200).json({ message: "Nominee records updated successfully !"});
             }
-            //let manageNominees = await ManageNomineesModel.create(results);
           });
       }
 

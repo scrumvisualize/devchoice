@@ -10,17 +10,18 @@ button .loginText{
 text-align: center;
 }
 .loginForm{
- width: 400px;
- height:100px;
+ width: 500px;
+ height:600px;
  margin:0 auto;
- margin-bottom: 50px;
  padding-top: 150px;
  background-color: #3ab3cf;
+ float: left;
 }
 
 .loginDevchoice img {
- width: 200px;
+ width: 500px;
  height:200px;
+
 }
 .loginAward{
  width: 400px;

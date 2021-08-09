@@ -19,6 +19,7 @@ const NominatePerson = () => {
 
     const maxOptions = 3;
     const [selectedOption, setSelectedOption] = useState([]);
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const handleTypeSelect = (e) => {
         const copy = [...selectedOption];
@@ -48,51 +49,48 @@ const NominatePerson = () => {
             </div>
             <h1>Nominate a person</h1>
             <div className="nomineeSelectBox">
-                <Multiselect
-                    onSelect={handleTypeSelect}
-                    onRemove={handleTypeRemove}
-                    options={selectedOption.length + 1 === maxOptions ? [] : options}
-                    displayValue="key"
-                    showCheckbox={true}
-                    emptyRecordMsg={"Maximum nominees selected !"}
-                />
+                <div id="dialog2" className="triangle_down1"></div>
+                <div className="arrowdown">
+                    <Multiselect
+                        onSelect={handleTypeSelect}
+                        onRemove={handleTypeRemove}
+                        options={selectedOption.length + 1 === maxOptions ? [] : options}
+                        displayValue="key"
+                        showCheckbox={true}
+                        emptyRecordMsg={"Maximum nominees selected !"}
+                    />
 
+                </div>
             </div>
+            <form onSubmit={handleSubmit(sendNomination)}>
             <div className="nomineesSelectedList">
                 <h3>Selected Nominees</h3>
-                {/*<div className="row">*/}
-                {/*    <div className="column" >*/}
-                {/*        <h2>Column 1</h2>*/}
-                {/*        <p>Some text..</p>*/}
-                {/*    </div>*/}
-                {/*    <div className="column" >*/}
-                {/*        <h2>Column 2</h2>*/}
-                {/*        <p>Some text..</p>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
                 {selectedOption.map((x, i) =>
                     <div key={i}>
                         <div className="row eachrecord">
                         <div className="column" >
-                            <span className="nomlabel">{x[i].key}</span>
+                            <label className="nomlabel">{x[i].key} <b>>></b></label>
                         </div>
-                        <input type='textarea' className='nomineechoosed' />
+                        <input
+                            required type='textarea'
+                            name={x[i].key}
+                            className='nomineechoosed'
+                            {...register(`${x[i].key}`,{
+                                required: "Reason for nomination is required !",
+                            })}
+                        />
                         </div>
                     </div>
                 )}
                 <div className="row">
                     <div className="buttongroup">
-                        <input type="button" value="Cancel"/>
-                        <input type="button" value="Submit" onClick={sendNomination}/>
+                        <input id="Submit" type="submit" value="Submit"/>
+                        <input id="Cancel" type="button" value="Cancel"/>
                     </div>
 
                 </div>
             </div>
-            {/*<div className="nominateButton">*/}
-            {/*    <input type="button" value="Next" onClick={onNominate}/>*/}
-            {/*</div>*/}
-            
-            
+            </form>
         </div>
 
         
