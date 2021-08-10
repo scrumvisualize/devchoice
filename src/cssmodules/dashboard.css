@@ -201,7 +201,7 @@ body {
 }
 
 .item{
-  margin:5px 10px 15px 5px;
+  margin:5px 10px 15px 10px;
   font-family: 'GT Flexa Variable', 'GT Flexa', sans-serif;
   transition: all .2s ease-in-out;
 }

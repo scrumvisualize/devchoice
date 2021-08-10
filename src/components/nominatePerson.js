@@ -19,7 +19,9 @@ const NominatePerson = () => {
 
     const maxOptions = 3;
     const [selectedOption, setSelectedOption] = useState([]);
+    const [nomRegister, setNomRegister] = useState([]);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
 
     const handleTypeSelect = (e) => {
         const copy = [...selectedOption];
@@ -32,13 +34,29 @@ const NominatePerson = () => {
         let index = copy.indexOf(e);
         copy.splice(index, 1);
         setSelectedOption(copy);
+        // immutating state (best practice)
+        const updateList = nomRegister.map((item) => {
+            return { ...item };
+        });
+        //delete the specific array case depends on the id
+        updateList.splice(index, 1);
+        setNomRegister(updateList);
     };
 
     const sendNomination = () => {
-        alert("hello")
-        // ...
+        console.log("Arry has: "+JSON.stringify(nomRegister));
     };
 
+    const handleChange = (e, i) => {
+        const { name, value } = e.target;
+        // immutating state (best practice)
+        const updateList = nomRegister.map((item) => {
+            return { ...item };
+        });
+        //change the specific array case depends on the id
+        updateList[i] = { ...updateList[i], name: name, reason: value };
+        setNomRegister(updateList);
+    };
   
     return (
         <div className="App">
@@ -49,7 +67,7 @@ const NominatePerson = () => {
             </div>
             <h1>Nominate a person</h1>
             <div className="nomineeSelectBox">
-                <div id="dialog2" className="triangle_down1"></div>
+                <div id="dialog2" className="triangle_down1"/>
                 <div className="arrowdown">
                     <Multiselect
                         onSelect={handleTypeSelect}
@@ -64,7 +82,7 @@ const NominatePerson = () => {
             </div>
             <form onSubmit={handleSubmit(sendNomination)}>
             <div className="nomineesSelectedList">
-                <h3>Selected Nominees</h3>
+                <h4>Selected Nominees</h4>
                 {selectedOption.map((x, i) =>
                     <div key={i}>
                         <div className="row eachrecord">
@@ -73,11 +91,12 @@ const NominatePerson = () => {
                         </div>
                         <input
                             required type='textarea'
+                            placeholder="Please provide reason for nomination.."
+                            key={i}
+                            id={i}
                             name={x[i].key}
                             className='nomineechoosed'
-                            {...register(`${x[i].key}`,{
-                                required: "Reason for nomination is required !",
-                            })}
+                            onChange={(e) => handleChange(e, i)}
                         />
                         </div>
                     </div>
