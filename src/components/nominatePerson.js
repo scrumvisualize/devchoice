@@ -5,28 +5,33 @@ import Axios from "axios";
 import { Link, useHistory } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 
-const options = [
-    { key: 'Aaron', id: 1},
-    { key: 'Bader', id: 2},
-    { key: 'Crots', id: 3},
-    { key: 'Dan', id: 4},
-    { key: 'Elep', id: 5},
-    { key: 'Pal', id: 6},
-    { key: 'Quilt', id: 7}
-  ];
-
 const NominatePerson = () => {
-
-    const maxOptions = 3;
+    const [option, setOption] = useState([]);
     const [selectedOption, setSelectedOption] = useState([]);
-    const [nomRegister, setNomRegister] = useState([]);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const [nomRegister, setNomRegister] = useState([{}]);
+    const { register, handleSubmit, watch, formState: { errors }, reset} = useForm();
+    const maxOptions = 3;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // const email = localStorage.getItem("loginEmail");
+            try {
+                const res = await Axios.get('http://localhost:8000/service/nomineeslist');
+                const data1 = res.data;
+                setOption(data1);
+                console.log("Get the list of nominees :" + (JSON.stringify(res.data)));
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        fetchData();
+    }, []);
 
 
-    const handleTypeSelect = (e) => {
+    const handleTypeSelect = (e, i) => {
         const copy = [...selectedOption];
-        copy.push(e);
-        setSelectedOption(copy);
+        copy.push(e[i]);
+       setSelectedOption(copy);
     };
 
     const handleTypeRemove = (e) => {
@@ -47,14 +52,24 @@ const NominatePerson = () => {
         console.log("Arry has: "+JSON.stringify(nomRegister));
     };
 
+    option.forEach(option=>{
+        option.displayValue=option.name+"\t"+option.email;
+    })
+
     const handleChange = (e, i) => {
-        const { name, value } = e.target;
+        const { name, email, value } = e.target;
+
         // immutating state (best practice)
         const updateList = nomRegister.map((item) => {
             return { ...item };
         });
-        //change the specific array case depends on the id
-        updateList[i] = { ...updateList[i], name: name, reason: value };
+
+        const select_Email = selectedOption.map((item) => {
+            return item.email;
+        });
+
+        //change the specific array case depends on the id //email:emailList[i],
+        updateList[i] = { ...updateList[i], name: name, email: select_Email[i], reason: value };
         setNomRegister(updateList);
     };
   
@@ -70,15 +85,17 @@ const NominatePerson = () => {
                 <div id="dialog2" className="triangle_down1"/>
                 <div className="arrowdown">
                     <Multiselect
-                        onSelect={handleTypeSelect}
+                        onSelect={(e) => handleTypeSelect(e, selectedOption.length)}
                         onRemove={handleTypeRemove}
-                        options={selectedOption.length + 1 === maxOptions ? [] : options}
-                        displayValue="key"
+                        options={selectedOption.length + 1 === maxOptions ? [] : option}
+                        displayValue="displayValue"
                         showCheckbox={true}
                         emptyRecordMsg={"Maximum nominees selected !"}
                     />
 
                 </div>
+            </div>
+            <div className="nominationcount">
             </div>
             <form onSubmit={handleSubmit(sendNomination)}>
             <div className="nomineesSelectedList">
@@ -87,14 +104,14 @@ const NominatePerson = () => {
                     <div key={i}>
                         <div className="row eachrecord">
                         <div className="column" >
-                            <label className="nomlabel">{x[i].key} <b>>></b></label>
+                            <label className="nomlabel">{x?.name} <b>>></b></label>
                         </div>
                         <input
                             required type='textarea'
                             placeholder="Please provide reason for nomination.."
                             key={i}
                             id={i}
-                            name={x[i].key}
+                            name={x?.name}
                             className='nomineechoosed'
                             onChange={(e) => handleChange(e, i)}
                         />
@@ -110,9 +127,9 @@ const NominatePerson = () => {
                 </div>
             </div>
             </form>
+
         </div>
 
-        
     )
 }
 

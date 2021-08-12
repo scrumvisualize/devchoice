@@ -320,7 +320,7 @@ app.put('/service/managenominees', upload.single('file'), async (req, res, next)
 /* This service is used get and display all employees in the manageNominees screen from the managenominees table */
 app.get('/service/nomineeslist', async (req, res) => {
   try {
-    const data = await ManageNomineesModel.findAll({ attributes: ['name', 'email', 'access'] });
+    const data = await ManageNomineesModel.findAll({ attributes: ['id', 'name', 'email', 'access'] });
     res.status(200).send(data);
   } catch (e) {
     res.status(500).json({ fail: e.message });
