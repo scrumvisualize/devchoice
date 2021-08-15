@@ -96,24 +96,29 @@ var upload = multer({ storage: storage});
 /* This service is used to submit a nomination and will display invalid link if token expired */
 app.post('/service/nominateperson', async (req, res) => {
   try {
-    const nomineeName = req.body.nomineename;
-    const nomineeEmail = req.body.email;
-    const nomineeTeam = req.body.nomineeteam;
-    const description = req.body.description;
-    const nominatedBy = req.body.nominatedby;
-    var data = { nomineename: nomineeName, email: nomineeEmail, nomineeteam: nomineeTeam, description: description, nominatedby: nominatedBy };
-    console.log("Server side display nominations :" + data);
-    const checkTokenData = await LinkTokenModel.findAll({ attributes: ['token', 'expiredAt'] });
-    const expiryDate = checkTokenData[0].expiredAt;
-    const formattedExpiryDate = moment(expiryDate).format('YYYY-MM-DD hh:mm');
-    const tokenData = checkTokenData[0].token;
-    var now = moment();
-    var currentDate = moment(now).format('YYYY-MM-DD hh:mm');
-    if (currentDate < formattedExpiryDate) {
-      const nominationData = await NominationModel.create(data);
-      res.status(200).json({ message: "Nomination send successfully !" });
+    const userEmail = req.body.userEmail;
+    const nomData = req.body.nomRegister;
+    const formData = {
+      useremail: userEmail,
+      nomineeemail:{},
+      nomineename: {},
+      nomineeteam:{},
+      reason:{}
+    }
+
+    const data = nomData.map(item => ({
+      useremail: userEmail,
+      nomineeemail: item.email,
+      nomineename: item.name,
+      nomineeteam: item.team,
+      reason: item.reason
+    }));
+    const numberOfNominations = await NominationModel.count({ where: { useremail: userEmail } });
+    if( numberOfNominations <= 2){
+      const nominationData = await NominationModel.bulkCreate(data);
+      res.status(200).json({ message: "Nomination submitted successfully !" });
     } else {
-      res.status(404).json({ fail: true });
+      res.status(202).json({ message: "Sorry you have exceeded the limit of nominations, please try next week !" });
     }
   } catch (e) {
     res.status(500).json({ fail: e.message });
@@ -121,10 +126,12 @@ app.post('/service/nominateperson', async (req, res) => {
 });
 
 
+
+
 /* This service is used to display list of all nominations in the Dashboard under Recent nominations section: */
 app.get('/service/nominations', async (req, res) => {
   try {
-    const nominationData = await NominationModel.findAll({ attributes: ['email', 'nomineename', 'nomineeteam', 'description', 'nominatedby', 'createdAt'] });
+    const nominationData = await NominationModel.findAll({ attributes: ['nomineeemail', 'nomineename', 'nomineeteam', 'reason', 'createdAt'] });
     res.status(200).send(nominationData);
   } catch (e) {
     res.status(500).json({ fail: e.message });
@@ -244,8 +251,7 @@ app.get('/service/displaywinner', async (req, res) => {
 app.get('/service/nominationgroup', async (req, res) => {
   try {
     const nominationGroup = await NominationModel.findAll({
-      //group: ['nomineename'],
-      attributes: ['nomineename', 'nomineeteam', 'description', 'createdAt']
+      attributes: ['nomineename', 'nomineeteam', 'reason', 'createdAt']
     });
     res.status(200).send(nominationGroup);
   } catch (e) {

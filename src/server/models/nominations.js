@@ -1,14 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
     const nominations = sequelize.define('nominations', {
-        email: {
-            type: DataTypes.STRING(100),
-            allowNull: false
-        },
         id: {
             type: DataTypes.INTEGER(10),
             allowNull: false,
             primaryKey: true,
             autoIncrement: true
+        },
+        useremail: {
+            type: DataTypes.STRING(150),
+            allowNull: false
+        },
+        nomineeemail: {
+            type: DataTypes.STRING(150),
+            allowNull: false
         },
         nomineename: {
             type: DataTypes.STRING(200),
@@ -16,15 +20,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         nomineeteam: {
             type: DataTypes.STRING(100),
+            allowNull: true
+        },
+        reason: {
+            type: DataTypes.STRING(250),
             allowNull: false
         },
-        description: {
-            type: DataTypes.STRING(1000),
-            allowNull: false
-        },
-        nominatedby: {
-            type: DataTypes.STRING(200),
-            allowNull: false
+        likes: {
+            type: DataTypes.INTEGER(10),
+            allowNull: true
         },
 		createdAt: {
             type: DataTypes.DATE,

@@ -23,7 +23,7 @@
 
 /*Base Mobile Layout*/
 .wrap {
-    width: 100%;
+    width: 95% !important;
     display: flex;
     border:solid 1px;
     border-color: #cfcf4e;
@@ -32,6 +32,7 @@
 #main-content, #sidebar-left, #sidebar-right {
     width: 100%;
     float: left;
+    text-align: center;
 }
 .nomlistdata{
     display:flex;

@@ -118,3 +118,10 @@ h1, h4{
     margin: 0px 100px 0px 0px;
     float: right;
 }
+.nominationValidationText{
+    width: 400px;
+    height: 30px;
+    color: orangered;
+    position: absolute;
+    margin: 500px 600px 10px -160px;
+}

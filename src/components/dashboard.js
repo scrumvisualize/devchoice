@@ -346,11 +346,11 @@ const Dashboard = props => {
                                             <label key={data.nomineename}><b>{data.nomineename}</b></label>
                                         </span>
                                         <span className="">
-                                            <p key={data.description}>{data.description}</p>
+                                            <p key={data.reason}>{data.reason}</p>
                                         </span>
-                                        <div className="nominatedby user">
-                                            <span key={data.nominatedby}>Nominated by: {data.nominatedby}</span>
-                                        </div>
+                                        {/*<div className="nominatedby user">*/}
+                                        {/*    <span key={data.nominatedby}>Nominated by: {data.nominatedby}</span>*/}
+                                        {/*</div>*/}
                                     </div>
                                 ))
                             }

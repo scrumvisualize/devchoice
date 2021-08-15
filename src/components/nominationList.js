@@ -93,10 +93,10 @@ const NominationList = () => {
                         if (!newGroup.hasOwnProperty(elem.nomineename)){
                             newGroup[elem.nomineename] = {
                                 createdAt: "",
-                                description: []
+                                reason: []
                             };
                         }
-                        newGroup[elem.nomineename].description.push(elem.description);
+                        newGroup[elem.nomineename].reason.push(elem.reason);
                         newGroup[elem.nomineename].createdAt = elem.createdAt;
                     }
                     setNominationGroup(newGroup);
@@ -128,6 +128,7 @@ const NominationList = () => {
                 <a><Link to={'/dashboard'} className="nav-link"> <b>Dashboard</b> </Link></a>
             </div>
             <h1 className="header"><b>Nomination List</b></h1>
+
             <div className="wrap">
                 <div id="sidebar-left">
                     <th>Nominee name</th>
@@ -150,7 +151,7 @@ const NominationList = () => {
                             <div id="main-content">
 
                                 {
-                                    nominationGroup[nomineename].description.map(desc => (
+                                    nominationGroup[nomineename].reason.map(desc => (
                                         <li key={desc} className="nomlistdata"><li>{desc}</li></li>
                                     ))
                                 }

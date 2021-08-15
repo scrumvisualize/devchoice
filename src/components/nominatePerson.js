@@ -9,12 +9,19 @@ const NominatePerson = () => {
     const [option, setOption] = useState([]);
     const [selectedOption, setSelectedOption] = useState([]);
     const [nomRegister, setNomRegister] = useState([{}]);
+    const [helperText, setHelperText] = useState('');
+    const [userEmail, setUserEmail] = useState("");
     const { register, handleSubmit, watch, formState: { errors }, reset} = useForm();
     const maxOptions = 3;
+    const history = useHistory();
+
+    useEffect(()=>{
+        const userEmail = localStorage.getItem("loginEmail");
+        setUserEmail(userEmail);
+    })
 
     useEffect(() => {
         const fetchData = async () => {
-            // const email = localStorage.getItem("loginEmail");
             try {
                 const res = await Axios.get('http://localhost:8000/service/nomineeslist');
                 const data1 = res.data;
@@ -49,7 +56,27 @@ const NominatePerson = () => {
     };
 
     const sendNomination = () => {
-        console.log("Arry has: "+JSON.stringify(nomRegister));
+        console.log("What the Array holds: "+JSON.stringify(nomRegister));
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        const fetchData = async (nomRegister) => {
+            try {
+                const res = await Axios.post('http://localhost:8000/service/nominateperson', {userEmail, nomRegister}, headers );
+                if (res.data) {
+                    console.log("Print data:" + res.data);
+                    const successMessage = res.data.message;
+                    setHelperText(successMessage);
+                    setNomRegister(reset);
+                }
+            } catch (e) {
+                console.log(e);
+                setNomRegister(reset);
+                setHelperText(e.message);
+                //history.push('/errorPage');
+            }
+        }
+        fetchData(nomRegister);
     };
 
     option.forEach(option=>{
@@ -126,8 +153,9 @@ const NominatePerson = () => {
 
                 </div>
             </div>
-            </form>
 
+            </form>
+            <span className="nominationValidationText">{helperText}</span>
         </div>
 
     )
