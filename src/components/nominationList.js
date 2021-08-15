@@ -128,7 +128,6 @@ const NominationList = () => {
                 <a><Link to={'/dashboard'} className="nav-link"> <b>Dashboard</b> </Link></a>
             </div>
             <h1 className="header"><b>Nomination List</b></h1>
-
             <div className="wrap">
                 <div id="sidebar-left">
                     <th>Nominee name</th>

@@ -313,7 +313,12 @@ p {
   font-weight:500; 
 }
 .nonominationdata{
-  color :#cdd6da;
+  color :#3d3d3c;
+  text-align: center;
+}
+
+.dashboarddata{
+  color :#3d3d3c;
   text-align: center;
 }
 

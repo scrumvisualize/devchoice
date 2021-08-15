@@ -117,6 +117,7 @@ const NominatePerson = () => {
                         options={selectedOption.length + 1 === maxOptions ? [] : option}
                         displayValue="displayValue"
                         showCheckbox={true}
+                        value={selectedOption}
                         emptyRecordMsg={"Maximum nominees selected !"}
                     />
 
@@ -140,6 +141,7 @@ const NominatePerson = () => {
                             id={i}
                             name={x?.name}
                             className='nomineechoosed'
+                            maxLength="250"
                             onChange={(e) => handleChange(e, i)}
                         />
                         </div>

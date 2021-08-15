@@ -118,7 +118,7 @@ app.post('/service/nominateperson', async (req, res) => {
       const nominationData = await NominationModel.bulkCreate(data);
       res.status(200).json({ message: "Nomination submitted successfully !" });
     } else {
-      res.status(202).json({ message: "Sorry you have exceeded the limit of nominations, please try next week !" });
+      res.status(202).json({ message: "Sorry ! you have exceeded the maximum limit of nominations..!" });
     }
   } catch (e) {
     res.status(500).json({ fail: e.message });
@@ -143,8 +143,8 @@ app.get('/service/nominations', async (req, res) => {
 app.get('/service/nominationcount', async (req, res) => {
   try {
     const data = await NominationModel.findAll({
-      group: ['email'],
-      attributes: ['email', 'nomineename', [sequelize.fn('COUNT', 'email'), 'EmailCount']],
+      group: ['nomineeemail'],
+      attributes: ['nomineeemail', 'nomineename', [sequelize.fn('COUNT', 'nomineeemail'), 'EmailCount']],
     });
     res.status(200).send(data);
   } catch (e) {

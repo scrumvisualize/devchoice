@@ -241,7 +241,7 @@ const Dashboard = props => {
                 <div className="profileImage">
                     <img src={image}></img>
                     <span className="dropdown-content">
-                        <a href="" onClick={signOut}>Log out</a>
+                        <a href="" onClick={signOut}>Logout</a>
                     </span>
                 </div>
             </div>
@@ -299,10 +299,10 @@ const Dashboard = props => {
                                     {
                                         nominationCount.map(data => (
                                             <div key={data.id}>
-                                                <div onClick={() => { setOpen(!open); setEmailText(data.email); setNameText(data.nomineename) }} className="count badge" >
+                                                <div onClick={() => { setOpen(!open); setEmailText(data.nomineeemail); setNameText(data.nomineename) }} className="count badge" >
                                                     <span className="badgenumber" value={data.count} key={data.count}>{data.EmailCount}</span>
                                                     <span className="countname" key={data.nomineename} onClick={() => setNameText(data.nomineename)}>{data.nomineename}</span>
-                                                    <span hidden={true} key={data.email}>{data.email}</span>
+                                                    <span hidden={true} key={data.nomineeemail}>{data.nomineeemail}</span>
                                                 </div>
                                             </div>
                                         ))
@@ -316,6 +316,9 @@ const Dashboard = props => {
                                         Object.entries(teams).map(([team, names]) => (
                                             <div key={team} className="team-1">
                                                 <h5>{team}</h5>
+                                                {
+                                                    !names.length && (<div className="nonominationdata">No teamwise nominations to display !</div>)
+                                                }
                                                 {names.map((name) => (
                                                     <span key={name} className="data-1">
                                                         {name}
@@ -332,7 +335,7 @@ const Dashboard = props => {
                     <h3>Nominated members</h3>
                         
                         {
-                            !nominationList.length && (<div className="nonominationdata">Sorry, no nominations to display !</div>)
+                            !nominationList.length && (<div className="dashboarddata">Sorry, no nominations to display !</div>)
                         }
 
                         <div className="grid-container">
