@@ -67,20 +67,29 @@ const NominatePerson = () => {
                     console.log("Print data:" + res.data);
                     const successMessage = res.data.message;
                     setHelperText(successMessage);
-                    setNomRegister(reset);
+                    const updateList = selectedOption.map((item) => {
+                        return { ...item, reason: "" };
+                    });
+                    setSelectedOption(updateList);
+                    setNomRegister(updateList);
                 }
             } catch (e) {
                 console.log(e);
                 setNomRegister(reset);
                 setHelperText(e.message);
                 //history.push('/errorPage');
+                const updateList = selectedOption.map((item) => {
+                    return { ...item, reason: "" };
+                });
+                setSelectedOption(updateList);
+                setNomRegister(updateList);
             }
         }
         fetchData(nomRegister);
     };
 
     option.forEach(option=>{
-        option.displayValue=option.name+"\t"+option.email;
+        option.displayValue=option.name+"\t" + option.email;
     })
 
     const handleChange = (e, i) => {
@@ -96,7 +105,10 @@ const NominatePerson = () => {
         });
 
         //change the specific array case depends on the id //email:emailList[i],
-        updateList[i] = { ...updateList[i], name: name, email: select_Email[i], reason: value };
+        // updateList[i] = { ...updateList[i], name: name, email: select_Email[i], reason: value };
+        // setNomRegister(updateList);
+        updateList[i] = { ...updateList[i], name: name, email: select_Email, reason: value };
+        setSelectedOption(updateList);
         setNomRegister(updateList);
     };
   
@@ -117,7 +129,6 @@ const NominatePerson = () => {
                         options={selectedOption.length + 1 === maxOptions ? [] : option}
                         displayValue="displayValue"
                         showCheckbox={true}
-                        value={selectedOption}
                         emptyRecordMsg={"Maximum nominees selected !"}
                     />
 
@@ -140,6 +151,7 @@ const NominatePerson = () => {
                             key={i}
                             id={i}
                             name={x?.name}
+                            value={x?.reason}
                             className='nomineechoosed'
                             maxLength="250"
                             onChange={(e) => handleChange(e, i)}

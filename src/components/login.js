@@ -51,7 +51,7 @@ const Login = () => {
                 </div>
                 <div className="column">
                     <div className="button">
-                        <img src="images/devchoice.PNG" className="loginAward"/>
+                        <img src="images/onlineaward.jpg" className="loginAward"/>
                     </div>
 
                 </div>

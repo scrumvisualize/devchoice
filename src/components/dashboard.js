@@ -363,7 +363,7 @@ const Dashboard = props => {
                 </div> 
             </div>
             <div className="bottom level">
-                <h3>@Copyright Vinod Mathew</h3>
+                <h3>@Copyright Vin</h3>
             </div>
             <Modal
                 open={open}

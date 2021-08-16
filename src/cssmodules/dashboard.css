@@ -240,7 +240,7 @@ p {
 .oldwinner span{
   height: 120px;
   width: 150px;
-  color: #bcbdc2;
+  color: #fff;
   font-size: 0.8rem;
   font-weight: medium;
   margin: 10px 20px 0px 10px !important;
@@ -307,7 +307,7 @@ p {
 }
 .countname{
   text-align: center;
-  color: rgb(16, 16, 17);
+  color: #fff;
   padding: 0px 0px 5px 10px;
   font-size: .8rem ;
   font-weight:500; 
@@ -325,9 +325,10 @@ p {
 .team-1, .team-2, .team-3, .team-4{
   flex-basis: 90%;
   width: 80px;
-  background-color: #adabe0;
+  background-color: #7b76db;
   margin: 0px 5px 20px 20px;
   overflow: auto;
+  color: #fff;
 }
 
 .data-1{
@@ -336,7 +337,7 @@ p {
   font-family: 'GT Flexa Variable', 'GT Flexa', sans-serif;
   font-size: .7rem ;
   font-weight: bold;
-  color: #7a7c7d;
+  color: #fff;
 }
 
 .nav-link {
