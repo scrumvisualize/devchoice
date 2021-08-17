@@ -32,3 +32,12 @@
   width: 50%;
   margin: 0 auto;
 }
+
+.toggleSwitch{
+  margin: 100px 0px 0px 500px;
+}
+
+.column {
+  float: left;
+  width: 20%;
+}

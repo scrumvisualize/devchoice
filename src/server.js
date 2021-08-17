@@ -115,8 +115,20 @@ app.post('/service/nominateperson', async (req, res) => {
     }));
     const numberOfNominations = await NominationModel.count({ where: { useremail: userEmail } });
     if( numberOfNominations <= 2){
-      const nominationData = await NominationModel.bulkCreate(data);
-      res.status(200).json({ message: "Nomination submitted successfully !" });
+      const sameEmail = await NominationModel.findAll({ attributes: ['nomineeemail'] }, { where: { useremail: userEmail } });
+      if(sameEmail.length > 0){
+        for(var i=0; i <= sameEmail.length; i++){
+          if(sameEmail[i].nomineeemail ===  nomData[i].email[i]){
+            res.status(202).json({ message: "Already nominated ! can't nominate again !" });
+          }else {
+            const nominationData = await NominationModel.bulkCreate(data);
+            res.status(200).json({ message: "Nomination submitted successfully !" });
+          }
+        }
+      } else {
+        const nominationData = await NominationModel.bulkCreate(data);
+        res.status(200).json({ message: "Nomination submitted successfully !" });
+      }
     } else {
       res.status(202).json({ message: "Sorry ! you have exceeded the maximum limit of nominations..!" });
     }
