@@ -115,20 +115,23 @@ app.post('/service/nominateperson', async (req, res) => {
     }));
     const numberOfNominations = await NominationModel.count({ where: { useremail: userEmail } });
     if( numberOfNominations <= 2){
-      const sameEmail = await NominationModel.findAll({ attributes: ['nomineeemail'] }, { where: { useremail: userEmail } });
-      if(sameEmail.length > 0){
-        for(var i=0; i <= sameEmail.length; i++){
-          if(sameEmail[i].nomineeemail ===  nomData[i].email[i]){
-            res.status(202).json({ message: "Already nominated ! can't nominate again !" });
-          }else {
-            const nominationData = await NominationModel.bulkCreate(data);
-            res.status(200).json({ message: "Nomination submitted successfully !" });
-          }
-        }
-      } else {
-        const nominationData = await NominationModel.bulkCreate(data);
-        res.status(200).json({ message: "Nomination submitted successfully !" });
-      }
+      const nominationData = await NominationModel.bulkCreate(data);
+      res.status(200).json({ message: "Nomination submitted successfully !" });
+      // const sameEmail = await NominationModel.findAll({ attributes: ['nomineeemail'] }, { where: { useremail: userEmail } });
+      // if(sameEmail.length > 0){
+      //   for(var i=0; i <= sameEmail.length -1; i++){
+      //     if(sameEmail[i].nomineeemail ===  nomData[i].email[i]){
+      //       res.status(202).json({ message: "Already nominated ! can't nominate again !" });
+      //     }else {
+      //       const nominationData = await NominationModel.bulkCreate(data);
+      //       res.status(200).json({ message: "Nomination submitted successfully !" });
+      //     }
+      //   }
+      //   res.status(202).json({ message: "Sorry ! you have exceeded the maximum limit of nominations..!" });
+      // } else {
+      //   const nominationData = await NominationModel.bulkCreate(data);
+      //   res.status(200).json({ message: "Nomination submitted successfully !" });
+      // }
     } else {
       res.status(202).json({ message: "Sorry ! you have exceeded the maximum limit of nominations..!" });
     }
@@ -137,7 +140,16 @@ app.post('/service/nominateperson', async (req, res) => {
   }
 });
 
-
+/* This service is used to get all nominations submitted by the login user:  */
+app.get('/service/submittednominations', async (req, res) => {
+  try {
+    const userEmail = req.body.userEmail;
+    const submittedNominationEmail = await NominationModel.findAll({ attributes: ['id', 'nomineeemail', 'nomineename'] }, { where: { useremail: userEmail } });
+    res.status(200).send(submittedNominationEmail);
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
 
 
 /* This service is used to display list of all nominations in the Dashboard under Recent nominations section: */

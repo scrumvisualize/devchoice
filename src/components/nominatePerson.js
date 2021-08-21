@@ -14,6 +14,9 @@ const NominatePerson = () => {
     const { register, handleSubmit, watch, formState: { errors }, reset} = useForm();
     const maxOptions = 3;
     const history = useHistory();
+    const [selectedValues, setSelectedValues] = useState([{}]);
+    const [submittedNominees, setSubmittedNominees] = useState([{}]);
+
 
     useEffect(()=>{
         const userEmail = localStorage.getItem("loginEmail");
@@ -22,11 +25,26 @@ const NominatePerson = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            const userEmail = localStorage.getItem("loginEmail");
+            try {
+                const res = await Axios.get('http://localhost:8000/service/submittednominations',{userEmail});
+                const data1 = res.data;
+                setSubmittedNominees(data1);
+                console.log("Submitted nominations :" + (JSON.stringify(data1)));
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
             try {
                 const res = await Axios.get('http://localhost:8000/service/nomineeslist');
                 const data1 = res.data;
                 setOption(data1);
-                console.log("Get the list of nominees :" + (JSON.stringify(res.data)));
+                console.log("Get the list of nomineeslist :" + (JSON.stringify(data1)));
             } catch (e) {
                 console.log(e);
             }
@@ -89,8 +107,13 @@ const NominatePerson = () => {
     };
 
     option.forEach(option=>{
-        option.displayValue=option.name+"\t" + option.email;
-    })
+         option.displayValue = option.name + "\t" + option.email;
+        submittedNominees.forEach(item =>{
+            if(item.nomineeemail === option.email){
+                item.displayValue = item.nomineename + "\t" + item.nomineeemail;
+            }
+        });
+    });
 
     const handleChange = (e, i) => {
         const { name, email, value } = e.target;
@@ -105,8 +128,6 @@ const NominatePerson = () => {
         });
 
         //change the specific array case depends on the id //email:emailList[i],
-        // updateList[i] = { ...updateList[i], name: name, email: select_Email[i], reason: value };
-        // setNomRegister(updateList);
         updateList[i] = { ...updateList[i], name: name, email: select_Email, reason: value };
         setSelectedOption(updateList);
         setNomRegister(updateList);
@@ -128,6 +149,8 @@ const NominatePerson = () => {
                         onRemove={handleTypeRemove}
                         options={selectedOption.length + 1 === maxOptions ? [] : option}
                         displayValue="displayValue"
+                        disablePreSelectedValues={true}
+                        selectedValues={submittedNominees}
                         showCheckbox={true}
                         emptyRecordMsg={"Maximum nominees selected !"}
                     />

@@ -62,7 +62,7 @@ body {
   padding: 10px 0px 0px 0px;
   margin-right: 15px;
   margin-top: 5px;
-  height: 324px;
+  height: 500px;
   overflow: auto;
 }
 
@@ -275,8 +275,8 @@ p {
     display:flex;
 }
 .column-1 {
-  background-color:#4741ab;
-  border-color: #886ab8 ;
+  background-color: #1976D2;
+  border-color: #229BFF;
   -webkit-box-shadow: 0 10px 6px -6px #777;
      -moz-box-shadow: 0 10px 6px -6px #777;
           box-shadow: 0 10px 6px -6px #777;
@@ -442,10 +442,10 @@ input {
 
 .bottom{
  width: 98.7%;
- height: 100px;
+ height: 150px;
  margin: 10px 0px 0px 8px;
  padding-right: 20px;
- background-color: #7b76db;
+ background-color: #1976D2;
  box-shadow: 0px 5px 5px 0px rgb(153 151 151);
 }
 
