@@ -1,0 +1,29 @@
+/* Create a responsive, centered, three-column grid. */
+h1{
+    color: white !important;
+    margin: auto 0;
+}
+.card-container {
+    align-items: start;
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(auto-fit, 300px);
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.card {
+    background-color: #1976D2;
+    border-radius: 5px;
+    color: white;
+    padding: 100px 0 16px;
+    text-align: center;
+    text-shadow: 1px 1px 0 #555;
+}
+
+.fas {
+    font-size: 50px;
+}
+.card img{
+    width:100px;
+}

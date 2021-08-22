@@ -7,6 +7,7 @@ import "./cssmodules/login.css";
 import "./cssmodules/nominationList.css";
 import "./cssmodules/managenominees.css";
 import "./cssmodules/nomineeperson.css";
+import "./cssmodules/backers.css";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Dashboard from "./components/dashboard";
 import CreateLink from "./components/createLink";
@@ -18,6 +19,7 @@ import ManageNominees from "./components/manageNominees";
 import { ProtectedRoute } from "./components/protectedRoute";
 import ErrorPage from "./components/errorPage";
 import PageNotFound from "./components/pageNotFound";
+import Backers from "./components/backers";
 
 function App() {
   return (
@@ -31,7 +33,8 @@ function App() {
               <Route exact path='/' component={Login} />
               <Route path='/nominate/:token' component={Nominate} />
               <Route path='/nominatePerson' component={NominatePerson} />
-              <Route path='/errorPage/' component={ErrorPage} />
+              <Route path='/nominatePerson' component={NominatePerson} />
+              <Route path='/backers' component={Backers} />
               <Route path='*' component={PageNotFound} />
           </Switch>
         </div>

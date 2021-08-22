@@ -268,6 +268,9 @@ const Dashboard = props => {
                     <div className="navlist menu">
                         <span className="menuitem link" onClick={() => history.push('/nominatePerson')}>Nominate Person</span>
                     </div>
+                    <div className="navlist menu">
+                        <span className="menuitem link" onClick={() => history.push('/backers')}>Backers & Supporters</span>
+                    </div>
                 </div>
                 <div className="column-2 box"> 
                     <div className="leveldown">
