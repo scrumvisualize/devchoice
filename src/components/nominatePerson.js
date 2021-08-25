@@ -10,7 +10,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { toast } from "react-toastify";
+import { notify } from "../utils/helperFunctions/HelperFunctions";
+import "react-toastify/dist/ReactToastify.css";
+
 const NominatePerson = () => {
+  toast.configure();
   const [option, setOption] = useState([]);
   const [selectedOption, setSelectedOption] = useState([]);
   const [nomRegister, setNomRegister] = useState([{}]);
@@ -43,6 +48,8 @@ const NominatePerson = () => {
 
     if (selectedOption.length === 0 && showOptions) {
       //if we want submit without choosing a nomniation & not achieve maximum limit (we used showOptions to know if we got the limit or no)
+
+      notify("You must select a nomination", toast, "error");
       updateList[0] = false;
       setValidationMsgs(updateList);
     } else {
@@ -51,6 +58,11 @@ const NominatePerson = () => {
     }
     if (!showOptions && selectedOption.length === 0) {
       //if we achieve maximum limit
+      notify(
+        "Sorry, nomination has exceeded the maximum limit!",
+        toast,
+        "error"
+      );
       updateList[1] = false;
       setValidationMsgs(updateList);
     } else {
@@ -69,6 +81,13 @@ const NominatePerson = () => {
           ok = ok && false;
         else ok = ok && true;
       });
+      if (!ok) {
+        notify(
+          "Reason for nomination is required & less than 245 characters!",
+          toast,
+          "error"
+        );
+      }
       updateList[2] = ok;
       setValidationMsgs(updateList);
     }
@@ -76,6 +95,7 @@ const NominatePerson = () => {
     for (let index = 0; index < updateList.length; index++) {
       if (!updateList[index]) {
         textareaVerification = false;
+
         break;
       }
     }
@@ -166,6 +186,7 @@ const NominatePerson = () => {
           console.log("Print data:" + res.data);
           const successMessage = res.data.message;
           setHelperText(successMessage);
+          notify("Nomination submitted successfully !", toast, "success");
           const updateList = selectedOption.map((item) => {
             return { ...item, reason: "" };
           });
@@ -188,10 +209,16 @@ const NominatePerson = () => {
   };
 
   option.forEach((option) => {
-    option.displayValue = option.firstName + "\t" +option.lastName + "\t" + option.email;
+    option.displayValue =
+      option.firstName + "\t" + option.lastName + "\t" + option.email;
     submittedNominees.forEach((item) => {
       if (item.nomineeemail === option.email) {
-        item.displayValue = item.nomineeFirstName + "\t" + item.nomineeLastName + "\t" + item.nomineeemail;
+        item.displayValue =
+          item.nomineeFirstName +
+          "\t" +
+          item.nomineeLastName +
+          "\t" +
+          item.nomineeemail;
       }
     });
   });
@@ -263,7 +290,18 @@ const NominatePerson = () => {
         </div>
       </div>
       {/* A.H NP-5 */}
-      <div className='nominationcount'>{3 - maxOptions}</div>
+      <div className='nominationcount'>
+        <span
+          style={{
+            position: "absolute",
+            top: "23%",
+            left: "43%",
+            color: "#fff",
+          }}
+        >
+          {3 - maxOptions}
+        </span>
+      </div>
       <form>
         <div className='nomineesSelectedList'>
           <h4>Selected Nominees</h4>
@@ -334,22 +372,36 @@ const NominatePerson = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <span className='nominationValidationText'>{helperText}</span>
-      {!validationMsgs[1] ? (
-        <span className='nominationValidationText'>
-          Sorry, nomination has exceeded the maximum limit!
-        </span>
-      ) : !validationMsgs[0] ? (
-        <span className='nominationValidationText'>
-          You must select a nomination
-        </span>
-      ) : (
-        !validationMsgs[2] && (
-          <span className='nominationValidationText'>
-            Reason for nomination is required & less than 245 characters!
-          </span>
-        )
-      )}
+      {/* {helperText === "Nomination submitted successfully !" &&
+        notify("Nomination submitted successfully !", toast, "success")} */}
+      {/* <span className='nominationValidationText'>{helperText}</span> */}
+      {/* {!validationMsgs[1]
+        ? notify(
+            "Sorry, nomination has exceeded the maximum limit!",
+            toast,
+            "error"
+          )
+        : // <span className='nominationValidationText'>
+        //   Sorry, nomination has exceeded the maximum limit!
+        // </span>
+        !validationMsgs[0]
+        ? notify(
+            "Sorry, nomination has exceeded the maximum limit!",
+            toast,
+            "error"
+          )
+        : // <span className='nominationValidationText'>
+          //   You must select a nomination
+          // </span>
+          !validationMsgs[2] &&
+          notify(
+            "Reason for nomination is required & less than 245 characters!",
+            toast,
+            "error"
+          )} */}
+      {/* // <span className='nominationValidationText'>
+        //   Reason for nomination is required & less than 245 characters!
+        // </span> */}
     </div>
   );
 };
