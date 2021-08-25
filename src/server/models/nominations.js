@@ -14,9 +14,17 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(150),
             allowNull: false
         },
-        nomineename: {
+        nomineeFirstName: {
             type: DataTypes.STRING(200),
             allowNull: false
+        },
+        nomineeLastName: {
+            type: DataTypes.STRING(200),
+            allowNull: false
+        },
+        nomineename: {
+            type: DataTypes.STRING(200),
+            allowNull: true
         },
         nomineeteam: {
             type: DataTypes.STRING(100),

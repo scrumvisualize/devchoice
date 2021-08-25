@@ -95,17 +95,12 @@ app.post("/service/nominateperson", async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
     const nomData = req.body.nomRegister;
-    const formData = {
-      useremail: userEmail,
-      nomineeemail: {},
-      nomineename: {},
-      nomineeteam: {},
-      reason: {},
-    };
 
     const data = nomData.map((item) => ({
       useremail: userEmail,
       nomineeemail: item.email,
+      nomineeFirstName: item.name,
+      nomineeLastName: item.lastName,
       nomineename: item.name,
       nomineeteam: item.team,
       reason: item.reason,
@@ -149,7 +144,7 @@ app.get("/service/submittednominations", async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
     const submittedNominationEmail = await NominationModel.findAll(
-      { attributes: ["id", "nomineeemail", "nomineename"] },
+      { attributes: ["id", "nomineeemail", "nomineeFirstName", "nomineeLastName", "nomineename"] },
       { where: { useremail: userEmail } }
     );
     res.status(200).send(submittedNominationEmail);

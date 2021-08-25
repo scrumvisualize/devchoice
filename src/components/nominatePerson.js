@@ -191,26 +191,23 @@ const NominatePerson = () => {
     option.displayValue = option.firstName + "\t" +option.lastName + "\t" + option.email;
     submittedNominees.forEach((item) => {
       if (item.nomineeemail === option.email) {
-        item.displayValue = item.nomineename + "\t" + item.nomineeemail;
+        item.displayValue = item.nomineeFirstName + "\t" + item.nomineeLastName + "\t" + item.nomineeemail;
       }
     });
   });
 
-  const handleChange = (e, i) => {
+  const handleChange = (e, i, lastName) => {
     const { name, email, value } = e.target;
 
     // immutating state (best practice)
     const updateList = selectedOption.map((item) => {
       return { ...item };
     });
-    // console.log(updateList, "updateList");
-    // const select_Email = selectedOption.map((item) => {
-    //   return item.email;
-    // });
 
     //change the specific array case depends on the id //email:emailList[i],
     updateList[i] = {
       name: name,
+      lastName: lastName,
       email: updateList[i].email,
       reason: value,
     };
@@ -288,7 +285,7 @@ const NominatePerson = () => {
                   value={x?.reason}
                   className='nomineechoosed'
                   maxLength='245'
-                  onChange={(e) => handleChange(e, i)}
+                  onChange={(e) => handleChange(e, i, x.lastName)}
                 />
               </div>
             </div>
