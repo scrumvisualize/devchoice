@@ -188,7 +188,7 @@ const NominatePerson = () => {
   };
 
   option.forEach((option) => {
-    option.displayValue = option.name + "\t" + option.email;
+    option.displayValue = option.firstName + "\t" +option.lastName + "\t" + option.email;
     submittedNominees.forEach((item) => {
       if (item.nomineeemail === option.email) {
         item.displayValue = item.nomineename + "\t" + item.nomineeemail;
@@ -321,8 +321,7 @@ const NominatePerson = () => {
         <DialogTitle id='alert-dialog-title'>{"Confirmation"}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Nomination will be submitted, click on submit to confirm !
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -341,7 +340,7 @@ const NominatePerson = () => {
       <span className='nominationValidationText'>{helperText}</span>
       {!validationMsgs[1] ? (
         <span className='nominationValidationText'>
-          Sorry nomination has exceeded the maximum limit!
+          Sorry, nomination has exceeded the maximum limit!
         </span>
       ) : !validationMsgs[0] ? (
         <span className='nominationValidationText'>
@@ -350,7 +349,7 @@ const NominatePerson = () => {
       ) : (
         !validationMsgs[2] && (
           <span className='nominationValidationText'>
-            Reason for nomination is required & less than 245 caracteres!
+            Reason for nomination is required & less than 245 characters!
           </span>
         )
       )}

@@ -369,6 +369,8 @@ app.put(
             const allNominees = results.map((nominees) => {
               return {
                 id: nominees.id,
+                firstName: nominees.firstname,
+                lastName: nominees.lastname,
                 name: nominees.name,
                 email: nominees.email,
               };
@@ -384,7 +386,7 @@ app.put(
                 .json({ message: "Nominees inserted successfully !" });
             } else {
               await ManageNomineesModel.bulkCreate(allNominees, {
-                updateOnDuplicate: ["name"],
+                updateOnDuplicate: ["firstName"],
                 //{attributes: { exclude: ['createdAt'] },
                 where: { id: ["id"] },
               });
@@ -404,7 +406,7 @@ app.put(
 app.get("/service/nomineeslist", async (req, res) => {
   try {
     const data = await ManageNomineesModel.findAll({
-      attributes: ["id", "name", "email", "access"],
+      attributes: ["id", "firstName", "lastName", "name", "email", "access"],
     });
     res.status(200).send(data);
   } catch (e) {

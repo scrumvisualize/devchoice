@@ -95,12 +95,16 @@ const ManageNominees = () => {
 
                 <div className="managenominees">
                 <table data-cy="Manage_Nominees">
-                    <th>Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Given Name</th>
                     <th>Email</th>
                     <th>Access</th>
                     {manageNominees.map(row => {
                         return (
                             <tr>
+                                <td>{row.firstName}</td>
+                                <td>{row.lastName}</td>
                                 <td>{row.name}</td>
                                 <td>{row.email}</td>
                                 <td>{row.access}</td>
