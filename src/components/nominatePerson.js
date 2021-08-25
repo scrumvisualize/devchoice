@@ -245,7 +245,7 @@ const NominatePerson = () => {
           </a>
         </div>
       </div>
-      <h1>Nominate a person</h1>
+      <h2>Nominate a person</h2>
       <div className='nomineeSelectBox'>
         <div id='dialog2' className='triangle_down1' />
         <div className='arrowdown'>

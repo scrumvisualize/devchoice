@@ -127,7 +127,7 @@ const NominationList = () => {
             <div className="leftNavItem">
                 <a><Link to={'/dashboard'} className="nav-link"> <b>Dashboard</b> </Link></a>
             </div>
-            <h1 className="header"><b>Nomination List</b></h1>
+            <h2 className="header"><b>Nomination List</b></h2>
             <div className="wrap">
                 <div id="sidebar-left">
                     <th>Nominee name</th>

@@ -90,7 +90,7 @@ const ManageNominees = () => {
                     <a><Link to={'/dashboard'} className="nav-link"> <b>Dashboard</b> </Link></a>
                 </div>
                 <div className="upload_header">
-                    <h1>Upload Nominees</h1>
+                    <h2>Manage Nominees</h2>
                 </div>
 
                 <div className="managenominees">
