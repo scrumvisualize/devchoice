@@ -127,12 +127,10 @@ app.post("/service/nominateperson", async (req, res) => {
       //   res.status(200).json({ message: "Nomination submitted successfully !" });
       // }
     } else {
-      res
-        .status(202)
-        .json({
-          message:
-            "Sorry ! you have exceeded the maximum limit of nominations..!",
-        });
+      res.status(202).json({
+        message:
+          "Sorry ! you have exceeded the maximum limit of nominations..!",
+      });
     }
   } catch (e) {
     res.status(500).json({ fail: e.message });
@@ -258,11 +256,9 @@ app.post("/service/validatelink", async (req, res) => {
       let tokendata = tokenData;
       res.status(200).send(tokendata);
     } else {
-      res
-        .status(404)
-        .json({
-          message: "Nomination link expired, please create a new one..!",
-        });
+      res.status(404).json({
+        message: "Nomination link expired, please create a new one..!",
+      });
     }
   } catch (e) {
     res.status(500).json({ fail: e.message });
