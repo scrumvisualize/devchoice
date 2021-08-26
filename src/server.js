@@ -11,6 +11,7 @@ const linkTokenSchema = require("./server/models/linktoken");
 const nominationSchema = require("./server/models/nominations");
 const nominationWinnerSchema = require("./server/models/nominationwinner");
 const manageNomineesSchema = require("./server/models/managenominees");
+const nominationSessionSchema = require("./server/models/nominationsession");
 const axios = require("axios");
 const path = require("path");
 const cors = require("cors");
@@ -47,6 +48,7 @@ const LinkTokenModel = linkTokenSchema(sequelize, DataTypes);
 const NominationModel = nominationSchema(sequelize, DataTypes);
 const NominationWinnerModel = nominationWinnerSchema(sequelize, DataTypes);
 const ManageNomineesModel = manageNomineesSchema(sequelize, DataTypes);
+const NominationSessionModel = nominationSessionSchema(sequelize, DataTypes);
 
 app.use(
   cors({
@@ -89,6 +91,27 @@ var upload = multer({ storage: storage });
 //     file.mimetype === 'text/csv' ? cb(null, true) : cb(null, false)
 //   }
 // })
+
+
+/* This service is used to create valid nomination session and saved into NominationSession table */
+app.post("/service/createnominationsession", async (req, res) => {
+  try {
+    const userEmail = req.body.userEmail;
+    const startDate = req.body.selectedDateStart;
+    const endDate = req.body.selectedDateEnd;
+    const statusdata = req.body.expanded;
+    const createSession = await NominationSessionModel.create({
+      ...req.body,
+      useremail: userEmail,
+      nominationStartDate: startDate,
+      nominationEndDate: endDate,
+      status: statusdata
+    });
+    res.status(200).send(createSession);
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
 
 /* This service is used to submit a nomination and will display invalid link if token expired */
 app.post("/service/nominateperson", async (req, res) => {

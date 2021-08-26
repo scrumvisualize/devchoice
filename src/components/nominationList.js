@@ -161,9 +161,9 @@ const NominationList = () => {
           </Link>
         </a>
       </div>
-      <h1 className='header'>
+      <h2 className='header'>
         <b>Nomination List</b>
-      </h1>
+      </h2>
       <div className='wrap'>
         <div id='sidebar-left'>
           <th>Nominee name</th>
@@ -210,10 +210,10 @@ const NominationList = () => {
         aria-describedby='alert-dialog-description'
       >
         <DialogContent>
-          <DialogTitle id='alert-dialog-title'>Title</DialogTitle>
+          <DialogTitle id='alert-dialog-title'>Publish Winner</DialogTitle>
 
           <DialogContentText id='alert-dialog-description'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Winner name and details will be published to Mattermost..!
           </DialogContentText>
           <DialogContentText
             style={{ textAlign: "center", margin: "30px 0px" }}

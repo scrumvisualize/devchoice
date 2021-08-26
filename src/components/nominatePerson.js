@@ -356,7 +356,7 @@ const NominatePerson = () => {
         <DialogTitle id='alert-dialog-title'>{"Confirmation"}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            Nomination will be submitted, click on submit to confirm !
+            On click on submit button will submit the nomination..!
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -187,8 +187,8 @@ const ManageNominees = () => {
       const fetchData = async () => {
         try {
           const res = await Axios.put(
-            "http://localhost:8000/service/activeStatus",
-            "active"
+             "http://localhost:8000/service/activeStatus",
+              "active"
           );
           console.log(res.data);
         } catch (e) {
@@ -234,7 +234,7 @@ const ManageNominees = () => {
       const fetchData = async () => {
         try {
           const res = await Axios.post(
-            "http://localhost:8000/service/adminActivity",
+            "http://localhost:8000/service/createnominationsession",
             { userEmail, selectedDateStart, selectedDateEnd, expanded }
           );
           console.log(res.data);
@@ -243,7 +243,7 @@ const ManageNominees = () => {
         }
       };
       fetchData();
-      notify("Done", toast, "success");
+      notify("New session has been saved", toast, "success");
     }
   };
 
@@ -270,7 +270,7 @@ const ManageNominees = () => {
           </a>
         </div>
         <div className='upload_header'>
-          <h1>Upload Nominees</h1>
+          <h2>Manage Nominees</h2>
         </div>
 
         <div className='managenominees'>
@@ -311,8 +311,9 @@ const ManageNominees = () => {
           />
           <CardContent>
             <Typography variant='body2' color='textSecondary' component='p'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Admin activity section will allow admin user to create a valid
+              nomination session by clicking the toggle nomination button and saving
+              the details.
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
