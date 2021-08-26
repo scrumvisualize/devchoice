@@ -25,12 +25,62 @@ import Typography from "@material-ui/core/Typography";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  KeyboardTimePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import Button from "@material-ui/core/Button";
 import { notify } from "../utils/helperFunctions/HelperFunctions";
 import { toast } from "react-toastify";
+import { TextField, Icon } from "@material-ui/core";
 
+const clockSVG = (
+  <svg
+    version='1.1'
+    id='Capa_1'
+    xmlns='http://www.w3.org/2000/svg'
+    xmlnsXlink='http://www.w3.org/1999/xlink'
+    x='0px'
+    y='0px'
+    viewBox='0 0 612 612'
+    style={{ enableBackground: "new 0 0 512 512" }}
+    xmlSpace='preserve'
+    fill='#707070'
+  >
+    <g>
+      <g>
+        <path
+          d='M347.216,301.211l-71.387-53.54V138.609c0-10.966-8.864-19.83-19.83-19.83c-10.966,0-19.83,8.864-19.83,19.83v118.978
+c0,6.246,2.935,12.136,7.932,15.864l79.318,59.489c3.569,2.677,7.734,3.966,11.878,3.966c6.048,0,11.997-2.717,15.884-7.952
+C357.766,320.208,355.981,307.775,347.216,301.211z'
+        />
+      </g>
+    </g>
+    <g>
+      <g>
+        <path
+          d='M256,0C114.833,0,0,114.833,0,256s114.833,256,256,256s256-114.833,256-256S397.167,0,256,0z M256,472.341
+c-119.275,0-216.341-97.066-216.341-216.341S136.725,39.659,256,39.659c119.295,0,216.341,97.066,216.341,216.341
+S375.275,472.341,256,472.341z'
+        />
+      </g>
+    </g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+    <g></g>
+  </svg>
+);
 //materiel UI stuff
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -133,9 +183,35 @@ const ManageNominees = () => {
     if (event.target.checked) {
       setShowCalender(true);
       handleExpandClick(); //toogle expand Down/Up
+      //MN6-2
+      const fetchData = async () => {
+        try {
+          const res = await Axios.put(
+            "http://localhost:8000/service/activeStatus",
+            "active"
+          );
+          console.log(res.data);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      fetchData();
     } else {
       setShowCalender(false);
       handleExpandClick(); //toogle expand Down/Up
+      //MN6-5
+      const fetchData = async () => {
+        try {
+          const res = await Axios.put(
+            "http://localhost:8000/service/activeStatus",
+            "inactive"
+          );
+          console.log(res.data);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      fetchData();
     }
   };
   const onSave = () => {
@@ -147,11 +223,27 @@ const ManageNominees = () => {
     )
       notify("You must select a correct dates", toast, "error");
     else {
-      alert("Hello");
-      //axiosc all
+      //MN6-1
+      //Axios all
       //selectedDateStart =>Nomination start date
       //selectedDateEnd  =>Nomination end date
       //userEmail => loginUserEmail
+      // you can choose expanded or showCalender
+      //expanded= showCalender = true (active) => show calendar
+      //expanded= showCalender = false (inactive) => hide calendar
+      const fetchData = async () => {
+        try {
+          const res = await Axios.post(
+            "http://localhost:8000/service/adminActivity",
+            { userEmail, selectedDateStart, selectedDateEnd, expanded }
+          );
+          console.log(res.data);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      fetchData();
+      notify("Done", toast, "success");
     }
   };
 
@@ -244,9 +336,10 @@ const ManageNominees = () => {
               <div style={{ textAlign: "center" }}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <KeyboardDatePicker
+                    style={{ width: "50%" }}
                     disableToolbar
                     variant='inline'
-                    format='MM/dd/yyyy'
+                    format='yyyy/MM/dd'
                     margin='normal'
                     id='date-picker-inline'
                     label='Nomination start date'
@@ -256,10 +349,25 @@ const ManageNominees = () => {
                       "aria-label": "change date",
                     }}
                   />
+
+                  <KeyboardTimePicker
+                    style={{ width: "50%" }}
+                    margin='normal'
+                    id='time-picker'
+                    label='Nomination start time'
+                    value={selectedDateStart}
+                    onChange={handleDateStartChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "change time",
+                    }}
+                    keyboardIcon={<Icon>{clockSVG}</Icon>}
+                  />
+
                   <KeyboardDatePicker
+                    style={{ width: "50%" }}
                     disableToolbar
                     variant='inline'
-                    format='MM/dd/yyyy'
+                    format='yyyy/MM/dd'
                     margin='normal'
                     id='date-picker-inline'
                     label='Nomination End date'
@@ -268,6 +376,20 @@ const ManageNominees = () => {
                     KeyboardButtonProps={{
                       "aria-label": "change date",
                     }}
+                  />
+                  <KeyboardTimePicker
+                    style={{ width: "50%" }}
+                    margin='normal'
+                    id='time-picker'
+                    label='Nomination end time'
+                    value={`${selectedDateEnd
+                      .toISOString()
+                      .slice(0, 10)}T17:30`}
+                    onChange={handleDateEndChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "change time",
+                    }}
+                    keyboardIcon={<Icon>{clockSVG}</Icon>}
                   />
                 </MuiPickersUtilsProvider>
                 <Button

@@ -25,7 +25,7 @@ const port = 8000;
 
 const DB_NAME = "devchoice";
 const DB_PORT = 3306;
-const DB_USERNAME = "admin";//root
+const DB_USERNAME = "admin"; //root
 const DB_PASSWORD = "C@rnagieMe11on";
 const DB_HOST = "127.0.0.1";
 const DB_DIALECT = "mysql";
@@ -142,7 +142,15 @@ app.get("/service/submittednominations", async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
     const submittedNominationEmail = await NominationModel.findAll(
-      { attributes: ["id", "nomineeemail", "nomineeFirstName", "nomineeLastName", "nomineename"] },
+      {
+        attributes: [
+          "id",
+          "nomineeemail",
+          "nomineeFirstName",
+          "nomineeLastName",
+          "nomineename",
+        ],
+      },
       { where: { useremail: userEmail } }
     );
     res.status(200).send(submittedNominationEmail);
