@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         status: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.BOOLEAN,
             allowNull: false
         },
         createdAt: {

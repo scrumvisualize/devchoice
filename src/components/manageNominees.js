@@ -120,6 +120,7 @@ const ManageNominees = () => {
   );
   const [selectedDateEnd, setSelectedDateEnd] = useState(new Date(Date.now()));
   const [userEmail, setUserEmail] = useState("");
+  const [nomStatus, setNomStatus] = useState(false);
 
   const handleDateStartChange = (date) => {
     setSelectedDateStart(date);
@@ -130,6 +131,26 @@ const ManageNominees = () => {
   useEffect(() => {
     isMounted.current = true;
     return () => (isMounted.current = false);
+  }, []);
+
+  /* Getting the active status boolean as back in the below useEffect */
+  useEffect(() => {
+    const fetchData = async () => {
+      const email = localStorage.getItem("loginEmail");
+      try {
+        const res = await Axios.get("http://localhost:8000/service/activeStatus",
+            {email}
+        );
+        setNomStatus(res.data[0].status);
+        console.log("Get status back :" + res.data[0].status);
+        if (res.data[0].status){
+          setShowCalender(true);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {

@@ -26,8 +26,8 @@ const port = 8000;
 
 const DB_NAME = "devchoice";
 const DB_PORT = 3306;
-const DB_USERNAME = "root"; //root
-const DB_PASSWORD = "root";
+const DB_USERNAME = "admin"; //root
+const DB_PASSWORD = "C@rnagieMe11on";
 const DB_HOST = "127.0.0.1";
 const DB_DIALECT = "mysql";
 const DB_POOL = {
@@ -177,6 +177,34 @@ app.get("/service/submittednominations", async (req, res) => {
       { where: { useremail: userEmail } }
     );
     res.status(200).send(submittedNominationEmail);
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
+
+/* This service is used to post/update active status into table */
+app.put("/service/activeStatus", async (req, res) => {
+  try {
+    const activeStatus = req.body;
+    const updateSession = await NominationSessionModel.update({
+      ...req.body,
+      status: activeStatus
+    });
+    res.status(200).send(updateSession);
+  } catch (e) {
+    res.status(500).json({fail: e.message});
+  }
+});
+
+/* This service is used to get the active or inactive status */
+app.get("/service/activeStatus", async (req, res) => {
+  try {
+    const userEmail = req.body.userEmail;
+    const statusCheck = await NominationSessionModel.findAll(
+        { attributes: ["status"] },
+        { where: { useremail: userEmail } }
+    );
+    res.status(200).send(statusCheck);
   } catch (e) {
     res.status(500).json({ fail: e.message });
   }

@@ -78,7 +78,7 @@ const NominationsCountBox = (props) => (
                   marginTop: "30px",
                 }}
               >
-                No winners to display !
+                No nominations count to display !
               </Typography>
             )}
           </Grid>

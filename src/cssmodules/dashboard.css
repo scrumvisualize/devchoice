@@ -231,33 +231,34 @@ p {
 }
 
 .nominateIcon img{
-  width:40px;
-  border-radius: 20px;
+  width:50px;
+  border-radius: 25px;
   margin: 0px 0px 0px 10px;
   display: flex;
   float:left;
 }
-.oldwinner span{
-  height: 120px;
-  width: 150px;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: medium;
-  margin: 10px 20px 0px 10px !important;
-  font-family: 'GT Flexa Variable', 'GT Flexa', sans-serif;
-}
+
 
 .oldwinner{
-  height:50px;
-  border:solid 0.2px;
-  background-color: #7b76db;
-  border-color: #4741ab;
-  margin: 2px 0px 3px 0px;
+  height:50px !important;
+  width: 380px !important;
+  margin: 5px 0px 3px 10px !important;
+  border: solid 0.2px;
+  border-color: #edf1f5;
+}
+
+.oldwinner span{
+  height: 100px;
+  width: 250px !important;
+  color: #67696b;
+  font-size: 0.8rem;
+  margin: 10px 20px 0px 10px !important;
+  font-family: 'GT Flexa Variable', 'GT Flexa', sans-serif;
 }
 .winnerIcon img{
   width:40px;
   border-radius: 20px;
-  margin: 10px 0px 0px 10px !important;
+  margin: 3px 0px 0px 10px !important;
   display: flex;
   float:left;
   padding: 0px 10px 10px 10px;
@@ -267,7 +268,7 @@ p {
 }
 .name{
   padding-bottom: 10px;
-  margin: 30px 0px 0px 0px;
+  margin: 10px 0px 0px 10px !important;
 }
 
 @media only screen and (min-width: 1280px) {
