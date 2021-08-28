@@ -26,8 +26,8 @@ const port = 8000;
 
 const DB_NAME = "devchoice";
 const DB_PORT = 3306;
-const DB_USERNAME = "admin"; //root
-const DB_PASSWORD = "C@rnagieMe11on";
+const DB_USERNAME = "root"; //root
+const DB_PASSWORD = "root";
 const DB_HOST = "127.0.0.1";
 const DB_DIALECT = "mysql";
 const DB_POOL = {
