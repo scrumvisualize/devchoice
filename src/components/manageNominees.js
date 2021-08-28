@@ -187,8 +187,8 @@ const ManageNominees = () => {
       const fetchData = async () => {
         try {
           const res = await Axios.put(
-             "http://localhost:8000/service/activeStatus",
-              "active"
+            "http://localhost:8000/service/activeStatus",
+            "active"
           );
           console.log(res.data);
         } catch (e) {
@@ -312,8 +312,8 @@ const ManageNominees = () => {
           <CardContent>
             <Typography variant='body2' color='textSecondary' component='p'>
               Admin activity section will allow admin user to create a valid
-              nomination session by clicking the toggle nomination button and saving
-              the details.
+              nomination session by clicking the toggle nomination button and
+              saving the details.
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
