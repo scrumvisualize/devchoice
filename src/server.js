@@ -183,13 +183,70 @@ app.get("/service/submittednominations", async (req, res) => {
 });
 
 /* This service is used to post/update active status into table */
+// app.put("/service/activeStatus", async (req, res) => {
+//   try {
+//     const userEmail = req.body.userEmail;
+//     const activeStatus = req.body.status;
+//     // const updateSession = await NominationSessionModel.update(
+//     //     {
+//     //       ...req.body,
+//     //       status: activeStatus
+//     //     },
+//     //     { where: { useremail: userEmail } }
+//     // );
+//
+//     //  const latestRecord  = NominationSessionModel.findAll({
+//     //   attributes: [
+//     //     sequelize.fn('MAX', sequelize.col('nominationStartDate'))
+//     //   ]
+//     // });
+//    // var latestRecord = NominationSessionModel.findAll({
+//    //    where: {
+//    //      [Sequelize.Op.in]: [Sequelize.literal('SELECT * FROM devchoice.nominationsession order by nominationStartDate desc limit 1')]
+//    //    },
+//    //  });
+//
+//     var latestRecord = NominationSessionModel.findAll({
+//       limit:1,
+//       order:
+//        Sequelize.literal('nominationStartDate DESC')
+//       // order:[
+//       //     ['nominationStartDate', 'DESC']
+//       // ]
+//     })
+//
+//     const updateSession = await NominationSessionModel.update(
+//         {
+//           ...req.body,
+//           status:activeStatus
+//         },
+//         { where: { id: latestRecord[0].id } }
+//     );
+//     res.status(200).send(updateSession);
+//   } catch (e) {
+//     res.status(500).json({fail: e.message});
+//   }
+// });
+
 app.put("/service/activeStatus", async (req, res) => {
   try {
-    const activeStatus = req.body;
-    const updateSession = await NominationSessionModel.update({
-      ...req.body,
-      status: activeStatus
-    });
+ //const userEmail = req.body.userEmail;
+    const activeStatus = req.body.status;
+    // let latestRecord = NominationSessionModel.findAll({
+    //   attributes: [sequelize.fn('MAX', sequelize.col('nominationStartDate')), 'status', 'id']
+    // });
+    let latestRecord = await sequelize.query("SELECT nominationStartDate, status, id FROM devchoice.nominationsession ORDER BY nominationStartDate DESC LIMIT 1");
+
+
+
+ //var recordId = latestRecord;
+ console.log("Get id record:" + latestRecord);
+    const updateSession = await NominationSessionModel.update(
+        {status: activeStatus},
+        {
+          where: {id: latestRecord[0][0].id}
+        });
+    console.log("Getdateatus:" + updateSession);
     res.status(200).send(updateSession);
   } catch (e) {
     res.status(500).json({fail: e.message});

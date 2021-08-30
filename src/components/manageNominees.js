@@ -136,15 +136,21 @@ const ManageNominees = () => {
   /* Getting the active status boolean as back in the below useEffect */
   useEffect(() => {
     const fetchData = async () => {
-      const email = localStorage.getItem("loginEmail");
       try {
-        const res = await Axios.get("http://localhost:8000/service/activeStatus",
-            {email}
+        const userEmail = localStorage.getItem("loginEmail");
+        const res = await Axios.get(
+            "http://localhost:8000/service/activeStatus",
+            userEmail
         );
         setNomStatus(res.data[0].status);
         console.log("Get status back :" + res.data[0].status);
-        if (res.data[0].status){
-          setShowCalender(true);
+        if (res.data[0].status === "1"){
+          //setShowCalender(true);s
+          setExpanded(true);
+          setState({activateNomination: true});
+        } else {
+          setExpanded(false);
+          setState({activateNomination: false});
         }
       } catch (e) {
         console.log(e);
@@ -205,18 +211,19 @@ const ManageNominees = () => {
       setShowCalender(true);
       handleExpandClick(); //toogle expand Down/Up
       //MN6-2
-      const fetchData = async () => {
-        try {
-          const res = await Axios.put(
-            "http://localhost:8000/service/activeStatus",
-            "active"
-          );
-          console.log(res.data);
-        } catch (e) {
-          console.log(e);
-        }
-      };
-      fetchData();
+      // const fetchData = async () => {
+      //   const userEmail = localStorage.getItem("loginEmail");
+      //   try {
+      //     const res = await Axios.put(
+      //       "http://localhost:8000/service/activeStatus",
+      //         {userEmail, status: 1 }
+      //     );
+      //     console.log(res.data);
+      //   } catch (e) {
+      //     console.log(e);
+      //   }
+      // };
+      // fetchData();
     } else {
       setShowCalender(false);
       handleExpandClick(); //toogle expand Down/Up
@@ -225,7 +232,7 @@ const ManageNominees = () => {
         try {
           const res = await Axios.put(
             "http://localhost:8000/service/activeStatus",
-            "inactive"
+              {userEmail, status: 0 }
           );
           console.log(res.data);
         } catch (e) {
