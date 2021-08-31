@@ -11,7 +11,6 @@ import "./cssmodules/backers.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import DashboardOld from "./components/dashboard";
-
 import CreateLink from "./components/createLink";
 import Nominate from "./components/nominate";
 import NominatePerson from "./components/nominatePerson";
@@ -25,8 +24,10 @@ import Backers from "./components/backers";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./components/dashboard/theme";
 import GlobalStyles from "./components/dashboard/GlobalStyles";
+//import * as SessionData from "./components/sessionHandler"
 
 function App() {
+  //const sessionData = SessionData.checkValidSession();
   return (
     <Router>
       <div>

@@ -133,19 +133,20 @@ const ManageNominees = () => {
     return () => (isMounted.current = false);
   }, []);
 
-  /* Getting the active status boolean as back in the below useEffect */
+
+  /* Getting the active status status back which will decide to show calender to display or not in useEffect */
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userEmail = localStorage.getItem("loginEmail");
         const res = await Axios.get(
-            "http://localhost:8000/service/activeStatus",
-            userEmail
+            "http://localhost:8000/service/getActiveStatus",
+            { params: { userEmail }}
         );
-        setNomStatus(res.data[0].status);
-        console.log("Get status back :" + res.data[0].status);
-        if (res.data[0].status === "1"){
-          //setShowCalender(true);s
+        setNomStatus(res.data[0][0].status);
+        console.log("Get status back :" + res.data[0][0].status);
+        if (res.data[0][0].status == "1"){
+          //setShowCalender(true);
           setExpanded(true);
           setState({activateNomination: true});
         } else {
@@ -210,7 +211,7 @@ const ManageNominees = () => {
     if (event.target.checked) {
       setShowCalender(true);
       handleExpandClick(); //toogle expand Down/Up
-      //MN6-2
+      //MN6-2 // we are not sending the 1 status on toggle on since on save will add 1 status to column
       // const fetchData = async () => {
       //   const userEmail = localStorage.getItem("loginEmail");
       //   try {

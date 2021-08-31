@@ -134,25 +134,10 @@ app.post("/service/nominateperson", async (req, res) => {
     if (numberOfNominations <= 2) {
       const nominationData = await NominationModel.bulkCreate(data);
       res.status(200).json({ message: "Nomination submitted successfully !" });
-      // const sameEmail = await NominationModel.findAll({ attributes: ['nomineeemail'] }, { where: { useremail: userEmail } });
-      // if(sameEmail.length > 0){
-      //   for(var i=0; i <= sameEmail.length -1; i++){
-      //     if(sameEmail[i].nomineeemail ===  nomData[i].email[i]){
-      //       res.status(202).json({ message: "Already nominated ! can't nominate again !" });
-      //     }else {
-      //       const nominationData = await NominationModel.bulkCreate(data);
-      //       res.status(200).json({ message: "Nomination submitted successfully !" });
-      //     }
-      //   }
-      //   res.status(202).json({ message: "Sorry ! you have exceeded the maximum limit of nominations..!" });
-      // } else {
-      //   const nominationData = await NominationModel.bulkCreate(data);
-      //   res.status(200).json({ message: "Nomination submitted successfully !" });
-      // }
     } else {
       res.status(202).json({
         message:
-          "Sorry ! you have exceeded the maximum limit of nominations..!",
+          "Sorry ! You have exceeded the maximum limit of nominations!",
       });
     }
   } catch (e) {
@@ -182,90 +167,39 @@ app.get("/service/submittednominations", async (req, res) => {
   }
 });
 
-/* This service is used to post/update active status into table */
-// app.put("/service/activeStatus", async (req, res) => {
-//   try {
-//     const userEmail = req.body.userEmail;
-//     const activeStatus = req.body.status;
-//     // const updateSession = await NominationSessionModel.update(
-//     //     {
-//     //       ...req.body,
-//     //       status: activeStatus
-//     //     },
-//     //     { where: { useremail: userEmail } }
-//     // );
-//
-//     //  const latestRecord  = NominationSessionModel.findAll({
-//     //   attributes: [
-//     //     sequelize.fn('MAX', sequelize.col('nominationStartDate'))
-//     //   ]
-//     // });
-//    // var latestRecord = NominationSessionModel.findAll({
-//    //    where: {
-//    //      [Sequelize.Op.in]: [Sequelize.literal('SELECT * FROM devchoice.nominationsession order by nominationStartDate desc limit 1')]
-//    //    },
-//    //  });
-//
-//     var latestRecord = NominationSessionModel.findAll({
-//       limit:1,
-//       order:
-//        Sequelize.literal('nominationStartDate DESC')
-//       // order:[
-//       //     ['nominationStartDate', 'DESC']
-//       // ]
-//     })
-//
-//     const updateSession = await NominationSessionModel.update(
-//         {
-//           ...req.body,
-//           status:activeStatus
-//         },
-//         { where: { id: latestRecord[0].id } }
-//     );
-//     res.status(200).send(updateSession);
-//   } catch (e) {
-//     res.status(500).json({fail: e.message});
-//   }
-// });
-
+/* This service is used to post/update active status 1 or 0 into the nomination session table */
 app.put("/service/activeStatus", async (req, res) => {
   try {
- //const userEmail = req.body.userEmail;
     const activeStatus = req.body.status;
-    // let latestRecord = NominationSessionModel.findAll({
-    //   attributes: [sequelize.fn('MAX', sequelize.col('nominationStartDate')), 'status', 'id']
-    // });
-    let latestRecord = await sequelize.query("SELECT nominationStartDate, status, id FROM devchoice.nominationsession ORDER BY nominationStartDate DESC LIMIT 1");
-
-
-
- //var recordId = latestRecord;
- console.log("Get id record:" + latestRecord);
+    let latestRecord = await sequelize.query("SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;");
+    console.log("Get id record:" + latestRecord);
     const updateSession = await NominationSessionModel.update(
         {status: activeStatus},
         {
           where: {id: latestRecord[0][0].id}
         });
-    console.log("Getdateatus:" + updateSession);
+    console.log("Get update status:" + updateSession);
     res.status(200).send(updateSession);
   } catch (e) {
     res.status(500).json({fail: e.message});
   }
 });
 
-/* This service is used to get the active or inactive status */
-app.get("/service/activeStatus", async (req, res) => {
+
+
+/* This service is used to get the 1 or 0 from nomination session table and pass back to frontend */
+app.get("/service/getActiveStatus", async (req, res) => {
   try {
-    const userEmail = req.body.userEmail;
-    const statusCheck = await NominationSessionModel.findAll(
-        { attributes: ["status"] },
-        { where: { useremail: userEmail } }
-    );
-    res.status(200).send(statusCheck);
+    let latestRecord = await sequelize.query("SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;");
+    const userEmail = req.query.userEmail;
+    let recordId = latestRecord[0][0].id;
+    const status = await sequelize.query(`SELECT status, id FROM devchoice.nominationsession where id=${recordId}`);
+    res.status(200).send(status);
   } catch (e) {
     res.status(500).json({ fail: e.message });
   }
 });
+
 
 /* This service is used to display list of all nominations in the Dashboard under Recent nominations section: */
 app.get("/service/nominations", async (req, res) => {
