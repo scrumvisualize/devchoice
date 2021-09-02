@@ -43,32 +43,37 @@ const NominatedMembersBox = (props) => (
       onChange={props.handleChange}
     />
     <Divider />
+    {console.log(props.searchResults.reverse())}
+
     <List>
       {!props.nominationList?.length && (
         <div className='dashboarddata'>Sorry, no nominations to display !</div>
       )}
-      {props.searchResults.map((data, i) => (
-        <ListItem divider={i < props.searchResults.length - 1} key={data.id}>
-          <ListItemAvatar>
-            <img
-              alt={data.nomineename}
-              src='/images/nominate_icon.PNG'
-              style={{
-                height: 48,
-                width: 48,
-              }}
+      {props.searchResults
+        .slice(0)
+        .reverse()
+        .map((data, i) => (
+          <ListItem divider={i < props.searchResults.length - 1} key={data.id}>
+            <ListItemAvatar>
+              <img
+                alt={data.nomineename}
+                src='/images/nominate_icon.PNG'
+                style={{
+                  height: 48,
+                  width: 48,
+                }}
+              />
+            </ListItemAvatar>
+            <ListItemText
+              primary={data.nomineename}
+              secondary={
+                data.reason.length <= 50
+                  ? data.reason
+                  : `${data.reason.substr(0, 50)}...`
+              }
             />
-          </ListItemAvatar>
-          <ListItemText
-            primary={data.nomineename}
-            secondary={
-              data.reason.length <= 50
-                ? data.reason
-                : `${data.reason.substr(0, 50)}...`
-            }
-          />
-        </ListItem>
-      ))}
+          </ListItem>
+        ))}
     </List>
     <Divider />
     <Box

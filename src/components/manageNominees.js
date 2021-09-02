@@ -118,7 +118,10 @@ const ManageNominees = () => {
   const [selectedDateStart, setSelectedDateStart] = useState(
     new Date(Date.now())
   );
-  const [selectedDateEnd, setSelectedDateEnd] = useState(new Date(Date.now()));
+  const [selectedDateEnd, setSelectedDateEnd] = useState(
+    new Date(Date.now()).toISOString().slice(0, 10) + "T17:30"
+  );
+
   const [userEmail, setUserEmail] = useState("");
   const [nomStatus, setNomStatus] = useState(false);
 
@@ -133,25 +136,24 @@ const ManageNominees = () => {
     return () => (isMounted.current = false);
   }, []);
 
-
   /* Getting the active status status back which will decide to show calender to display or not in useEffect */
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userEmail = localStorage.getItem("loginEmail");
         const res = await Axios.get(
-            "http://localhost:8000/service/getActiveStatus",
-            { params: { userEmail }}
+          "http://localhost:8000/service/getActiveStatus",
+          { params: { userEmail } }
         );
         setNomStatus(res.data[0][0].status);
         console.log("Get status back :" + res.data[0][0].status);
-        if (res.data[0][0].status == "1"){
+        if (res.data[0][0].status == "1") {
           //setShowCalender(true);
           setExpanded(true);
-          setState({activateNomination: true});
+          setState({ activateNomination: true });
         } else {
           setExpanded(false);
-          setState({activateNomination: false});
+          setState({ activateNomination: false });
         }
       } catch (e) {
         console.log(e);
@@ -233,7 +235,7 @@ const ManageNominees = () => {
         try {
           const res = await Axios.put(
             "http://localhost:8000/service/activeStatus",
-              {userEmail, status: 0 }
+            { userEmail, status: 0 }
           );
           console.log(res.data);
         } catch (e) {
@@ -412,9 +414,7 @@ const ManageNominees = () => {
                     margin='normal'
                     id='time-picker'
                     label='Nomination end time'
-                    value={`${selectedDateEnd
-                      .toISOString()
-                      .slice(0, 10)}T17:30`}
+                    value={selectedDateEnd}
                     onChange={handleDateEndChange}
                     KeyboardButtonProps={{
                       "aria-label": "change time",

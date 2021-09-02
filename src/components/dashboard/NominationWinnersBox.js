@@ -32,6 +32,19 @@ const NominationWinnersBox = (props) => (
               No winners to display !
             </Typography>
           )}
+        </Grid>
+        <Grid item>
+          <Avatar
+            style={{
+              backgroundColor: red[600],
+              height: 56,
+              width: 56,
+            }}
+          >
+            <AssignmentIndIcon />
+          </Avatar>
+        </Grid>
+        <Grid item>
           {props.displayWinner
             .sort((a, b) => moment(b.createdAt) - moment(a.createdAt))
             .map((data) => (
@@ -47,17 +60,6 @@ const NominationWinnersBox = (props) => (
                 </div>
               </div>
             ))}
-        </Grid>
-        <Grid item>
-          <Avatar
-            style={{
-              backgroundColor: red[600],
-              height: 56,
-              width: 56,
-            }}
-          >
-            <AssignmentIndIcon />
-          </Avatar>
         </Grid>
       </Grid>
     </CardContent>

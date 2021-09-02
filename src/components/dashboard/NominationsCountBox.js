@@ -121,7 +121,22 @@ const NominationsCountBox = (props) => (
               <Typography color='textPrimary' variant='body1'>
                 {data.nomineename}
               </Typography>
-              <Typography variant='h2'>{data.EmailCount}</Typography>
+
+              <Typography
+                variant='h2'
+                style={{
+                  color: "#fff",
+                  backgroundColor: "rgb(25, 118, 210)",
+                  width: "30px",
+                  height: "28px",
+                  top: "5px",
+                  borderRadius: "50%",
+                }}
+              >
+                <span style={{ position: "relative", top: "5px" }}>
+                  {data.EmailCount}
+                </span>
+              </Typography>
             </Box>
           ))}
         </Box>
