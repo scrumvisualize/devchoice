@@ -49,7 +49,7 @@ const NominatePerson = () => {
     if (selectedOption.length === 0 && showOptions) {
       //if we want submit without choosing a nomniation & not achieve maximum limit (we used showOptions to know if we got the limit or no)
 
-      notify("You must select a nomination", toast, "error");
+      notify("You must select a nominee before you submit !", toast, "error");
       updateList[0] = false;
       setValidationMsgs(updateList);
     } else {
@@ -83,7 +83,7 @@ const NominatePerson = () => {
       });
       if (!ok) {
         notify(
-          "Reason for nomination is required & less than 245 characters!",
+          "Reason for nomination is required or reason should be less than 245 characters..!",
           toast,
           "error"
         );
@@ -109,6 +109,7 @@ const NominatePerson = () => {
     const userEmail = localStorage.getItem("loginEmail");
     setUserEmail(userEmail);
   });
+
 
   useEffect(() => {
     const fetchData = async () => {

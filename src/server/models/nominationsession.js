@@ -37,5 +37,13 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'nominationsession'
     });
 
+    nominationsession.associate = function (models) {
+        // associations has been defined here
+        nominationsession.hasOne(models.nominations, {
+            foreignKey: 'session_id',
+            targetKey: 'id',
+            onDelete: "CASCADE"
+        });
+    };
     return nominationsession;
 };

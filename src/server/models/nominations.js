@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
+        session_id: {
+            type: DataTypes.INTEGER(18)
+        },
         useremail: {
             type: DataTypes.STRING(150),
             allowNull: false
@@ -38,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER(10),
             allowNull: true
         },
-		createdAt: {
+        createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW
@@ -52,6 +55,15 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         tableName: 'nominations'
     });
+
+    nominations.associate = function (models) {
+        // session_id set as foreignKey in the nominations table -> id of nominationsession table
+        nominations.belongsTo(models.nominationsession, {
+            foreignKey: 'session_id',
+            sourceKey: 'id',
+            onDelete: "CASCADE"
+        });
+    };
 
     return nominations;
 };

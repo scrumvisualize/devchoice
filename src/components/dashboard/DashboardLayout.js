@@ -62,6 +62,7 @@ const DashboardLayout = () => {
   const [open, setOpen] = useState(false);
   const [nameText, setNameText] = useState("");
   const [emailText, setEmailText] = useState("");
+  const [enableNominatePersonTab, setEnableNominatePersonTab] = useState("");
 
   const isMounted = useRef(false);
   const history = useHistory();

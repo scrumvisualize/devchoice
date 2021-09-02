@@ -119,7 +119,10 @@ app.post("/service/nominateperson", async (req, res) => {
     const userEmail = req.body.userEmail;
     const nomData = req.body.nomRegister;
 
+    let latestRecord = await sequelize.query("SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;");
+
     const data = nomData.map((item) => ({
+      session_id: latestRecord[0][0].id,
       useremail: userEmail,
       nomineeemail: item.email,
       nomineeFirstName: item.name,
@@ -204,16 +207,23 @@ app.get("/service/getActiveStatus", async (req, res) => {
 /* This service is used to display list of all nominations in the Dashboard under Recent nominations section: */
 app.get("/service/nominations", async (req, res) => {
   try {
-    const nominationData = await NominationModel.findAll({
-      attributes: [
-        "nomineeemail",
-        "nomineename",
-        "nomineeteam",
-        "reason",
-        "createdAt",
-      ],
-    });
-    res.status(200).send(nominationData);
+    let sessionId = await sequelize.query("SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;");
+    let nominationSessionId = await sequelize.query("SELECT distinct nominations.session_id FROM nominations LEFT JOIN nominationsession ON nominations.session_id = nominationsession.id;");
+    if(sessionId[0][0].status == "1" && sessionId[0][0].id == nominationSessionId[0][0].session_id ){
+      const nominationData = await NominationModel.findAll({
+            attributes: [
+              "nomineeemail",
+              "nomineeFirstName",
+              "nomineeLastName",
+              "nomineename",
+              "nomineeteam",
+              "reason",
+              "createdAt",
+            ]},
+          { where: { id: sessionId } }
+      );
+      res.status(200).send(nominationData);
+    }
   } catch (e) {
     res.status(500).json({ fail: e.message });
   }
