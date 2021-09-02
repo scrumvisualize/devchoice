@@ -14,6 +14,7 @@ import NominationWinnersBox from "./NominationWinnersBox";
 import TeamwiseNominationsBox from "./TeamwiseNominationsBox";
 import NominationsCountBox from "./NominationsCountBox";
 import NominatedMembersBox from "./NominatedMembersBox";
+import ChartBox from "./ChartBox";
 
 const moment = require("moment");
 
@@ -197,6 +198,7 @@ const DashboardLayout = () => {
       }
     };
     fetchData();
+    setOpen(false);
   };
 
   const onLogoutSuccess = (res) => {
@@ -244,10 +246,10 @@ const DashboardLayout = () => {
             >
               <Container maxWidth={false}>
                 <Grid container spacing={3}>
-                  <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Grid item lg={4} sm={12} xl={4} xs={12}>
                     <NominationWinnersBox displayWinner={displayWinner} />
                   </Grid>
-                  <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Grid item lg={4} sm={12} xl={4} xs={12}>
                     <NominationsCountBox
                       nominationCount={nominationCount}
                       openDialog={() => setOpen(true)}
@@ -260,10 +262,10 @@ const DashboardLayout = () => {
                     />
                     {console.log(open)}
                   </Grid>
-                  <Grid item lg={4} sm={6} xl={4} xs={12}>
+                  <Grid item lg={4} sm={12} xl={4} xs={12}>
                     <TeamwiseNominationsBox teams={teams} />
                   </Grid>
-                  <Grid item lg={4} md={6} xl={4} xs={12}>
+                  <Grid item lg={4} md={12} xl={4} xs={12}>
                     <NominatedMembersBox
                       nominationList={nominationList}
                       searchResults={searchResults}
@@ -271,6 +273,9 @@ const DashboardLayout = () => {
                       handleChange={handleChange}
                       sx={{ height: "100%" }}
                     />
+                  </Grid>
+                  <Grid item lg={8} sm={12} xl={8} xs={12}>
+                    <ChartBox />
                   </Grid>
                 </Grid>
               </Container>

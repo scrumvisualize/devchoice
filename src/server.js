@@ -26,8 +26,8 @@ const port = 8000;
 
 const DB_NAME = "devchoice";
 const DB_PORT = 3306;
-const DB_USERNAME = "admin"; //root
-const DB_PASSWORD = "C@rnagieMe11on";
+const DB_USERNAME = "root"; //admin
+const DB_PASSWORD = "root"; //C@rnagieMe11on
 const DB_HOST = "127.0.0.1";
 const DB_DIALECT = "mysql";
 const DB_POOL = {
@@ -92,7 +92,6 @@ var upload = multer({ storage: storage });
 //   }
 // })
 
-
 /* This service is used to create valid nomination session and saved into NominationSession table */
 app.post("/service/createnominationsession", async (req, res) => {
   try {
@@ -105,7 +104,7 @@ app.post("/service/createnominationsession", async (req, res) => {
       useremail: userEmail,
       nominationStartDate: startDate,
       nominationEndDate: endDate,
-      status: statusdata
+      status: statusdata,
     });
     res.status(200).send(createSession);
   } catch (e) {
@@ -139,8 +138,7 @@ app.post("/service/nominateperson", async (req, res) => {
       res.status(200).json({ message: "Nomination submitted successfully !" });
     } else {
       res.status(202).json({
-        message:
-          "Sorry ! You have exceeded the maximum limit of nominations!",
+        message: "Sorry ! You have exceeded the maximum limit of nominations!",
       });
     }
   } catch (e) {
@@ -174,35 +172,39 @@ app.get("/service/submittednominations", async (req, res) => {
 app.put("/service/activeStatus", async (req, res) => {
   try {
     const activeStatus = req.body.status;
-    let latestRecord = await sequelize.query("SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;");
+    let latestRecord = await sequelize.query(
+      "SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;"
+    );
     console.log("Get id record:" + latestRecord);
     const updateSession = await NominationSessionModel.update(
-        {status: activeStatus},
-        {
-          where: {id: latestRecord[0][0].id}
-        });
+      { status: activeStatus },
+      {
+        where: { id: latestRecord[0][0].id },
+      }
+    );
     console.log("Get update status:" + updateSession);
     res.status(200).send(updateSession);
-  } catch (e) {
-    res.status(500).json({fail: e.message});
-  }
-});
-
-
-
-/* This service is used to get the 1 or 0 from nomination session table and pass back to frontend */
-app.get("/service/getActiveStatus", async (req, res) => {
-  try {
-    let latestRecord = await sequelize.query("SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;");
-    const userEmail = req.query.userEmail;
-    let recordId = latestRecord[0][0].id;
-    const status = await sequelize.query(`SELECT status, id FROM devchoice.nominationsession where id=${recordId}`);
-    res.status(200).send(status);
   } catch (e) {
     res.status(500).json({ fail: e.message });
   }
 });
 
+/* This service is used to get the 1 or 0 from nomination session table and pass back to frontend */
+app.get("/service/getActiveStatus", async (req, res) => {
+  try {
+    let latestRecord = await sequelize.query(
+      "SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;"
+    );
+    const userEmail = req.query.userEmail;
+    let recordId = latestRecord[0][0].id;
+    const status = await sequelize.query(
+      `SELECT status, id FROM devchoice.nominationsession where id=${recordId}`
+    );
+    res.status(200).send(status);
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
 
 /* This service is used to display list of all nominations in the Dashboard under Recent nominations section: */
 app.get("/service/nominations", async (req, res) => {
