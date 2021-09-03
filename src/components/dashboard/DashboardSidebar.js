@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
@@ -21,6 +21,7 @@ import {
   Users as UsersIcon,
 } from "react-feather";
 import NavItem from "./NavItem";
+import Axios from "axios";
 
 const items = [
   {
@@ -57,7 +58,24 @@ const items = [
 
 const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
   const location = useLocation();
+  const [enableNominatePersonTab, setEnableNominatePersonTab] = useState("");
 
+  /* If the active status getting is 0, disable Nominate Person link else if it is 1 show Nominate Person link in useEffect */
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userEmail = localStorage.getItem("loginEmail");
+        const res = await Axios.get(
+          "http://localhost:8000/service/getActiveStatus",
+          { params: { userEmail } }
+        );
+        setEnableNominatePersonTab(res.data[0][0].status);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
@@ -88,14 +106,22 @@ const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
       <Divider />
       <Box style={{ padding: "16px" }}>
         <List>
-          {items.map((item) => (
-            <NavItem
-              href={item.href}
-              key={item.title}
-              title={item.title}
-              icon={item.icon}
-            />
-          ))}
+          {items.map((item) => {
+            if (
+              enableNominatePersonTab === "0" &&
+              item.title == "Nominate Person"
+            )
+              return <div></div>;
+            else
+              return (
+                <NavItem
+                  href={item.href}
+                  key={item.title}
+                  title={item.title}
+                  icon={item.icon}
+                />
+              );
+          })}
         </List>
       </Box>
       <Box sx={{ flexGrow: 1 }} />
