@@ -108,7 +108,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
         <List>
           {items.map((item) => {
             if (
-              enableNominatePersonTab === "0" &&
+              enableNominatePersonTab == "0" &&
               item.title == "Nominate Person"
             )
               return <div></div>;

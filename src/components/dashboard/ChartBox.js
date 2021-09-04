@@ -13,7 +13,8 @@ import CodeIcon from "@material-ui/icons/Code";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import GroupWorkIcon from "@material-ui/icons/GroupWork";
 import { Line } from "react-chartjs-2";
-import { useState } from "react";
+import {useEffect, useState} from "react";
+import Axios from "axios";
 
 const options = {
   scales: {
@@ -192,15 +193,31 @@ const ChartBox = (props) => {
       30,
     ]);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await Axios.get(
+            "http://localhost:8000/service/nominationchartdata"
+        );
+        const data = res.data;
+        setCount(data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
+
   const handleClick6Month = () => {
     setChartPeriod("6month");
     setLabels(month);
-    setCount([162, 19, 50, 5, 120, 80]);
+    setCount(count);
   };
   const handleClickYear = () => {
     setChartPeriod("1year");
     setLabels(year);
-    setCount([120, 10, 0, 50, 100, 70, 10, 90, 120, 80, 0, 100]);
+    setCount([2, 10, 5, 8, 12, 15, 10]);
   };
   return (
     <Card style={{ height: "100%" }} {...props}>

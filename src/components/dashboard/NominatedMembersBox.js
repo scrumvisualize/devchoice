@@ -65,7 +65,7 @@ const NominatedMembersBox = (props) => (
               />
             </ListItemAvatar>
             <ListItemText
-              primary={data.nomineename}
+              primary={data.nomineeFirstName + ' ' + data.nomineeLastName}
               secondary={
                 data.reason.length <= 50
                   ? data.reason

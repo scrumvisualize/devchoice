@@ -260,6 +260,17 @@ app.get("/service/teamwisenomination", async (req, res) => {
   }
 });
 
+
+/* This service is used to display nomination data in chart ie month or year wise data : */
+app.get("/service/nominationchartdata", async (req, res) => {
+  try {
+    let data = await sequelize.query("SELECT COUNT(*), createdAt, session_id FROM devchoice.nominations group by session_id;");
+    res.status(200).send(data);
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
+
 /* This service is used to create and update token data while creating a link */
 app.put("/service/createlink", async (req, res) => {
   try {
