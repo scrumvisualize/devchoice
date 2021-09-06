@@ -115,10 +115,12 @@ const NominatePerson = () => {
     const fetchData = async () => {
       const userEmail = localStorage.getItem("loginEmail");
       try {
-        const res = await Axios.get(
+       let res = [];
+        res = await Axios.get(
           "http://localhost:8000/service/submittednominations",
           { userEmail }
         );
+
         const data1 = res.data;
         setSubmittedNominees(data1);
         setMaxOptions(3 - data1.length); //A.H-making maxOption dynamic because we don't the length of data from submittednominations
@@ -137,9 +139,7 @@ const NominatePerson = () => {
           "http://localhost:8000/service/nomineeslist"
         );
         const data1 = res.data;
-
         setOption(data1);
-
         console.log("Get the list of nomineeslist :" + JSON.stringify(data1));
       } catch (e) {
         console.log(e);

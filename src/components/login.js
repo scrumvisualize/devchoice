@@ -39,37 +39,20 @@ const Login = () => {
     return (
         <div className="App">
             <h1>Login</h1>
-            <div className="container">
-                <div className="column">
-                    <div className="rowspan">
-                        <button onClick={signIn}>
-                            <img src="images/google.png" className="loginG"/>
-                            <span className="loginText">Sign in</span>
-                        </button>
-
-                    </div>
-                </div>
-                <div className="column">
-                    <div className="button">
-                        <img src="images/onlineaward.jpg" className="loginAward"/>
-                    </div>
-
+            <div className="loginForm part1">
+                <button onClick={signIn}>
+                    <img src="images/google.png" className="loginG"/>
+                    <span className="loginText">Sign in</span>
+                </button><br></br><br></br>
+                <div className="loginDevchoice">
                 </div>
             </div>
-            {/*<div className="loginForm part1">*/}
-            {/*    <button onClick={signIn}>*/}
-            {/*        <img src="images/google.png" className="loginG"/>*/}
-            {/*        <span className="loginText">Sign in</span>*/}
-            {/*    </button><br></br><br></br>*/}
-            {/*    <div className="loginDevchoice">*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<div loginForm part2>*/}
-            {/*    <img src="images/devchoice.PNG" className="loginAward"/>*/}
-            {/*    /!*<span className="loginbanner">*!/*/}
-            {/*    /!*    <pre>Dev Choice Awards !</pre>*!/*/}
-            {/*    /!*</span>*!/*/}
-            {/*</div>*/}
+            <div loginForm part2>
+                <img src="images/onlineaward.jpg" className="loginAward"/>
+                {/*<span className="loginbanner">*/}
+                {/*    <pre>Dev Choice Awards !</pre>*/}
+                {/*</span>*/}
+            </div>
         </div>
 
     )

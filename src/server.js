@@ -6,7 +6,7 @@ const csv = require("csv-parser");
 const fs = require("fs");
 const results = [];
 require("dotenv").config();
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes, QueryTypes} = require("sequelize");
 const linkTokenSchema = require("./server/models/linktoken");
 const nominationSchema = require("./server/models/nominations");
 const nominationWinnerSchema = require("./server/models/nominationwinner");
@@ -26,8 +26,8 @@ const port = 8000;
 
 const DB_NAME = "devchoice";
 const DB_PORT = 3306;
-const DB_USERNAME = "root"; //admin
-const DB_PASSWORD = "root"; //C@rnagieMe11on
+const DB_USERNAME = "admin"; //admin
+const DB_PASSWORD = "C@rnagieMe11on"; //C@rnagieMe11on
 const DB_HOST = "127.0.0.1";
 const DB_DIALECT = "mysql";
 const DB_POOL = {
@@ -150,18 +150,24 @@ app.post("/service/nominateperson", async (req, res) => {
 app.get("/service/submittednominations", async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
-    const submittedNominationEmail = await NominationModel.findAll(
-      {
-        attributes: [
-          "id",
-          "nomineeemail",
-          "nomineeFirstName",
-          "nomineeLastName",
-          "nomineename",
-        ],
-      },
-      { where: { useremail: userEmail } }
-    );
+    // const submittedNominationEmail = await NominationModel.findAll(
+    //   {
+    //     attributes: [
+    //       "id",
+    //       "nomineeemail",
+    //       "nomineeFirstName",
+    //       "nomineeLastName",
+    //       "nomineename",
+    //     ],
+    //   },
+    //   {
+    //     where: { useremail: userEmail }
+    //   }
+    // );
+    let submittedNominationEmail = 0;
+    submittedNominationEmail = await sequelize.query(
+        `select * from devchoice.nominations where useremail=userEmail and session_id=(select max(id) from devchoice.nominationsession);`
+    ,{ type: QueryTypes.SELECT});
     res.status(200).send(submittedNominationEmail);
   } catch (e) {
     res.status(500).json({ fail: e.message });
