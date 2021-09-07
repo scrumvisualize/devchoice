@@ -119,7 +119,7 @@ app.post("/service/nominateperson", async (req, res) => {
     const nomData = req.body.nomRegister;
 
     let latestRecord = await sequelize.query("SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;");
-
+    let sessionid = latestRecord[0][0].id;
     const data = nomData.map((item) => ({
       session_id: latestRecord[0][0].id,
       useremail: userEmail,
@@ -130,9 +130,14 @@ app.post("/service/nominateperson", async (req, res) => {
       nomineeteam: item.team,
       reason: item.reason,
     }));
+    // trying to fix the issue: nominate a person based on latest session id - by vin 07/09
     const numberOfNominations = await NominationModel.count({
-      where: { useremail: userEmail },
+      attributes: [
+        "useremail"
+      ],
+      where: { session_id: sessionid },
     });
+
     if (numberOfNominations <= 2) {
       const nominationData = await NominationModel.bulkCreate(data);
       res.status(200).json({ message: "Nomination submitted successfully !" });
@@ -164,6 +169,8 @@ app.get("/service/submittednominations", async (req, res) => {
     //     where: { useremail: userEmail }
     //   }
     // );
+
+    //trying to fix preselected records displaying in dropdown for old nominations: vin 07/09
     let submittedNominationEmail = 0;
     submittedNominationEmail = await sequelize.query(
         `select * from devchoice.nominations where useremail=userEmail and session_id=(select max(id) from devchoice.nominationsession);`
@@ -215,23 +222,28 @@ app.get("/service/getActiveStatus", async (req, res) => {
 /* This service is used to display list of all nominations in the Dashboard under Recent nominations section: */
 app.get("/service/nominations", async (req, res) => {
   try {
-    let sessionId = await sequelize.query("SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;");
-    let nominationSessionId = await sequelize.query("SELECT distinct nominations.session_id FROM nominations LEFT JOIN nominationsession ON nominations.session_id = nominationsession.id;");
-    if(sessionId[0][0].status == "1" && sessionId[0][0].id == nominationSessionId[0][0].session_id ){
-      const nominationData = await NominationModel.findAll({
-            attributes: [
-              "nomineeemail",
-              "nomineeFirstName",
-              "nomineeLastName",
-              "nomineename",
-              "nomineeteam",
-              "reason",
-              "createdAt",
-            ]},
-          { where: { id: sessionId } }
-      );
-      res.status(200).send(nominationData);
-    }
+    // let sessionId = await sequelize.query("SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;");
+    // let nominationSessionId = await sequelize.query("SELECT distinct nominations.session_id FROM nominations LEFT JOIN nominationsession ON nominations.session_id = nominationsession.id;");
+    // if(sessionId[0][0].status == "1" && sessionId[0][0].id == nominationSessionId[0][0].session_id ){
+    //   const nominationData = await NominationModel.findAll({
+    //         attributes: [
+    //           "nomineeemail",
+    //           "nomineeFirstName",
+    //           "nomineeLastName",
+    //           "nomineename",
+    //           "nomineeteam",
+    //           "reason",
+    //           "createdAt",
+    //         ]},
+    //       { where: { id: sessionId } }
+    //   );
+    //   res.status(200).send(nominationData);
+    // }
+
+    // trying to fix the issue: 07/09 -vinod - I care to display the nominations for the latest session id only--
+    let nominationData = await sequelize.query("select nomineeemail, nomineeFirstName, nomineeLastName, nomineename, nomineeteam, reason, createdAt from devchoice.nominations where session_id=(select max(id) from devchoice.nominationsession);"
+    ,{ type: QueryTypes.SELECT});
+    res.status(200).send(nominationData);
   } catch (e) {
     res.status(500).json({ fail: e.message });
   }

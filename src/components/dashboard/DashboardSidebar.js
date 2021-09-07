@@ -19,6 +19,7 @@ import {
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
+  Eye as NomView
 } from "react-feather";
 import NavItem from "./NavItem";
 import Axios from "axios";
@@ -48,6 +49,11 @@ const items = [
     href: "/nominatePerson",
     icon: SettingsIcon,
     title: "Nominate Person",
+  },
+  {
+    href: "/nominationView",
+    icon: NomView,
+    title: "Nomination View",
   },
   {
     href: "/backers",

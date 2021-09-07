@@ -1,0 +1,20 @@
+.nominationRecord{
+    width:500px;
+    height:70px;
+    background-color: #3f9eeb !important;
+    color: #fff !important;
+    margin: 10px 0px 5px 100px;
+    border-radius: 5px;
+}
+.nominationRecord img{
+    width:50px !important;
+    height:50px !important;
+    border-radius: 25px;
+}
+.datarecord{
+    margin:0px 0px 0px 20px;
+    text-align: center;
+}
+.likeButton{
+    margin-left: 80px;
+}
