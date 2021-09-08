@@ -119,7 +119,7 @@ const NominationsCountBox = (props) => (
             >
               <PersonAddIcon color='action' />
               <Typography color='textPrimary' variant='body1'>
-                {data.nomineename}
+                {data.nomineeFirstName + ' ' + data.nomineeLastName }
               </Typography>
 
               <Typography

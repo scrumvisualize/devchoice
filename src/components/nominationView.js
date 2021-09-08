@@ -58,16 +58,18 @@ const NominationView = () => {
                             <img src="images/trophy1.png"/>
                             <span key={item.nomineeFirstName} className="datarecord">{item.nomineeFirstName}</span>
                             <span key={item.nomineeLastName} className="datarecord">{item.nomineeLastName}</span>
-                            <span key={item.reason} className="datarecord">{item.reason}</span>
+                            <span key={item.reason} className="datarecord">{
+                                item.reason.length <= 20
+                                    ? item.reason
+                                    : `${item.reason.substr(0, 20)}...`
+                            }</span>
                             <span className="datarecord" key={item.createdAt}>{moment(item.createdAt).format('DD-MMM-YYYY')}</span>
-                            <span className="likeButton" onClick={saveLikes} >
+                            <span className="likeButton" onClick={saveLikes}>
                                <HeartIcon/>
                             </span>
-
                         </div>
                     ))
                 }
-
             </div>
         </div>
     )

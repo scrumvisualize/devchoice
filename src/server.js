@@ -252,14 +252,19 @@ app.get("/service/nominations", async (req, res) => {
 /* This service is used to display the count of nominations received for a nominee in the Dashboard under Nominations count section: */
 app.get("/service/nominationcount", async (req, res) => {
   try {
-    const data = await NominationModel.findAll({
-      group: ["nomineeemail"],
-      attributes: [
-        "nomineeemail",
-        "nomineename",
-        [sequelize.fn("COUNT", "nomineeemail"), "EmailCount"],
-      ],
-    });
+    // const data = await NominationModel.findAll({
+    //   group: ["nomineeemail"],
+    //   attributes: [
+    //     "nomineeemail",
+    //     "nomineename",
+    //     [sequelize.fn("COUNT", "nomineeemail"), "EmailCount"],
+    //   ],
+    //   where: { id: latestRecord[0][0].id }
+    // });
+
+    // fix the count issue as per the latest changes : VM 08/Sept
+    let data = await sequelize.query("select COUNT(nomineeemail) as EmailCount, nomineeFirstName, nomineeLastName, nomineename from devchoice.nominations where session_id=(select max(id) from devchoice.nominationsession) group by nomineeemail;"
+        ,{ type: QueryTypes.SELECT});
     res.status(200).send(data);
   } catch (e) {
     res.status(500).json({ fail: e.message });
