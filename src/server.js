@@ -460,6 +460,7 @@ app.put(
                 lastName: nominees.lastname,
                 name: nominees.name,
                 email: nominees.email,
+                access: nominees.access
               };
             });
             //SELECT COUNT(email) from devchoice.managenominees;
@@ -496,6 +497,17 @@ app.get("/service/nomineeslist", async (req, res) => {
       attributes: ["id", "firstName", "lastName", "name", "email", "access"],
     });
     res.status(200).send(data);
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
+
+/* This service is used to get the access/role of the login user : */
+app.get("/service/managenomineeaccess", async (req, res) => {
+  try {
+    const userEmail = req.query.email;
+    const access = await sequelize.query(`select access FROM devchoice.managenominees where email="${userEmail}";`);
+    res.status(200).send(access);
   } catch (e) {
     res.status(500).json({ fail: e.message });
   }

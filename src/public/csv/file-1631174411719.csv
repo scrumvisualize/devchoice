@@ -1,0 +1,10 @@
+id,firstname,lastname,name,email,access
+1,Aat,Bran,Aat,aat@test1.com,user
+2,Arn,Dell,Arn,arn@test1.com,user
+3,Alt,Vibe,Alt,alt@test1.com,user
+4,Sin,Tom,Sin,sin@test1.com,user
+5,Ron,Drak,Ron,ron@test1.com,user
+6,Rad,Mos,Rads,rad@test1.com,user
+7,Sam,Mer,Sam,sam@yo.com,user
+8,Vin,Mat,Vin,vin@test.com,user
+9,Dev,Choice,Dev,devchoicetest@gmail.com,admin
