@@ -6,7 +6,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
         <Route
             {...rest}
             render={(props) => {
-                if (localStorage.getItem("userAccess")) {
+                if (localStorage.getItem("loginEmail")) {
                     return <Component {...props} />;
                 } else {
                     return (
