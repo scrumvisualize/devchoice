@@ -19,7 +19,7 @@ import {
   User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
-  Eye as NomView
+  Eye as NomView,
 } from "react-feather";
 import NavItem from "./NavItem";
 import Axios from "axios";
@@ -64,7 +64,7 @@ const items = [
 
 const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
   const location = useLocation();
-  const [enableNominatePersonTab, setEnableNominatePersonTab] = useState("");
+  const [status, setStatus] = useState();
 
   /* If the active status getting is 0, disable Nominate Person link else if it is 1 show Nominate Person link in useEffect */
   useEffect(() => {
@@ -75,7 +75,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
           "http://localhost:8000/service/getActiveStatus",
           { params: { userEmail } }
         );
-        setEnableNominatePersonTab(res.data[0][0].status);
+        setStatus(res.data[0][0].status);
       } catch (e) {
         console.log(e);
       }
@@ -111,11 +111,13 @@ const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
       </Box>
       <Divider />
       <Box style={{ padding: "16px" }}>
+        {console.log(status == "0")}
         <List>
           {items.map((item) => {
             if (
-              enableNominatePersonTab == "0" &&
-              item.title == "Nominate Person"
+              status == "0" &&
+              item.title !== "Nominate Person" &&
+              item.title !== "Nomination View"
             )
               return <div></div>;
             else
