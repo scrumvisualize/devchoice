@@ -26,10 +26,30 @@ import Backers from "./components/backers";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./components/dashboard/theme";
 import GlobalStyles from "./components/dashboard/GlobalStyles";
+import Axios from "axios";
+import { useEffect, useState } from "react";
+
 //import * as SessionData from "./components/sessionHandler"
 
 function App() {
   //const sessionData = SessionData.checkValidSession();
+  const [status, setStatus] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userEmail = localStorage.getItem("loginEmail");
+        const res = await Axios.get(
+          "http://localhost:8000/service/getActiveStatus",
+          { params: { userEmail } }
+        );
+        setStatus(res.data[0][0].status);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <Router>
       <div>
@@ -41,30 +61,43 @@ function App() {
               path='/dashboard'
               component={DashboardLayout}
             />
-            <ProtectedRoute
+            <Route exact path='/' component={Login} />
+            {status == "1" && (
+              <>
+                <ProtectedRoute
+                  exact
+                  path='/createLink'
+                  component={CreateLink}
+                />
+                <ProtectedRoute
+                  exact
+                  path='/nominationList'
+                  component={NominationList}
+                />
+                <ProtectedRoute
+                  exact
+                  path='/manageNominees'
+                  component={ManageNominees}
+                />
+                <Route path='/nominate/:token' component={Nominate} />
+                *
+                <Route path='/backers' component={Backers} />
+              </>
+            )}
+            <Route path='/nominatePerson' exact component={NominatePerson} />
+            <Route path='/nominationView' exact component={NominationView} />
+            <Route path='*' component={PageNotFound} />
+
+            {/* <ProtectedRoute
               exact
+              path='/dashboard'
+              component={DashboardLayout}
+            />
+            <ProtectedRoute
+              
               path='/dashboardOld'
               component={DashboardOld}
-            />
-
-            <ProtectedRoute exact path='/createLink' component={CreateLink} />
-            <ProtectedRoute
-              exact
-              path='/nominationList'
-              component={NominationList}
-            />
-            <ProtectedRoute
-              exact
-              path='/manageNominees'
-              component={ManageNominees}
-            />
-            <Route exact path='/' component={Login} />
-            <Route path='/nominate/:token' component={Nominate} />
-            <Route path='/nominatePerson' component={NominatePerson} />
-            <Route path='/nominatePerson' component={NominatePerson} />
-            <Route path='/nominationView' component={NominationView} />
-            <Route path='/backers' component={Backers} />
-            <Route path='*' component={PageNotFound} />
+            /> */}
           </Switch>
         </ThemeProvider>
       </div>

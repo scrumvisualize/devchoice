@@ -6,7 +6,7 @@ const csv = require("csv-parser");
 const fs = require("fs");
 const results = [];
 require("dotenv").config();
-const { Sequelize, DataTypes, QueryTypes} = require("sequelize");
+const { Sequelize, DataTypes, QueryTypes } = require("sequelize");
 const linkTokenSchema = require("./server/models/linktoken");
 const nominationSchema = require("./server/models/nominations");
 const nominationWinnerSchema = require("./server/models/nominationwinner");
@@ -26,8 +26,8 @@ const port = 8000;
 
 const DB_NAME = "devchoice";
 const DB_PORT = 3306;
-const DB_USERNAME = "admin"; //admin
-const DB_PASSWORD = "C@rnagieMe11on"; //C@rnagieMe11on
+const DB_USERNAME = "root"; //admin
+const DB_PASSWORD = "root"; //C@rnagieMe11on
 const DB_HOST = "127.0.0.1";
 const DB_DIALECT = "mysql";
 const DB_POOL = {
@@ -118,7 +118,9 @@ app.post("/service/nominateperson", async (req, res) => {
     const userEmail = req.body.userEmail;
     const nomData = req.body.nomRegister;
 
-    let latestRecord = await sequelize.query("SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;");
+    let latestRecord = await sequelize.query(
+      "SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;"
+    );
     let sessionid = latestRecord[0][0].id;
     const data = nomData.map((item) => ({
       session_id: latestRecord[0][0].id,
@@ -132,9 +134,7 @@ app.post("/service/nominateperson", async (req, res) => {
     }));
     // trying to fix the issue: nominate a person based on latest session id - by vin 07/09
     const numberOfNominations = await NominationModel.count({
-      attributes: [
-        "useremail"
-      ],
+      attributes: ["useremail"],
       where: { session_id: sessionid },
     });
 
@@ -173,8 +173,9 @@ app.get("/service/submittednominations", async (req, res) => {
     //trying to fix preselected records displaying in dropdown for old nominations: vin 07/09
     let submittedNominationEmail = 0;
     submittedNominationEmail = await sequelize.query(
-        `select * from devchoice.nominations where useremail=userEmail and session_id=(select max(id) from devchoice.nominationsession);`
-    ,{ type: QueryTypes.SELECT});
+      `select * from devchoice.nominations where useremail=userEmail and session_id=(select max(id) from devchoice.nominationsession);`,
+      { type: QueryTypes.SELECT }
+    );
     res.status(200).send(submittedNominationEmail);
   } catch (e) {
     res.status(500).json({ fail: e.message });
@@ -241,8 +242,10 @@ app.get("/service/nominations", async (req, res) => {
     // }
 
     // trying to fix the issue: 07/09 -vinod - I care to display the nominations for the latest session id only--
-    let nominationData = await sequelize.query("select nomineeemail, nomineeFirstName, nomineeLastName, nomineename, nomineeteam, reason, createdAt from devchoice.nominations where session_id=(select max(id) from devchoice.nominationsession);"
-    ,{ type: QueryTypes.SELECT});
+    let nominationData = await sequelize.query(
+      "select nomineeemail, nomineeFirstName, nomineeLastName, nomineename, nomineeteam, reason, createdAt from devchoice.nominations where session_id=(select max(id) from devchoice.nominationsession);",
+      { type: QueryTypes.SELECT }
+    );
     res.status(200).send(nominationData);
   } catch (e) {
     res.status(500).json({ fail: e.message });
@@ -283,11 +286,12 @@ app.get("/service/teamwisenomination", async (req, res) => {
   }
 });
 
-
 /* This service is used to display nomination data in chart ie month or year wise data : */
 app.get("/service/nominationchartdata", async (req, res) => {
   try {
-    let data = await sequelize.query("SELECT COUNT(*), createdAt, session_id FROM devchoice.nominations group by session_id;");
+    let data = await sequelize.query(
+      "SELECT COUNT(*), createdAt, session_id FROM devchoice.nominations group by session_id;"
+    );
     res.status(200).send(data);
   } catch (e) {
     res.status(500).json({ fail: e.message });

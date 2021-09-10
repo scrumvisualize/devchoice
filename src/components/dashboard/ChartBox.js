@@ -13,7 +13,7 @@ import CodeIcon from "@material-ui/icons/Code";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import GroupWorkIcon from "@material-ui/icons/GroupWork";
 import { Line } from "react-chartjs-2";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Axios from "axios";
 
 const options = {
@@ -198,8 +198,9 @@ const ChartBox = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-            "http://localhost:8000/service/nominationchartdata"
+          "http://localhost:8000/service/nominationchartdata"
         );
+        console.log(res.data, "aaaaaaaaaa");
         const data = res.data;
         setCount(data);
       } catch (e) {
