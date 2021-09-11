@@ -1,127 +1,133 @@
-h1, h4{
-    color: rgba(128, 130, 131);
-    font-size: 1em !important;
-    text-align: center;
-    margin: 5px 200px 0px 10px !important;
+h1,
+h4 {
+  color: rgba(128, 130, 131);
+  font-size: 1em !important;
+  text-align: center;
+  margin: 5px 200px 0px 10px !important;
 }
 .nomineeSelectBox {
-    width: 400px;
-    height:60px !important;
-    margin: 0 auto;
-    float: left;
-    margin: 20px 50px 0px 50px;
-    color: #71767a;
+  width: 400px;
+  height: 60px !important;
+  margin: 0 auto;
+  float: left;
+  margin: 20px 50px 0px 50px;
+  color: #71767a;
 }
 
 .triangle_down1 {
-    position: relative;
-    content: "";
-    display: flex;
-    width: 13px;
-    height: 13px;
-    border-right: 0.2em solid black;
-    border-top: 0.2em solid black;
-    transform: rotate(135deg);
-    margin-left: 22.0em;
-    margin-bottom: -20px;
+  position: relative;
+  content: "";
+  display: flex;
+  width: 13px;
+  height: 13px;
+  border-right: 0.2em solid black;
+  border-top: 0.2em solid black;
+  transform: rotate(135deg);
+  margin-left: 22em;
+  margin-bottom: -20px;
 }
 .nominateButton input {
-    width: 5%;
-    height: 30px;
-    margin-top: 10px !important;
-    background-color:#1abc9c;
+  width: 5%;
+  height: 30px;
+  margin-top: 10px !important;
+  background-color: #1abc9c;
 }
 
 .nomineesSelectedList {
-    width: 1000px;
-    height:350px;
-    float: left;
-    margin: 20px 50px 0px 200px;
-    text-align: left;
+  width: 1000px;
+  height: 350px;
+  float: left;
+  margin: 20px 50px 0px 200px;
+  text-align: left;
 }
-
 
 .nomineesSelectedList input {
-    width: 400px;
-    height: 60px;
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
-    box-shadow: 0px 5px 10px 0px rgb(153 151 151);
+  width: 400px;
+  height: 60px;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  box-shadow: 0px 5px 10px 0px rgb(153 151 151);
 }
 
-.nomineesSelectedList .nomlabel{
-    width:120px;
-    height: 40px;
-    padding:5px;
-    display:block;
-    background-color: #4aa2d9 !important;
-    border-radius: 2px !important;
-    text-align: center;
+.nomineesSelectedList .nomlabel {
+  width: 120px;
+  height: 40px;
+  padding: 5px;
+  display: block;
+  background-color: #4aa2d9 !important;
+  border-radius: 2px !important;
+  text-align: center;
 }
 
 .column {
-    float: left;
-    width: 20%;
-    padding: 1rem;
-    height: 50px;
-    color: #ffffff;
-    font-weight: bold;
-    margin-bottom: 10px;
+  float: left;
+  width: 20%;
+  padding: 1rem;
+  height: 50px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-
 .row:after {
-    content: "";
-    display: table;
-    clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 @media (max-width: 600px) {
-    .column {
-        width: 100%;
-    }
+  .column {
+    width: 100%;
+  }
 }
 
-.eachrecord{
-    border-color: #989a9e;
-    margin: 10px;
-    border-radius: 3px;
+.eachrecord {
+  border-color: #989a9e;
+  margin: 10px;
+  border-radius: 3px;
 }
-.nomineechoosed{
-    border-radius: 3px;
-    border-color: #585a5c !important;
-    border: solid 1px;
-
+.nomineechoosed {
+  border-radius: 3px;
+  border-color: #585a5c !important;
+  border: solid 1px;
 }
 
-.buttongroup{
-    width: 50px;
-    position: relative;
-    padding-right: 5px;
-    text-align: center;
-    border-radius: 5px;
-    margin-left: 207px !important;
+.buttongroup {
+  width: 50px;
+  position: relative;
+  padding-right: 5px;
+  text-align: center;
+  border-radius: 5px;
+  margin-left: 207px !important;
 }
 #Cancel {
-    background-color: #fadf48;
+  background-color: #fadf48;
 }
 
 #Submit {
-    background-color: #37f0d1;
+  background-color: #37f0d1;
 }
-.nominationcount{
-    width: 50px;
-    height: 50px;
-    position: relative;
-    border-radius: 25px;
-    background-color: #3f9eeb;
-    margin: 0px 100px 0px 0px;
-    float: right;
+.nominationcount {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  border-radius: 25px;
+  background-color: #3f9eeb;
+  margin: 0px 100px 0px 0px;
+  float: right;
 }
-.nominationValidationText{
-    width: 400px;
-    height: 30px;
-    color: orangered;
-    position: absolute;
-    margin: 500px 600px 10px -160px;
+.nominationValidationText {
+  width: 400px;
+  height: 30px;
+  color: orangered;
+  position: absolute;
+  margin: 500px 600px 10px -160px;
+}
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
 }

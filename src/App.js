@@ -37,77 +37,55 @@ function App() {
       try {
         const userEmail = localStorage.getItem("loginEmail");
         const res = await Axios.get(
-            "http://localhost:8000/service/managenomineeaccess",
-            { params: { userEmail } }
+          "http://localhost:8000/service/managenomineeaccess",
+          { params: { userEmail } }
         );
+        console.log(res.data[0][0].access, "rest.data");
         const data = res.data[0][0].access;
         setRole(data);
-        console.log("Is admin or user: "+ data);
+        console.log("Is admin or user: " + data);
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
   }, []);
+  const switchAdmin = (
+    <Switch>
+      <Route exact path='/' component={() => <Login role={role} />} />
+      <ProtectedRoute exact path='/dashboard' component={DashboardLayout} />
+      <ProtectedRoute exact path='/createLink' component={CreateLink} />
+      <ProtectedRoute exact path='/nominationList' component={NominationList} />
+      <ProtectedRoute exact path='/manageNominees' component={ManageNominees} />
+      <Route exact path='/nominate/:token' component={Nominate} />
+      <Route exact path='/backers' component={Backers} />
+      <Route path='/nominatePerson' exact component={NominatePerson} />
+      <Route path='/nominationView' exact component={NominationView} />
+      <Route component={PageNotFound} />
+    </Switch>
+  );
+  const switchUser = (
+    <Switch>
+      <Route exact path='/' component={Login} />
+      <Route
+        path='/nominatePerson'
+        exact
+        component={() => <NominatePerson role={role} />}
+      />
+      <Route
+        path='/nominationView'
+        exact
+        component={() => <NominationView role={role} />}
+      />
+      <Route component={PageNotFound} />
+    </Switch>
+  );
   return (
-      <Router>
-        <div>
-          <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            <Switch>
-              <Route exact path='/' component={Login} />
-              {role == "admin" ? (
-                  <>
-                    <ProtectedRoute
-                        exact
-                        path='/dashboard'
-                        component={DashboardLayout}
-                    />
-                    <ProtectedRoute
-                        exact
-                        path='/createLink'
-                        component={CreateLink}
-                    />
-                    <ProtectedRoute
-                        exact
-                        path='/nominationList'
-                        component={NominationList}
-                    />
-                    <ProtectedRoute
-                        exact
-                        path='/manageNominees'
-                        component={ManageNominees}
-                    />
-                    <Route path='/nominate/:token' component={Nominate} />
-                    *
-                    <Route path='/backers' component={Backers} />
-                  </>
-              ) : (
-                  <>
-                    <Route
-                        path='/nominatePerson'
-                        exact
-                        component={NominatePerson}
-                    />
-                    <Route
-                        path='/nominationView'
-                        exact
-                        component={NominationView}
-                    />
-                  </>
-              )}
-              <Route path='*' component={PageNotFound} />
-            {/* <ProtectedRoute
-              exact
-              path='/dashboard'
-              component={DashboardLayout}
-            />
-            <ProtectedRoute
-
-              path='/dashboardOld'
-              component={DashboardOld}
-            /> */}
-          </Switch>
+    <Router>
+      <div>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          {role === "admin" ? switchAdmin : switchUser}
         </ThemeProvider>
       </div>
     </Router>
