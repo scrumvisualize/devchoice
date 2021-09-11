@@ -466,6 +466,7 @@ app.put(
                 lastName: nominees.lastname,
                 name: nominees.name,
                 email: nominees.email,
+                access: nominees.access,
               };
             });
             //SELECT COUNT(email) from devchoice.managenominees;
