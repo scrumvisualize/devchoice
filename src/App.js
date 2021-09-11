@@ -58,22 +58,22 @@ function App() {
               <Route exact path='/' component={Login} />
               {role == "admin" ? (
                   <>
-                    <Route
+                    <ProtectedRoute
                         exact
                         path='/dashboard'
                         component={DashboardLayout}
                     />
-                    <Route
+                    <ProtectedRoute
                         exact
                         path='/createLink'
                         component={CreateLink}
                     />
-                    <Route
+                    <ProtectedRoute
                         exact
                         path='/nominationList'
                         component={NominationList}
                     />
-                    <Route
+                    <ProtectedRoute
                         exact
                         path='/manageNominees'
                         component={ManageNominees}
