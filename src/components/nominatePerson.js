@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import { notify } from "../utils/helperFunctions/HelperFunctions";
 import "react-toastify/dist/ReactToastify.css";
 
-const NominatePerson = () => {
+const NominatePerson = (props) => {
   toast.configure();
   const [option, setOption] = useState([]);
   const [selectedOption, setSelectedOption] = useState([]);
@@ -267,9 +267,11 @@ const NominatePerson = () => {
       <div className='navbar-nav'>
         <div className='leftNavItem'>
           <a>
-            <Link to={"/dashboard"} className='nav-link'>
-              {" "}
-              <b>Dashboard</b>{" "}
+            <Link
+              to={props.role ? "/nominationView" : "/dashboard"}
+              className='nav-link'
+            >
+              <b>{props.role ? "Nomination View" : "Dashboard"}</b>
             </Link>
           </a>
         </div>

@@ -65,29 +65,31 @@ const items = [
 const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
   const location = useLocation();
   const [status, setStatus] = useState();
+  const [role, setRole] = useState();
 
-  /* If the active status getting is 0, disable Nominate Person link else if it is 1 show Nominate Person link in useEffect */
+  useEffect(() => {
+    if (openMobile && onMobileClose) {
+      onMobileClose();
+    }
+  }, [location.pathname]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userEmail = localStorage.getItem("loginEmail");
         const res = await Axios.get(
-          "http://localhost:8000/service/getActiveStatus",
+          "http://localhost:8000/service/managenomineeaccess",
           { params: { userEmail } }
         );
-        setStatus(res.data[0][0].status);
+        console.log(res.data[0][0].access, "rest.data");
+        const data = res.data[0][0].access;
+        setRole(data);
+        console.log("Is admin or user: " + data);
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
   }, []);
-  useEffect(() => {
-    if (openMobile && onMobileClose) {
-      onMobileClose();
-    }
-  }, [location.pathname]);
-
   const content = (
     <Box>
       <Box
@@ -111,11 +113,10 @@ const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
       </Box>
       <Divider />
       <Box style={{ padding: "16px" }}>
-        {console.log(status == "0")}
         <List>
           {items.map((item) => {
             if (
-              status == "0" &&
+              role === "user" &&
               item.title !== "Nominate Person" &&
               item.title !== "Nomination View"
             )
