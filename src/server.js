@@ -26,8 +26,8 @@ const port = 8000;
 
 const DB_NAME = "devchoice";
 const DB_PORT = 3306;
-const DB_USERNAME = "root"; //admin
-const DB_PASSWORD = "root"; //C@rnagieMe11on
+const DB_USERNAME = "admin"; //admin
+const DB_PASSWORD = "C@rnagieMe11on"; //C@rnagieMe11on
 const DB_HOST = "127.0.0.1";
 const DB_DIALECT = "mysql";
 const DB_POOL = {
@@ -504,6 +504,19 @@ app.get("/service/nomineeslist", async (req, res) => {
     res.status(500).json({ fail: e.message });
   }
 });
+
+
+/* This service is used get the access of the login user, if admin see all nav links  else user Nominate Person and Nomination View tabs only */
+app.get("/service/managenomineeaccess", async (req, res) => {
+  try {
+    let userEmail = req.query.userEmail;
+    let data = await sequelize.query(`SELECT access FROM devchoice.managenominees where email="${userEmail}";`);
+    res.status(200).send(data);
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
+
 
 (async () => {
   try {
