@@ -26,8 +26,8 @@ const port = 8000;
 
 const DB_NAME = "devchoice";
 const DB_PORT = 3306;
-const DB_USERNAME = "root"; //admin
-const DB_PASSWORD = "root"; //C@rnagieMe11on
+const DB_USERNAME = "admin"; //admin
+const DB_PASSWORD = "C@rnagieMe11on"; //C@rnagieMe11on
 const DB_HOST = "127.0.0.1";
 const DB_DIALECT = "mysql";
 const DB_POOL = {
@@ -267,7 +267,7 @@ app.get("/service/nominationcount", async (req, res) => {
 
     // fix the count issue as per the latest changes : VM 08/Sept
     let data = await sequelize.query(
-      "select COUNT(nomineeemail) as EmailCount, nomineeFirstName, nomineeLastName, nomineename from devchoice.nominations where session_id=(select max(id) from devchoice.nominationsession) group by nomineeemail;",
+      "select COUNT(nomineeemail) as EmailCount, nomineeemail, nomineeFirstName, nomineeLastName, nomineename from devchoice.nominations where session_id=(select max(id) from devchoice.nominationsession) group by nomineeemail;",
       { type: QueryTypes.SELECT }
     );
     res.status(200).send(data);
@@ -411,9 +411,16 @@ app.get("/service/displaywinner", async (req, res) => {
 /* This service is used to group nomination based on name: */
 app.get("/service/nominationgroup", async (req, res) => {
   try {
-    const nominationGroup = await NominationModel.findAll({
-      attributes: ["nomineename", "nomineeteam", "reason", "createdAt"],
-    });
+    // const nominationGroup = await NominationModel.findAll({
+    //   attributes: ["nomineename", "nomineeteam", "reason", "createdAt"],
+    // });
+    // res.status(200).send(nominationGroup);
+
+    /* Fix the issue to get the latest nomination in the Nomination List screen based on latest session_id from table */
+    let nominationGroup = await sequelize.query(
+        "select nomineeemail, nomineeFirstName, nomineeLastName, nomineename, nomineeteam, reason, createdAt from devchoice.nominations where session_id=(select max(id) from devchoice.nominationsession);",
+        { type: QueryTypes.SELECT }
+    );
     res.status(200).send(nominationGroup);
   } catch (e) {
     res.status(500).json({ fail: e.message });

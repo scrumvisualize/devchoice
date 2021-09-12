@@ -104,14 +104,15 @@ const NominationList = () => {
         );
         if (isMounted.current) {
           for (const elem of res.data) {
-            if (!newGroup.hasOwnProperty(elem.nomineename)) {
-              newGroup[elem.nomineename] = {
+            const key = elem.nomineeFirstName + " " + elem.nomineeLastName;
+            if (!newGroup.hasOwnProperty(key)) {
+              newGroup[key] = {
                 createdAt: "",
                 reason: [],
               };
             }
-            newGroup[elem.nomineename].reason.push(elem.reason);
-            newGroup[elem.nomineename].createdAt = elem.createdAt;
+            newGroup[key].reason.push(elem.reason);
+            newGroup[key].createdAt = elem.createdAt;
           }
           setNominationGroup(newGroup);
           console.log("Nomination data from server :" + res.data);

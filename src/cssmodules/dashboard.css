@@ -7,9 +7,9 @@ h1, h2, h3 {
   color: rgba(128, 130, 131);
   font-size: 1em !important;
   text-align: center !important;
-  margin: 0 auto !important;
   margin-bottom: 10px !important;
 }
+
 .column-1 h3{
   color: #ffffff;
 }
@@ -342,7 +342,7 @@ p {
 }
 
 .nav-link {
-  width: 100px;
+  width: 150px;
   color: #5e6263;
   text-decoration: none;
   margin: 0px 0px 5px 0px;

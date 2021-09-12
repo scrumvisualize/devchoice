@@ -28,8 +28,7 @@ const NominatePerson = (props) => {
     formState: { errors },
     reset,
   } = useForm();
-  const history = useHistory();
-  const [selectedValues, setSelectedValues] = useState([{}]);
+
   const refSelect = useRef(null);
   const [submittedNominees, setSubmittedNominees] = useState([{}]);
   const [maxOptions, setMaxOptions] = useState(0); //A.H-making maxOption dynamic because we don't the length of data from submittednominations
@@ -119,12 +118,16 @@ const NominatePerson = (props) => {
           "http://localhost:8000/service/submittednominations",
           { userEmail }
         );
-
         const data1 = res.data;
         console.log(data1, "data1");
-        setSubmittedNominees(data1);
-        setMaxOptions(3 - data1.length); //A.H-making maxOption dynamic because we don't the length of data from submittednominations
-        console.log("Submitted nominations :" + JSON.stringify(data1));
+        if(userEmail == data1[0].useremail){
+          setSubmittedNominees(data1);
+          setMaxOptions(3 - data1.length); //A.H-making maxOption dynamic because we don't the length of data from submittednominations
+          console.log("Submitted nominations :" + JSON.stringify(data1));
+        } else {
+          setMaxOptions(selectedOption);
+        }
+
       } catch (e) {
         console.log(e);
       }
@@ -276,7 +279,9 @@ const NominatePerson = (props) => {
           </a>
         </div>
       </div>
-      <h2>Nominate a person</h2>
+      <div className="nomHeader">
+        <h2>Nominate a person</h2>
+      </div><br></br>
       <div className='nomineeSelectBox'>
         <div id='dialog2' className='triangle_down1' />
         <div className='arrowdown'>

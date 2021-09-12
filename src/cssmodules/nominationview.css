@@ -3,7 +3,7 @@
     height:70px;
     background-color: #3f9eeb !important;
     color: #fff !important;
-    margin: 10px 0px 5px 100px;
+    margin: 10px 0px 5px 278px;
     border-radius: 5px;
 }
 .nominationRecord img{
@@ -17,4 +17,14 @@
 }
 .likeButton{
     margin-left: 80px;
+}
+@media only screen and (min-width: 1920px) {
+    .nominationRecord{
+        width:700px;
+        height:70px;
+        background-color: #3f9eeb !important;
+        color: #fff !important;
+        margin: 10px 0px 5px 605px;
+        border-radius: 5px;
+    }
 }
