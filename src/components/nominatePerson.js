@@ -116,18 +116,17 @@ const NominatePerson = (props) => {
         let res = [];
         res = await Axios.get(
           "http://localhost:8000/service/submittednominations",
-          { userEmail }
+            {params:{userEmail}}
         );
         const data1 = res.data;
         console.log(data1, "data1");
-        if(userEmail == data1[0].useremail){
+        //if(userEmail == data1[0].useremail){
           setSubmittedNominees(data1);
           setMaxOptions(3 - data1.length); //A.H-making maxOption dynamic because we don't the length of data from submittednominations
           console.log("Submitted nominations :" + JSON.stringify(data1));
-        } else {
-          setMaxOptions(selectedOption);
-        }
-
+        // } else {
+        //   setMaxOptions(selectedOption);
+        // }
       } catch (e) {
         console.log(e);
       }

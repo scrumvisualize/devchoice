@@ -135,7 +135,7 @@ app.post("/service/nominateperson", async (req, res) => {
     // trying to fix the issue: nominate a person based on latest session id - by vin 07/09
     const numberOfNominations = await NominationModel.count({
       attributes: ["useremail"],
-      where: { session_id: sessionid },
+      where: { session_id: sessionid, useremail: userEmail },
     });
 
     if (numberOfNominations <= 2) {
@@ -151,29 +151,45 @@ app.post("/service/nominateperson", async (req, res) => {
   }
 });
 
+
+/* This service is used to submit likes by the user from the Nomination view screen  */
+app.put("/service/nominationviewsavelikes", async (req, res) => {
+  try {
+    const userEmail = req.body.useremail;
+    const nomineeEmail = req.body.nomineeEmail;
+    const likeCount = req.body.likes;
+   let savelike = await sequelize.query(
+        `UPDATE devchoice.nominations A set likes="${likeCount}" where nomineeemail="${nomineeEmail}" and useremail="${userEmail}";`,
+        { type: QueryTypes.UPDATE }
+    );
+    res.status(200).send(savelike);
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
+
+
+/* This service is used to get the count of likes from database  */
+app.get("/service/nominationlikes", async (req, res) => {
+  try {
+    let countlike = await sequelize.query(
+        `select id, nomineeemail, likes from devchoice.nominations where session_id=(select max(id) from devchoice.nominationsession) group by nomineeemail;`,
+        { type: QueryTypes.SELECT }
+    );
+    res.status(200).send(countlike);
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
+
 /* This service is used to get all nominations submitted by the login user:  */
 app.get("/service/submittednominations", async (req, res) => {
   try {
-    const userEmail = req.body.userEmail;
-    // const submittedNominationEmail = await NominationModel.findAll(
-    //   {
-    //     attributes: [
-    //       "id",
-    //       "nomineeemail",
-    //       "nomineeFirstName",
-    //       "nomineeLastName",
-    //       "nomineename",
-    //     ],
-    //   },
-    //   {
-    //     where: { useremail: userEmail }
-    //   }
-    // );
-
+    const userEmail = req.query.userEmail;
     //trying to fix preselected records displaying in dropdown for old nominations: vin 07/09
     let submittedNominationEmail = 0;
     submittedNominationEmail = await sequelize.query(
-      `select * from devchoice.nominations where useremail=userEmail and session_id=(select max(id) from devchoice.nominationsession);`,
+      `select * from devchoice.nominations where useremail="${userEmail}" and session_id=(select max(id) from devchoice.nominationsession);`,
       { type: QueryTypes.SELECT }
     );
     res.status(200).send(submittedNominationEmail);
