@@ -295,9 +295,11 @@ app.get("/service/nominationcount", async (req, res) => {
 /* This service is used to display the teamwise names of the nominees : */
 app.get("/service/teamwisenomination", async (req, res) => {
   try {
-    const data = await NominationModel.findAll({
-      attributes: ["nomineename", "nomineeteam"],
-    });
+    /* fix the teamwise issue, add team column and display teams : VM 26/Sept */
+    let data = await sequelize.query(
+        "select nomineeemail, nomineeFirstName, nomineeLastName, nomineename, mn.team, reason, noms.createdAt from nominations noms left join managenominees mn on nomineeemail = email where session_id=(select max(id) from nominationsession);",
+        { type: QueryTypes.SELECT }
+    );
     res.status(200).send(data);
   } catch (e) {
     res.status(500).json({ fail: e.message });
@@ -490,6 +492,7 @@ app.put(
                 name: nominees.name,
                 email: nominees.email,
                 access: nominees.access,
+                team: nominees.team,
               };
             });
             //SELECT COUNT(email) from devchoice.managenominees;
@@ -523,7 +526,7 @@ app.put(
 app.get("/service/nomineeslist", async (req, res) => {
   try {
     const data = await ManageNomineesModel.findAll({
-      attributes: ["id", "firstName", "lastName", "name", "email", "access"],
+      attributes: ["id", "firstName", "lastName", "name", "email", "access", "team"],
     });
     res.status(200).send(data);
   } catch (e) {

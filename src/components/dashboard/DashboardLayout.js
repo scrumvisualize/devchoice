@@ -218,8 +218,8 @@ const DashboardLayout = () => {
   });
 
   const teams = teamwiseNomination.reduce((teams, team) => {
-    if (!teams[team.nomineeteam]) teams[team.nomineeteam] = [];
-    teams[team.nomineeteam].push(team.nomineename);
+    if (!teams[team.team]) teams[team.team] = [];
+    teams[team.team].push(team.nomineename);
     return teams;
   }, {});
 

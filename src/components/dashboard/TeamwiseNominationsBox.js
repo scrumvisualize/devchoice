@@ -294,9 +294,9 @@ const TeamwiseNominationsBox = (props) => (
               }}
             >
               {team === "Dev" && devIcon}
-              {team === "Qa" && qaIcon}
+              {team === "QA" && qaIcon}
               {team === "Support" && SupportIcon}
-              {team === "Add Ons" && addOnsIcon}
+              {team === "AddOns" && addOnsIcon}
               {team === "CST" && CSTicon}
               {names.map((name) => (
                 <>

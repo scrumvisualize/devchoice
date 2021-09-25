@@ -311,6 +311,7 @@ const ManageNominees = () => {
             <th>Given Name</th>
             <th>Email</th>
             <th>Access</th>
+            <th>Team</th>
             {manageNominees.map((row) => {
               return (
                 <tr>
@@ -319,6 +320,7 @@ const ManageNominees = () => {
                   <td>{row.name}</td>
                   <td>{row.email}</td>
                   <td>{row.access}</td>
+                  <td>{row.team}</td>
                 </tr>
               );
             })}
