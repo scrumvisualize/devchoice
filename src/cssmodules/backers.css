@@ -7,7 +7,7 @@ h1{
     align-items: start;
     display: grid;
     grid-gap: 30px;
-    grid-template-columns: repeat(auto-fit, 300px);
+    grid-template-columns: repeat(auto-fit, 400px);
     justify-content: center;
     margin-top: 50px;
 }
@@ -26,4 +26,9 @@ h1{
 }
 .card img{
     width:100px;
+}
+.card p {
+    font-size: 0.8em;
+    display: inline-block;
+    text-align: left;
 }

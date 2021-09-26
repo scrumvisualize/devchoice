@@ -28,6 +28,7 @@ const options = {
   },
 };
 const ChartBox = (props) => {
+  const [monthlyCount, setMonthlyCount] = useState([]);
   const [chartPeriod, setChartPeriod] = useState("1month");
   const [labels, setLabels] = useState([
     "1",
@@ -99,7 +100,7 @@ const ChartBox = (props) => {
     datasets: [
       {
         label: "Nominations",
-        data: count,
+        data: monthlyCount,
         fill: false,
         backgroundColor: "rgb(25, 118, 210)",
         borderColor: "rgba(25, 118, 210,.2)",
@@ -200,9 +201,8 @@ const ChartBox = (props) => {
         const res = await Axios.get(
           "http://localhost:8000/service/nominationchartdata"
         );
-        console.log(res.data, "aaaaaaaaaa");
-        const data = res.data;
-        setCount(data);
+        console.log(res.data, "Just throw the full data");
+        setMonthlyCount([ res.data[0][0].count]);
       } catch (e) {
         console.log(e);
       }
@@ -218,7 +218,8 @@ const ChartBox = (props) => {
   const handleClickYear = () => {
     setChartPeriod("1year");
     setLabels(year);
-    setCount([2, 10, 5, 8, 12, 15, 10]);
+    //setCount(count);
+    setMonthlyCount(monthlyCount);
   };
   return (
     <Card style={{ height: "100%" }} {...props}>

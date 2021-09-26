@@ -14,17 +14,17 @@ const Backers = () => {
                 <section class="card-container">
                 <div class="card">
                     <i class="fas fa-paint-brush"></i>
-                    <h1>VM</h1>
                     <img src="images/google.png"></img>
+                    <p> I was motivated to create a DevChoice system for simPRO.
+                        I have successfully created a working prototype to help the nomination process.
+                    </p>
                     <p>
-                        Vin is the main developer who spend his time to come up with developing the devchoice
-                        system for sim.
+                        I have choosed Reactjs framework for front end, Express for server side and Axios for making res calls.
                     </p>
                 </div>
 
                 <div class="card">
                     <i class="fas fa-desktop"></i>
-                    <h1>CD</h1>
                     <img src="images/google.png"></img>
                     <p>
                         Char helps with his excellent coding skills at times

@@ -310,7 +310,7 @@ app.get("/service/teamwisenomination", async (req, res) => {
 app.get("/service/nominationchartdata", async (req, res) => {
   try {
     let data = await sequelize.query(
-      "SELECT COUNT(*), createdAt, session_id FROM devchoice.nominations group by session_id;"
+      "SELECT COUNT(*) as count, createdAt, session_id FROM devchoice.nominations group by session_id;"
     );
     res.status(200).send(data);
   } catch (e) {
