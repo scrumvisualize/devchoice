@@ -72,7 +72,7 @@ const NominationsCountBox = (props) => (
               <Typography
                 color='textPrimary'
                 style={{
-                  fontSize: "24px",
+                  fontSize: "15px",
                   color: "#172b4d",
                   fontWeight: "500",
                   marginTop: "30px",
@@ -131,6 +131,7 @@ const NominationsCountBox = (props) => (
                   height: "28px",
                   top: "5px",
                   borderRadius: "50%",
+                  marginLeft: "25px",
                 }}
               >
                 <span style={{ position: "relative", top: "5px" }}>

@@ -23,7 +23,7 @@ const NominationWinnersBox = (props) => (
             <Typography
               color='textPrimary'
               style={{
-                fontSize: "24px",
+                fontSize: "15px",
                 color: "#172b4d",
                 fontWeight: "500",
                 marginTop: "30px",

@@ -263,6 +263,21 @@ const TeamwiseNominationsBox = (props) => (
           <Typography color='textSecondary' gutterBottom variant='h6'>
             Teamwise Nominations
           </Typography>
+          {!props.teams.length && (
+          <Typography
+              color='textPrimary'
+              gutterBottom variant='h6'
+              style={{
+                fontSize: "15px",
+                color: "#172b4d",
+                fontWeight: "500",
+                marginTop: "30px",
+              }}
+            >
+            No teamwise nominations to display !
+          </Typography>
+
+          )}
         </Grid>
 
         <Grid item>

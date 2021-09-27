@@ -85,7 +85,7 @@ const NominationView = (props) => {
       <h2>Nomination View</h2>
       {!nominationView.length && (
         <div className='dashboarddata'>
-          Sorry, No nominations data to display..!
+          Sorry, no nominations data to display !
         </div>
       )}
       <div className='row'>

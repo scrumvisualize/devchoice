@@ -190,12 +190,17 @@ const NominatePerson = (props) => {
           console.log("Print data:" + res.data);
           const successMessage = res.data.message;
           setHelperText(successMessage);
-          notify("Nomination submitted successfully !", toast, "success");
-          const updateList = selectedOption.map((item) => {
-            return { ...item, reason: "" };
-          });
-          setSelectedOption(updateList);
-          setNomRegister(updateList);
+          if(successMessage === "Valid nomination session not available !"){
+            notify("Valid nomination session not available !", toast, "error");
+            setOpenDialog(false);
+          } else {
+            notify("Nomination submitted successfully !", toast, "success");
+            const updateList = selectedOption.map((item) => {
+              return { ...item, reason: "" };
+            });
+            setSelectedOption(updateList);
+            setNomRegister(updateList);
+          }
         }
       } catch (e) {
         console.log(e);
@@ -281,79 +286,82 @@ const NominatePerson = (props) => {
       <div className="nomHeader">
         <h2>Nominate a person</h2>
       </div><br></br>
-      <div className='nomineeSelectBox'>
-        <div id='dialog2' className='triangle_down1' />
-        <div className='arrowdown'>
-          <Multiselect
-            ref={refSelect}
-            onSelect={(e) => handleTypeSelect(e, selectedOption.length)}
-            onRemove={handleTypeRemove}
-            options={!showOptions ? [] : option} //A.H toogle
-            displayValue='displayValue'
-            disablePreSelectedValues={true}
-            selectedValues={submittedNominees}
-            showCheckbox={true}
-            emptyRecordMsg={"Maximum nominees selected !"}
-          />
+      <section className="col1">
+        <div className='nomineeSelectBox'>
+          <div id='dialog2' className='triangle_down1' />
+          <div className='arrowdown'>
+            <Multiselect
+              ref={refSelect}
+              onSelect={(e) => handleTypeSelect(e, selectedOption.length)}
+              onRemove={handleTypeRemove}
+              options={!showOptions ? [] : option} //A.H toogle
+              displayValue='displayValue'
+              disablePreSelectedValues={true}
+              selectedValues={submittedNominees}
+              showCheckbox={true}
+              emptyRecordMsg={"Maximum nominees selected !"}
+            />
+          </div>
         </div>
-      </div>
+      </section>
       {/* A.H NP-5 */}
-      <div className='nominationcount'>
-        <span
-          style={{
-            position: "absolute",
-            top: "23%",
-            left: "43%",
-            color: "#fff",
-          }}
-        >
-          {3 - maxOptions}
-        </span>
-      </div>
-      <form>
-        <div className='nomineesSelectedList'>
-          <h4>Selected Nominees</h4>
-          {selectedOption.map((x, i) => (
-            <div key={i}>
-              <div className='row eachrecord'>
-                <div className='column'>
-                  <label className='nomlabel'>
-                    {x?.name} <b>>></b>
-                  </label>
+      <section id="addData" className="col2">
+        <div className='nominationcount'>
+          <span
+            style={{
+              position: "absolute",
+              top: "23%",
+              left: "43%",
+              color: "#fff",
+            }}
+          >
+            {3 - maxOptions}
+          </span>
+        </div>
+        <form>
+          <div className='nomineesSelectedList'>
+            {selectedOption.map((x, i) => (
+              <div key={i}>
+                <div className='row eachrecord'>
+                  <div className='column'>
+                    <label className='nomlabel'>
+                      {x?.name} <b>>></b>
+                    </label>
+                  </div>
+                  <input
+                    required
+                    type='textarea'
+                    placeholder='Please provide reason for nomination..'
+                    key={i}
+                    id={i}
+                    name={x?.name}
+                    value={x?.reason}
+                    className='nomineechoosed'
+                    maxLength='245'
+                    onChange={(e) => handleChange(e, i, x.lastName)}
+                  />
                 </div>
+              </div>
+            ))}
+            <div className='row'>
+              <div className='buttongroup'>
                 <input
-                  required
-                  type='textarea'
-                  placeholder='Please provide reason for nomination..'
-                  key={i}
-                  id={i}
-                  name={x?.name}
-                  value={x?.reason}
-                  className='nomineechoosed'
-                  maxLength='245'
-                  onChange={(e) => handleChange(e, i, x.lastName)}
+                  id='Submit'
+                  type='button'
+                  value='Submit'
+                  onClick={handleClickOpenDialog}
+                />
+                <input
+                  id='Cancel'
+                  type='button'
+                  value='Cancel'
+                  onClick={handleCancel}
                 />
               </div>
             </div>
-          ))}
-          <div className='row'>
-            <div className='buttongroup'>
-              <input
-                id='Submit'
-                type='button'
-                value='Submit'
-                onClick={handleClickOpenDialog}
-              />
-              <input
-                id='Cancel'
-                type='button'
-                value='Cancel'
-                onClick={handleCancel}
-              />
-            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </section>
       {/* A.H dialog confirmation */}
       <Dialog
         open={openDialog}
@@ -380,36 +388,6 @@ const NominatePerson = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* {helperText === "Nomination submitted successfully !" &&
-        notify("Nomination submitted successfully !", toast, "success")} */}
-      {/* <span className='nominationValidationText'>{helperText}</span> */}
-      {/* {!validationMsgs[1]
-        ? notify(
-            "Sorry, nomination has exceeded the maximum limit!",
-            toast,
-            "error"
-          )
-        : // <span className='nominationValidationText'>
-        //   Sorry, nomination has exceeded the maximum limit!
-        // </span>
-        !validationMsgs[0]
-        ? notify(
-            "Sorry, nomination has exceeded the maximum limit!",
-            toast,
-            "error"
-          )
-        : // <span className='nominationValidationText'>
-          //   You must select a nomination
-          // </span>
-          !validationMsgs[2] &&
-          notify(
-            "Reason for nomination is required & less than 245 characters!",
-            toast,
-            "error"
-          )} */}
-      {/* // <span className='nominationValidationText'>
-        //   Reason for nomination is required & less than 245 characters!
-        // </span> */}
     </div>
   );
 };

@@ -121,30 +121,35 @@ app.post("/service/nominateperson", async (req, res) => {
     let latestRecord = await sequelize.query(
       "SELECT status, nom.id FROM devchoice.nominationsession nom JOIN (SELECT MAX(id) AS id FROM devchoice.nominationsession) max on nom.id = max.id;"
     );
-    let sessionid = latestRecord[0][0].id;
-    const data = nomData.map((item) => ({
-      session_id: latestRecord[0][0].id,
-      useremail: userEmail,
-      nomineeemail: item.email,
-      nomineeFirstName: item.name,
-      nomineeLastName: item.lastName,
-      nomineename: item.name,
-      nomineeteam: item.team,
-      reason: item.reason,
-    }));
-    // trying to fix the issue: nominate a person based on latest session id - by vin 07/09
-    const numberOfNominations = await NominationModel.count({
-      attributes: ["useremail"],
-      where: { session_id: sessionid, useremail: userEmail },
-    });
 
-    if (numberOfNominations <= 2) {
-      const nominationData = await NominationModel.bulkCreate(data);
-      res.status(200).json({ message: "Nomination submitted successfully !" });
-    } else {
-      res.status(202).json({
-        message: "Sorry ! You have exceeded the maximum limit of nominations!",
+    if( latestRecord[0].length > 0 ){
+      let sessionid = latestRecord[0][0].id;
+      const data = nomData.map((item) => ({
+        session_id: latestRecord[0][0].id,
+        useremail: userEmail,
+        nomineeemail: item.email,
+        nomineeFirstName: item.name,
+        nomineeLastName: item.lastName,
+        nomineename: item.name,
+        nomineeteam: item.team,
+        reason: item.reason,
+      }));
+      // trying to fix the issue: nominate a person based on latest session id - by vin 07/09
+      const numberOfNominations = await NominationModel.count({
+        attributes: ["useremail"],
+        where: { session_id: sessionid, useremail: userEmail },
       });
+
+      if (numberOfNominations <= 2) {
+        const nominationData = await NominationModel.bulkCreate(data);
+        res.status(200).json({ message: "Nomination submitted successfully !" });
+      } else {
+        res.status(202).json({
+          message: "Sorry ! You have exceeded the maximum limit of nominations!",
+        });
+      }
+    } else {
+      res.status(202).json({ message: "Valid nomination session not available !" });
     }
   } catch (e) {
     res.status(500).json({ fail: e.message });
