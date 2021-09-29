@@ -315,8 +315,9 @@ app.get("/service/teamwisenomination", async (req, res) => {
 app.get("/service/nominationchartdata", async (req, res) => {
   try {
     let data = await sequelize.query(
-      "SELECT COUNT(*) as count, createdAt, session_id FROM devchoice.nominations group by session_id;"
+      "SELECT COUNT('id') AS nominations, createdAt FROM devchoice.nominations WHERE YEAR (createdAt) = YEAR(CURDATE()) GROUP BY MONTH (createdAt);"
     );
+
     res.status(200).send(data);
   } catch (e) {
     res.status(500).json({ fail: e.message });

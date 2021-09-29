@@ -274,7 +274,6 @@ const TeamwiseNominationsBox = (props) => (
                 marginTop: "30px",
               }}
             >
-            No teamwise nominations to display !
           </Typography>
 
           )}

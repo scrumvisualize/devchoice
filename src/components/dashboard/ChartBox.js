@@ -202,7 +202,7 @@ const ChartBox = (props) => {
           "http://localhost:8000/service/nominationchartdata"
         );
         console.log(res.data, "Just throw the full data");
-        setMonthlyCount([ res.data[0][0].count]);
+        setMonthlyCount([ res.data[0][0]]);
       } catch (e) {
         console.log(e);
       }
@@ -220,6 +220,16 @@ const ChartBox = (props) => {
     setLabels(year);
     //setCount(count);
     setMonthlyCount(monthlyCount);
+    let arr = [];
+    for (let i = 0; i < 12; i++) {
+      arr[i] = 0;
+    }
+    for (let i = 0; i < monthlyCount.length; i++) {
+      let x = parseInt(monthlyCount[i].createdAt.substr(5, 2));
+      arr[x] = monthlyCount[i].nominations;
+    }
+    console.log(arr);
+    setMonthlyCount(arr);
   };
   return (
     <Card style={{ height: "100%" }} {...props}>

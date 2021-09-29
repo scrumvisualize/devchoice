@@ -88,48 +88,57 @@ const NominationView = (props) => {
           Sorry, no nominations data to display !
         </div>
       )}
-      <div className='row'>
+      <div className='wrapper'>
         {nominationView.map((item, i) => (
           <div
             key={item}
             className={`nominationRecord animate__animated animate__fadeInUp animate__delay-${i}s`}
           >
+            <span className='nomdataimg'>
             <img src='images/trophy1.png' />
-            <span key={item.nomineeFirstName} className='datarecord'>
+            </span>
+            <div className="row">
+              <span key={item.nomineeFirstName} className='dataname'>
               {item.nomineeFirstName}
             </span>
-            <span key={item.nomineeLastName} className='datarecord'>
+              <span key={item.nomineeLastName} className='dataname'>
               {item.nomineeLastName}
             </span>
+            </div>
             <span key={item.nomineeemail} className='emailhide'>
               {item.nomineeemail}
             </span>
-            <span key={item.reason} className='datarecord'>
-              {item.reason.length <= 20
-                ? item.reason
-                : `${item.reason.substr(0, 20)}...`}
-            </span>
-            <span className='datarecord' key={item.createdAt}>
-              {moment(item.createdAt).format("DD-MMM-YYYY")}
-            </span>
-            <span className='likeButton' onClick={() => saveLikes(item.nomineeemail)}>
-              <HeartIcon />
+              <div className="flex-container">
+                <div className="flex-left">
+                  <span key={item.reason} className='datareason'>
+                    {item.reason.length <= 7
+                  ? item.reason
+                  : `${item.reason.substr(0, 15)}...`}
+                  </span>
+                </div>
+                <div className="flex-right">
+                  <span className='datadate' key={item.createdAt}>
+                  {moment(item.createdAt).format("DD-MMM-YYYY")}
+                  </span>
+                </div>
+              </div>
 
-              {
-                likeCount.map((likeCount) => (
-                <span key={likeCount}>
-                  {
-                    item.nomineeemail === likeCount.nomineeemail ? likeCount.likes : (
-                        null
-                    )
-                  }
+            {/*<span className='likeButton' onClick={() => saveLikes(item.nomineeemail)}>*/}
+            {/*  <HeartIcon />*/}
 
-                </span>
-                ))
-              }
+            {/*  {*/}
+            {/*    likeCount.map((likeCount) => (*/}
+            {/*    <span key={likeCount}>*/}
+            {/*      {*/}
+            {/*        item.nomineeemail === likeCount.nomineeemail ? likeCount.likes : (*/}
+            {/*            null*/}
+            {/*        )*/}
+            {/*      }*/}
 
-
-            </span>
+            {/*    </span>*/}
+            {/*    ))*/}
+            {/*  }*/}
+            {/*</span>*/}
           </div>
         ))}
       </div>
