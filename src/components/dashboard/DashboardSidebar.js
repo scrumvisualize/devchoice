@@ -30,11 +30,11 @@ const items = [
     icon: BarChartIcon,
     title: "Dashboard",
   },
-  {
-    href: "/createLink",
-    icon: UsersIcon,
-    title: "Create Link",
-  },
+  // {
+  //   href: "/createLink",
+  //   icon: UsersIcon,
+  //   title: "Create Link",
+  // },
   {
     href: "/nominationList",
     icon: ShoppingBagIcon,
@@ -97,12 +97,13 @@ const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
           alignItems: "center",
           display: "flex",
           flexDirection: "column",
-          padding: "24px",
+          padding: "24px"
         }}
       >
         <Avatar
           component={RouterLink}
           src={imageProfile}
+          title="Account"
           style={{
             cursor: "pointer",
             width: "64px",

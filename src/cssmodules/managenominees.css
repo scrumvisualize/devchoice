@@ -17,7 +17,8 @@
   text-align: left;
   padding: 5px;
   font-size: 11px;
-  background-color: #adabe0;
+  background-color: #1976d2;
+  color: #fff
 }
 
 .managenominees tr:nth-child(even) {
