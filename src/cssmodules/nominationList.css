@@ -1,9 +1,8 @@
 
 
 #main-content {
-    background-color: #7ebbed;
+    background-color: #d8dfeb;
     word-wrap: break-word;
-    color: #1e1f1f;
 }
 
 #sidebar-left {
@@ -106,7 +105,7 @@
         border-width: 1px 1px 3px;
         border-radius: 5px;
         margin : 50px !important;
-        
+
       }
 
       .makeStyles-label-6{

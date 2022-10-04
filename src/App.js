@@ -17,6 +17,7 @@ import Nominate from "./components/nominate";
 import NominatePerson from "./components/nominatePerson";
 import NominationView from "./components/nominationView";
 import Login from "./components/login";
+import Footer from "./components/footer";
 import NominationList from "./components/nominationList";
 import ManageNominees from "./components/manageNominees";
 import { ProtectedRoute } from "./components/protectedRoute";
@@ -54,7 +55,7 @@ function App() {
     <Switch>
       <Route exact path='/' component={() => <Login role={role} />} />
       <ProtectedRoute exact path='/dashboard' component={DashboardLayout} />
-      <ProtectedRoute exact path='/createLink' component={CreateLink} />
+      {/* <ProtectedRoute exact path='/createLink' component={CreateLink} /> */}
       <ProtectedRoute exact path='/nominationList' component={NominationList} />
       <ProtectedRoute exact path='/manageNominees' component={ManageNominees} />
       <Route exact path='/nominate/:token' component={Nominate} />
@@ -62,6 +63,8 @@ function App() {
       <Route path='/nominatePerson' exact component={NominatePerson} />
       <Route path='/nominationView' exact component={NominationView} />
       <Route component={PageNotFound} />
+      <Route component={Footer} />
+
     </Switch>
   );
   const switchUser = (
@@ -78,6 +81,7 @@ function App() {
         component={() => <NominationView role={role} />}
       />
       <Route component={PageNotFound} />
+      
     </Switch>
   );
   return (

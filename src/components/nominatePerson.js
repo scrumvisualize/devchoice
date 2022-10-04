@@ -325,7 +325,11 @@ const NominatePerson = (props) => {
                 <div className='row eachrecord'>
                   <div className='column'>
                     <label className='nomlabel'>
+<<<<<<< HEAD
                       {x?.name} <b>→</b>
+=======
+                      {x?.name} <b>&#8594;</b>
+>>>>>>> 66906d76e3b80a8e5a34c29a62f307f3cf942a25
                     </label>
                   </div>
                   <input

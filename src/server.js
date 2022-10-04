@@ -26,8 +26,8 @@ const port = 8000;
 
 const DB_NAME = "devchoice";
 const DB_PORT = 3306;
-const DB_USERNAME = "admin"; //admin
-const DB_PASSWORD = "C@rnagieMe11on"; //C@rnagieMe11on
+const DB_USERNAME = "root"; //admin
+const DB_PASSWORD = "admin"; //C@rnagieMe11on
 const DB_HOST = "127.0.0.1";
 const DB_DIALECT = "mysql";
 const DB_POOL = {
@@ -476,7 +476,7 @@ app.post("/service/publishwinner", async (req, res) => {
   }
 });
 
-/* This service is used to save the employees uploaded via csv file into database and populate the employees list into 
+/* This service is used to save the employees uploaded via csv file into database and populate the employees list into
 the nominate person screen */
 app.put(
   "/service/managenominees",
