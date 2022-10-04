@@ -325,7 +325,7 @@ const NominatePerson = (props) => {
                 <div className='row eachrecord'>
                   <div className='column'>
                     <label className='nomlabel'>
-                      {x?.name} <b>>></b>
+                      {x?.name} <b>→</b>
                     </label>
                   </div>
                   <input

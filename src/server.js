@@ -511,9 +511,9 @@ app.put(
                 .status(200)
                 .json({ message: "Nominees inserted successfully !" });
             } else {
-              await ManageNomineesModel.bulkCreate(allNominees, {
-                updateOnDuplicate: ["firstName"],
-                //{attributes: { exclude: ['createdAt'] },
+              await ManageNomineesModel.bulkCreate(allNominees,
+                 { updateOnDuplicate: ["updatedAt"]},
+                 { attributes: { exclude: ['createdAt'] },
                 where: { id: ["id"] },
               });
               res

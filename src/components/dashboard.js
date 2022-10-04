@@ -222,6 +222,7 @@ const Dashboard = (props) => {
   const onLogoutSuccess = (res) => {
     localStorage.removeItem("loginEmail");
     localStorage.removeItem("userImage");
+    localStorage.removeItem("authToken");
     history.push("/");
     console.log("Logged out successfully !");
   };
@@ -445,9 +446,7 @@ const Dashboard = (props) => {
           </div>
         </div>
       </div>
-      <div className='bottom level'>
-        <h3>@Copyright Vin</h3>
-      </div>
+      
       <Modal
         open={open}
         onClose={() => {

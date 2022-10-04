@@ -30,11 +30,11 @@ const items = [
     icon: BarChartIcon,
     title: "Dashboard",
   },
-  {
-    href: "/createLink",
-    icon: UsersIcon,
-    title: "Create Link",
-  },
+  // {
+  //   href: "/createLink",
+  //   icon: UsersIcon,
+  //   title: "Create Link",
+  // },
   {
     href: "/nominationList",
     icon: ShoppingBagIcon,
@@ -61,6 +61,10 @@ const items = [
     title: "Backers & Supporters",
   },
 ];
+
+      // <div className='bottom level'>
+      //   <h1>@Copyright Vinod</h1>
+      // </div>
 
 const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
   const location = useLocation();
