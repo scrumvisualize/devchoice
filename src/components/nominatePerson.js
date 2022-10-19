@@ -284,7 +284,7 @@ const NominatePerson = (props) => {
         </div>
       </div>
       <div className="nomHeader">
-        <h2>Nominate a person</h2>
+        <h1>Nominate Person</h1>
       </div><br></br>
       <section className="col1">
         <div className='nomineeSelectBox'>
@@ -325,11 +325,7 @@ const NominatePerson = (props) => {
                 <div className='row eachrecord'>
                   <div className='column'>
                     <label className='nomlabel'>
-<<<<<<< HEAD
                       {x?.name} <b>→</b>
-=======
-                      {x?.name} <b>&#8594;</b>
->>>>>>> 66906d76e3b80a8e5a34c29a62f307f3cf942a25
                     </label>
                   </div>
                   <input

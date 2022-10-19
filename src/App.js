@@ -37,9 +37,11 @@ function App() {
     const fetchData = async () => {
       try {
         const userEmail = localStorage.getItem("loginEmail");
+        const params = {
+          userEmail: userEmail,
+        };
         const res = await Axios.get(
-          "http://localhost:8000/service/managenomineeaccess",
-          { params: { userEmail } }
+          "http://localhost:8000/service/managenomineeaccess", { params } 
         );
         console.log(res.data[0][0].access, "rest.data");
         const data = res.data[0][0].access;
@@ -80,7 +82,7 @@ function App() {
         exact
         component={() => <NominationView role={role} />}
       />
-      <Route component={PageNotFound} />
+      <Route component={NominationView} />
       
     </Switch>
   );

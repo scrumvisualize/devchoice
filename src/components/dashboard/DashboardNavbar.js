@@ -20,7 +20,7 @@ const DashboardNavbar = ({ onMobileNavOpen, signOut, ...rest }) => {
     <AppBar elevation={0} {...rest} style={{ background: "#1976D2" }}>
       <Toolbar>
         <RouterLink to='/'>
-          <img alt='Logo' src='images/onlineaward.jpg' width='80px' />
+          <img alt='Logo' src='images/simpro.PNG' width='80px'/>
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden mdDown>

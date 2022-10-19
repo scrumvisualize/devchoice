@@ -277,7 +277,7 @@ const ChartBox = (props) => {
           >
             Last 6 Months
           </Button>
-          <Button
+          {/* <Button
             variant='outlined'
             color='primary'
             style={{
@@ -286,7 +286,7 @@ const ChartBox = (props) => {
             onClick={handleClickYear}
           >
             This Year
-          </Button>
+          </Button> */}
         </div>
 
         <Box

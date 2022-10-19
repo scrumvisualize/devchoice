@@ -82,7 +82,7 @@ const NominationView = (props) => {
           </Link>
         </a>
       </div>
-      <h2>Nomination View</h2>
+      <h1>Nomination View</h1>
       {!nominationView.length && (
         <div className='dashboarddata'>
           Sorry, no nominations data to display !
@@ -123,7 +123,7 @@ const NominationView = (props) => {
                 </div>
               </div>
 
-            {/*<span className='likeButton' onClick={() => saveLikes(item.nomineeemail)}>*/}
+            {/* <span className='likeButton' onClick={() => saveLikes(item.nomineeemail)}>*/}
             {/*  <HeartIcon />*/}
 
             {/*  {*/}
@@ -138,7 +138,7 @@ const NominationView = (props) => {
             {/*    </span>*/}
             {/*    ))*/}
             {/*  }*/}
-            {/*</span>*/}
+            {/*</span> */}
           </div>
         ))}
       </div>

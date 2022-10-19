@@ -4,7 +4,7 @@
     background-color: #3f9eeb !important;
     color: #fff !important;
     margin: 15px 0px 5px 100px;
-    border-radius: 5px;
+    border-radius: 5px 5px;
     display: grid;
     grid-template-columns: 100px 100px 300px 100px!important;
 }
@@ -14,19 +14,24 @@
     border-radius: 25px;
 }
 
-.likeButton{
 
-}
 @media only screen and (min-width: 1920px) {
     .nominationRecord{
         width:600px;
         height:100px;
         background-color: #3f9eeb !important;
         color: #fff !important;
-        margin: 10px 0px 5px 50px;
-        border-radius: 5px;
+        margin: 10px 0px 5px 100px;
+        border-radius: 5px 5px;
         display: grid !important;
         grid-template-columns: 150px 100px 300px 250px!important;
+    }
+    .nominationRecord img {
+        height: 50px;
+        width:  50px;
+        margin-left: -10px;
+        margin-top: 20px;
+        border-radius: 5px 5px;
     }
 }
 .emailhide{
@@ -42,11 +47,14 @@
     width:  50px;
     margin-left: -10px;
     margin-top: 20px;
+    border-radius: 5px 5px;
 }
 .nominationRecord .nomdataimg{
     background-color: #d3d984 !important;
     height: 100px;
     width:100px;
+    border-radius: 5px 5px;
+    
  }
 
 .flex-container {

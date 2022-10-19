@@ -14,16 +14,19 @@ const Backers = () => {
                 <section class="card-container">
                 <div class="card">
                     <i class="fas fa-paint-brush"></i>
-                    <img src="images/google.png"></img>
+                    <img src="images/simpro.PNG"></img>
                     <p> 
-                      I was curious to create a DevChoice system for simPRO. 
+                      While working in simPRO, I was interested in design and developing a 
+                      Devchoice awarding system using Reactjs, Express, Axios, Sequelize and Mysql.
+                      I have tried my level best to complete the small project.
+                      Regards Vinod 
                     </p>
                     
                 </div>
             </section>
-            <div className="footerLevel">
+            {/* <div className="footerLevel">
                 <Footer></Footer>
-            </div>
+            </div> */}
         </div>
     )
 }

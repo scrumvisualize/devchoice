@@ -38,7 +38,7 @@ const Login = (props) => {
 
   return (
     <div className='App'>
-      <h1>Login</h1>
+      <h2>Login</h2>
       <div className='loginForm part1'>
         <button onClick={signIn}>
           <img src='images/google.png' className='loginG' />
@@ -50,9 +50,9 @@ const Login = (props) => {
       </div>
       <div loginForm part2>
         <img src='images/onlineaward.jpg' className='loginAward' />
-        {/*<span className="loginbanner">*/}
-        {/*    <pre>Dev Choice Awards !</pre>*/}
-        {/*</span>*/}
+        <span className="loginbanner">
+        <pre><h2>Dev Choice Awards</h2></pre>
+        </span>
       </div>
     </div>
   );

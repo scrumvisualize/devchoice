@@ -453,3 +453,22 @@ input {
   text-align: center !important;
   padding-top: 35px !important;
 }
+
+
+.oldwinner{
+  height:50px !important;
+  width: 380px !important;
+  margin: 5px 0px 3px 10px !important;
+  border: solid 0.2px;
+  border-color: #edf1f5;
+}
+
+@media only screen and (min-width: 1920px) {
+  .oldwinner{
+    height:50px !important;
+    width: 380px !important;
+    margin: 5px 0px 3px 50px !important;
+    border: solid 0.2px;
+    border-color: #edf1f5;
+  }
+}

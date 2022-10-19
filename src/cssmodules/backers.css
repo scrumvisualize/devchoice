@@ -1,8 +1,8 @@
 /* Create a responsive, centered, three-column grid. */
-h1{
+/* h1{
     color: white !important;
     margin: auto 0;
-}
+} */
 .card-container {
     align-items: start;
     display: grid;
