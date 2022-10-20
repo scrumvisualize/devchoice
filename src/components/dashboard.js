@@ -3,7 +3,8 @@ import Axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
-import { useGoogleLogout } from "react-google-login";
+//import { useGoogleLogout } from "react-google-login";
+import { GoogleLogout } from '@react-oauth/google';
 const moment = require("moment");
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -219,7 +220,7 @@ const Dashboard = (props) => {
     fetchData();
   };
 
-  const onLogoutSuccess = (res) => {
+  const {onLogoutSuccess} = (res) => {
     localStorage.removeItem("loginEmail");
     localStorage.removeItem("userImage");
     localStorage.removeItem("authToken");
@@ -230,11 +231,11 @@ const Dashboard = (props) => {
   const onFailure = () => {
     console.log("Handle failure cases !");
   };
-  const { signOut } = useGoogleLogout({
-    clientId,
-    onLogoutSuccess,
-    onFailure,
-  });
+  // const { signOut } = GoogleLogout({
+  //   clientId,
+  //   onLogoutSuccess,
+  //   onFailure,
+  // });
 
   const teams = teamwiseNomination.reduce((teams, team) => {
     if (!teams[team.nomineeteam]) teams[team.nomineeteam] = [];
@@ -262,7 +263,7 @@ const Dashboard = (props) => {
         <div className='profileImage'>
           <img src={image}></img>
           <span className='dropdown-content'>
-            <a href='' onClick={signOut}>
+            <a href='' onClick={onLogoutSuccess}>
               Logout
             </a>
           </span>

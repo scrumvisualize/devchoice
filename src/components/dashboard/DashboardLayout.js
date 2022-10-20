@@ -3,7 +3,7 @@ import Axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
-import { useGoogleLogout } from "react-google-login";
+//import { useGoogleLogout } from "react-google-login";
 
 import styled from "@emotion/styled";
 import DashboardNavbar from "./DashboardNavbar";
@@ -201,7 +201,7 @@ const DashboardLayout = () => {
     setOpen(false);
   };
 
-  const onLogoutSuccess = (res) => {
+  const {onLogoutSuccess} = (res) => {
     localStorage.removeItem("loginEmail");
     localStorage.removeItem("userImage");
     history.push("/");
@@ -211,11 +211,11 @@ const DashboardLayout = () => {
   const onFailure = () => {
     console.log("Handle failure cases !");
   };
-  const { signOut } = useGoogleLogout({
-    clientId,
-    onLogoutSuccess,
-    onFailure,
-  });
+  // const { signOut } = useGoogleLogout({
+  //   clientId,
+  //   onLogoutSuccess,
+  //   onFailure,
+  // });
 
   const teams = teamwiseNomination.reduce((teams, team) => {
     if (!teams[team.team]) teams[team.team] = [];
@@ -226,7 +226,7 @@ const DashboardLayout = () => {
   return (
     <DashboardLayoutRoot>
       <DashboardNavbar
-        signOut={signOut}
+        onLogoutSuccess={onLogoutSuccess}
         onMobileNavOpen={() => setMobileNavOpen(true)}
       />
       <DashboardSidebar
