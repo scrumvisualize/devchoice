@@ -7,5 +7,7 @@ button .loginText{
 text-align: center;
 }
 
-
-
+ .loginForm {
+  width: 200px !important; 
+  margin: 0 auto !important;
+}

@@ -30,13 +30,6 @@ const Login = (props) => {
     console.log("Login failed: res:", res);
     alert(`Failed to login !`);
   };
-  // const { credentialResponse } = GoogleLogin({
-  //   onSuccess,
-  //   onFailure,
-  //   clientId,
-  //   isSignedIn: true,
-  //   accessType: "offline",
-  // });
 
   const googleSuccess =  async (res) => {  
     console.log('auth.js-googlesuccess-res',res)  
@@ -44,13 +37,12 @@ const Login = (props) => {
       .then(res => res.json())
       .then(response => {
         console.log('user Info=',response);
-        // console.log("Login successfully", response.profileObj);
         const email = response.email;
         const image = response.picture;
         setUserEmail(email);
         window.localStorage.setItem("loginEmail", email);
         window.localStorage.setItem("userImage", image);
-        refreshToken(response);
+        refreshToken(res);
         history.replace(toLocation);
       })
       .catch(error => console.log(error));    
@@ -64,15 +56,10 @@ const Login = (props) => {
       <div className='App'>
       <h2>Login</h2>
       <div className='loginForm part1'>
-        {/* <button onClick={signIn}>
-          <img src='images/google.png' className='loginG' />
-          <span className='loginText'>Sign in</span>
-        </button> */}
         <GoogleLogin
           onSuccess={googleSuccess}
           onError={googleError}
         />
-        <br></br>
         <br></br>
         <div className='loginDevchoice'></div>
       </div>
