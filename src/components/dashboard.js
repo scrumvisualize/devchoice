@@ -5,6 +5,7 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 //import { useGoogleLogout } from "react-google-login";
 import { GoogleLogout } from '@react-oauth/google';
+import {gapi} from 'gapi-script';
 const moment = require("moment");
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -237,6 +238,20 @@ const Dashboard = (props) => {
   //   onFailure,
   // });
 
+
+  const signOut = () =>{
+    const auth2 = gapi.auth2.getAuthInstance();
+    if (auth2 != null) {
+      auth2.signOut().then(
+           auth2.disconnect().then(console.log('LOGOUT SUCCESSFUL')),
+           localStorage.removeItem("loginEmail"),
+           localStorage.removeItem("userImage"),
+           history.push("/"),
+           console.log("Logged out successfully !")
+       )
+      }
+    } 
+
   const teams = teamwiseNomination.reduce((teams, team) => {
     if (!teams[team.nomineeteam]) teams[team.nomineeteam] = [];
     teams[team.nomineeteam].push(team.nomineename);
@@ -263,7 +278,7 @@ const Dashboard = (props) => {
         <div className='profileImage'>
           <img src={image}></img>
           <span className='dropdown-content'>
-            <a href='' onClick={onLogoutSuccess}>
+            <a href='' onClick={signOut}>
               Logout
             </a>
           </span>

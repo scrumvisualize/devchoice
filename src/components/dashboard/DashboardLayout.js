@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 //import { useGoogleLogout } from "react-google-login";
+import {gapi} from 'gapi-script';
 
 import styled from "@emotion/styled";
 import DashboardNavbar from "./DashboardNavbar";
@@ -217,6 +218,19 @@ const DashboardLayout = () => {
   //   onFailure,
   // });
 
+  const {signOut} = () =>{
+  const auth2 = gapi.auth2.getAuthInstance();
+  if (auth2 != null) {
+    auth2.signOut().then(
+         auth2.disconnect().then(console.log('LOGOUT SUCCESSFUL')),
+         localStorage.removeItem("loginEmail"),
+         localStorage.removeItem("userImage"),
+         history.push("/"),
+         console.log("Logged out successfully !")
+     )
+    }
+  } 
+
   const teams = teamwiseNomination.reduce((teams, team) => {
     if (!teams[team.team]) teams[team.team] = [];
     teams[team.team].push(team.nomineename);
@@ -226,7 +240,7 @@ const DashboardLayout = () => {
   return (
     <DashboardLayoutRoot>
       <DashboardNavbar
-        onLogoutSuccess={onLogoutSuccess}
+        onLogoutSuccess={signOut}
         onMobileNavOpen={() => setMobileNavOpen(true)}
       />
       <DashboardSidebar
