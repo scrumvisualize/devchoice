@@ -100,7 +100,7 @@ const NominationList = () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominationgroup"
+          "https://devchoice.simproedge.com/api/service/nominationgroup"
         );
         if (isMounted.current) {
           for (const elem of res.data) {
@@ -136,7 +136,7 @@ const NominationList = () => {
       const fetchData = async () => {
         try {
           const res = await Axios.post(
-            "http://localhost:8000/service/publishwinner",
+            "https://devchoice.simproedge.com/api/service/publishwinner",
             { winnerName, winnerDetails }
           );
           console.log(res.data);

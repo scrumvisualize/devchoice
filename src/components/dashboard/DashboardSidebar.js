@@ -81,7 +81,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
       try {
         const userEmail = localStorage.getItem("loginEmail");
         const res = await Axios.get(
-          "http://localhost:8000/service/managenomineeaccess",
+          "https://devchoice.simproedge.com/api/service/managenomineeaccess",
           { params: { userEmail } }
         );
         console.log(res.data[0][0].access, "rest.data");

@@ -98,7 +98,7 @@ const DashboardLayout = () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominations"
+          "https://devchoice.simproedge.com/api/service/nominations"
         );
         if (isMounted.current) {
           setNominationList(res.data);
@@ -115,7 +115,7 @@ const DashboardLayout = () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/displaywinner"
+          "https://devchoice.simproedge.com/api/service/displaywinner"
         );
         if (isMounted.current) {
           setDisplayWinner(res.data);
@@ -132,7 +132,7 @@ const DashboardLayout = () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominationcount"
+          "https://devchoice.simproedge.com/api/service/nominationcount"
         );
         if (isMounted.current) {
           setNominationCount(res.data);
@@ -149,7 +149,7 @@ const DashboardLayout = () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/teamwisenomination"
+          "https://devchoice.simproedge.com/api/service/teamwisenomination"
         );
         if (isMounted.current) {
           setTeamwiseNomination(res.data);
@@ -167,7 +167,7 @@ const DashboardLayout = () => {
       const email = localStorage.getItem("loginEmail");
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/dashboardview",
+          "https://devchoice.simproedge.com/api/service/dashboardview",
           { email }
         );
         if (isMounted.current) {
@@ -188,7 +188,7 @@ const DashboardLayout = () => {
       const name = nameText;
       try {
         const res = await Axios.post(
-          "http://localhost:8000/service/confirmwinner",
+          "https://devchoice.simproedge.com/api/service/confirmwinner",
           { email, name }
         );
         if (isMounted.current) {

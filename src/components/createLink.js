@@ -23,7 +23,7 @@ const CreateLink = () => {
         const fetchData = async () => {
             try {
                 localStorage.setItem("userEmail", email);
-                const res = await Axios.put('http://localhost:8000/service/createlink', { email, token});
+                const res = await Axios.put('https://devchoice.simproedge.com/api/service/createlink', { email, token});
                 if (res.data) {
                     console.log("Link token created:" + res.data);
                     setEmail("");
@@ -42,7 +42,7 @@ const CreateLink = () => {
         const fetchData = async () => {
             try {
                 const email = localStorage.getItem("userEmail");
-                const res = await Axios.post('http://localhost:8000/service/validatelink', { params: { email} });
+                const res = await Axios.post('https://devchoice.simproedge.com/api/service/validatelink', { params: { email} });
                 if (res.data) {
                     const validToken = res.data;
                     console.log("Get token :" + res.data);

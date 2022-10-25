@@ -29,7 +29,7 @@ const Nominate = () => {
         reset(initialState);
         const fetchData = async () => {
             try {
-                const res = await Axios.post('http://localhost:8000/service/nominateperson', formRegister);
+                const res = await Axios.post('https://devchoice.simproedge.com/api/service/nominateperson', formRegister);
                 if (res.data) {
                     console.log("Link token created:" + res.data);
                     const successMessage = res.data.message;

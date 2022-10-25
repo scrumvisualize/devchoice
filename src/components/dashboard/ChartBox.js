@@ -199,7 +199,7 @@ const ChartBox = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominationchartdata"
+          "https://devchoice.simproedge.com/api/service/nominationchartdata"
         );
         console.log(res.data, "Just throw the full data");
         setMonthlyCount([ res.data[0]]);
