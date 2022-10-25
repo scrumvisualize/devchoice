@@ -41,7 +41,7 @@ function App() {
           userEmail: userEmail,
         };
         const res = await Axios.get(
-          "http://localhost:8000/service/managenomineeaccess", { params } 
+          "https://devchoice.simproedge.com/api/service/managenomineeaccess", { params }
         );
         console.log(res.data[0][0].access, "rest.data");
         const data = res.data[0][0].access;

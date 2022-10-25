@@ -115,7 +115,7 @@ const NominatePerson = (props) => {
       try {
         let res = [];
         res = await Axios.get(
-          "http://localhost:8000/service/submittednominations",
+          "https://devchoice.simproedge.com/api/service/submittednominations",
             {params:{userEmail}}
         );
         const data1 = res.data;
@@ -138,7 +138,7 @@ const NominatePerson = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nomineeslist"
+          "https://devchoice.simproedge.com/api/service/nomineeslist"
         );
         console.log(res.data, "aaa");
         const data1 = res.data;
@@ -182,7 +182,7 @@ const NominatePerson = (props) => {
     const fetchData = async (nomRegister) => {
       try {
         const res = await Axios.post(
-          "http://localhost:8000/service/nominateperson",
+          "https://devchoice.simproedge.com/api/service/nominateperson",
           { userEmail, nomRegister },
           headers
         );

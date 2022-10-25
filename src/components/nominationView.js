@@ -22,7 +22,7 @@ const NominationView = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-            "http://localhost:8000/service/nominationlikes"
+            "https://devchoice.simproedge.com/api/service/nominationlikes"
         );
         if (isMounted.current) {
           setLikeCount(res.data);
@@ -39,7 +39,7 @@ const NominationView = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominations"
+          "https://devchoice.simproedge.com/api/service/nominations"
         );
         if (isMounted.current) {
           setNominationView(res.data);
@@ -60,7 +60,7 @@ const NominationView = (props) => {
       const params = {useremail: userEmail, nomineeEmail: email, likes: likes};
       try {
         const res = await Axios.put(
-            "http://localhost:8000/service/nominationviewsavelikes", params);
+            "https://devchoice.simproedge.com/api/service/nominationviewsavelikes", params);
         if (isMounted.current) {
           console.log("Like status :" + res.data);
         }

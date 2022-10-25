@@ -142,7 +142,7 @@ const ManageNominees = () => {
       try {
         const userEmail = localStorage.getItem("loginEmail");
         const res = await Axios.get(
-          "http://localhost:8000/service/getActiveStatus",
+          "https://devchoice.simproedge.com/api/service/getActiveStatus",
           { params: { userEmail } }
         );
         setNomStatus(res.data[0][0].status);
@@ -167,7 +167,7 @@ const ManageNominees = () => {
       // const email = localStorage.getItem("loginEmail");
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nomineeslist"
+          "https://devchoice.simproedge.com/api/service/nomineeslist"
         );
         setManageNominees(res.data);
         console.log("Get the list of nominees :" + res.data);
@@ -190,7 +190,7 @@ const ManageNominees = () => {
       }
       formData.append("file", fileArr);
       const res = Axios.put(
-        "http://localhost:8000/service/managenominees",
+        "https://devchoice.simproedge.com/api/service/managenominees",
         formData,
         {
           headers: {
@@ -218,7 +218,7 @@ const ManageNominees = () => {
       //   const userEmail = localStorage.getItem("loginEmail");
       //   try {
       //     const res = await Axios.put(
-      //       "http://localhost:8000/service/activeStatus",
+      //       "https://devchoice.simproedge.com/api/service/activeStatus",
       //         {userEmail, status: 1 }
       //     );
       //     console.log(res.data);
@@ -234,7 +234,7 @@ const ManageNominees = () => {
       const fetchData = async () => {
         try {
           const res = await Axios.put(
-            "http://localhost:8000/service/activeStatus",
+            "https://devchoice.simproedge.com/api/service/activeStatus",
             { userEmail, status: 0 }
           );
           console.log(res.data);
@@ -265,7 +265,7 @@ const ManageNominees = () => {
       const fetchData = async () => {
         try {
           const res = await Axios.post(
-            "http://localhost:8000/service/createnominationsession",
+            "https://devchoice.simproedge.com/api/service/createnominationsession",
             { userEmail, selectedDateStart, selectedDateEnd, expanded }
           );
           console.log(res.data);
