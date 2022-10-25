@@ -30,6 +30,8 @@ import GlobalStyles from "./components/dashboard/GlobalStyles";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 
+const appURL = process.env.REACT_APP_URL;
+
 function App() {
   const [role, setRole] = useState();
 
@@ -41,7 +43,7 @@ function App() {
           userEmail: userEmail,
         };
         const res = await Axios.get(
-          "http://localhost:8000/service/managenomineeaccess", { params } 
+          `${appURL}/service/managenomineeaccess`, { params } 
         );
         console.log(res.data[0][0].access, "rest.data");
         const data = res.data[0][0].access;
