@@ -17,6 +17,8 @@ import { toast } from "react-toastify";
 
 const moment = require("moment");
 
+const appURL = process.env.REACT_APP_URL;
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -100,7 +102,7 @@ const NominationList = () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominationgroup"
+          `${appURL}/service/nominationgroup`
         );
         if (isMounted.current) {
           for (const elem of res.data) {
@@ -136,7 +138,7 @@ const NominationList = () => {
       const fetchData = async () => {
         try {
           const res = await Axios.post(
-            "http://localhost:8000/service/publishwinner",
+            `${appURL}/service/publishwinner`,
             { winnerName, winnerDetails }
           );
           console.log(res.data);
@@ -250,37 +252,6 @@ const NominationList = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* <Modal
-        open={open}
-        onClose={() => {
-          setOpen(false);
-        }}
-        className={classes.modal}
-      >
-        <form className={classes.form}>
-          <div className='inputField'>
-            <input
-              placeholder='name'
-              name='winnername'
-              type='text'
-              onChange={(e) => setWinnerName(e.target.value)}
-            />
-          </div>
-          <div className='inputField'>
-            <textarea
-              name='description'
-              placeholder='winning details'
-              onChange={(e) => setWinnerDetails(e.target.value)}
-            />
-          </div>
-          <input
-            className='publishbtn'
-            type='submit'
-            value='Publish'
-            onClick={postWinner}
-          />
-        </form>
-      </Modal> */}
     </div>
   );
 };

@@ -16,9 +16,9 @@ const Backers = () => {
                     <i class="fas fa-paint-brush"></i>
                     <img src="images/simpro.PNG"></img>
                     <p> 
-                      While working in simPRO, I was interested in design and developing a 
-                      Devchoice awarding system using Reactjs, Express, Axios, Sequelize and Mysql.
-                      I have tried my level best to complete the small project.
+                      While working in simPRO, I was interested in developing a system for 
+                      Devchoice awards using Reactjs, Express, Axios, Sequelize and Mysql.
+                      I have tried my level best to complete the small project for simPRO.
                       Regards Vinod 
                     </p>
                     

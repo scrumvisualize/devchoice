@@ -18,8 +18,9 @@ import NominatedMembersBox from "./NominatedMembersBox";
 import ChartBox from "./ChartBox";
 
 const moment = require("moment");
-
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const appURL = process.env.REACT_APP_URL;
+
 const DashboardLayoutRoot = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   display: "flex",
@@ -98,7 +99,7 @@ const DashboardLayout = () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominations"
+          `${appURL}/service/nominations`
         );
         if (isMounted.current) {
           setNominationList(res.data);
@@ -115,7 +116,7 @@ const DashboardLayout = () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/displaywinner"
+          `${appURL}/service/displaywinner`
         );
         if (isMounted.current) {
           setDisplayWinner(res.data);
@@ -132,7 +133,7 @@ const DashboardLayout = () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominationcount"
+          `${appURL}/service/nominationcount`
         );
         if (isMounted.current) {
           setNominationCount(res.data);
@@ -149,7 +150,7 @@ const DashboardLayout = () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/teamwisenomination"
+          `${appURL}/service/teamwisenomination`
         );
         if (isMounted.current) {
           setTeamwiseNomination(res.data);
@@ -167,7 +168,7 @@ const DashboardLayout = () => {
       const email = localStorage.getItem("loginEmail");
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/dashboardview",
+          `${appURL}/service/dashboardview`,
           { email }
         );
         if (isMounted.current) {
@@ -188,7 +189,7 @@ const DashboardLayout = () => {
       const name = nameText;
       try {
         const res = await Axios.post(
-          "http://localhost:8000/service/confirmwinner",
+          `${appURL}/service/confirmwinner`,
           { email, name }
         );
         if (isMounted.current) {
@@ -212,12 +213,7 @@ const DashboardLayout = () => {
   const onFailure = () => {
     console.log("Handle failure cases !");
   };
-  // const { signOut } = useGoogleLogout({
-  //   clientId,
-  //   onLogoutSuccess,
-  //   onFailure,
-  // });
-
+ 
   const {signOut} = () =>{
   const auth2 = gapi.auth2.getAuthInstance();
   if (auth2 != null) {

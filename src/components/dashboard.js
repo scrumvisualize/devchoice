@@ -9,6 +9,7 @@ import {gapi} from 'gapi-script';
 const moment = require("moment");
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const appURL = process.env.REACT_APP_URL;
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -16,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    //maxWidth: "500px"
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -118,7 +118,7 @@ const Dashboard = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominations"
+          `${appURL}/service/nominations`
         );
         if (isMounted.current) {
           setNominationList(res.data);
@@ -135,7 +135,7 @@ const Dashboard = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/displaywinner"
+          `${appURL}/service/displaywinner`
         );
         if (isMounted.current) {
           setDisplayWinner(res.data);
@@ -152,7 +152,7 @@ const Dashboard = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominationcount"
+          `${appURL}/service/nominationcount`
         );
         if (isMounted.current) {
           setNominationCount(res.data);
@@ -169,7 +169,7 @@ const Dashboard = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/teamwisenomination"
+          `${appURL}/service/teamwisenomination`
         );
         if (isMounted.current) {
           setTeamwiseNomination(res.data);
@@ -187,7 +187,7 @@ const Dashboard = (props) => {
       const email = localStorage.getItem("loginEmail");
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/dashboardview",
+          `${appURL}/service/dashboardview`,
           { email }
         );
         if (isMounted.current) {
@@ -208,7 +208,7 @@ const Dashboard = (props) => {
       const name = nameText;
       try {
         const res = await Axios.post(
-          "http://localhost:8000/service/confirmwinner",
+          `${appURL}/service/confirmwinner`,
           { email, name }
         );
         if (isMounted.current) {

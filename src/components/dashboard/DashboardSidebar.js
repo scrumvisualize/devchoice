@@ -24,6 +24,8 @@ import {
 import NavItem from "./NavItem";
 import Axios from "axios";
 
+const appURL = process.env.REACT_APP_URL;
+
 const items = [
   {
     href: "/dashboard",
@@ -62,10 +64,6 @@ const items = [
   },
 ];
 
-      // <div className='bottom level'>
-      //   <h1>@Copyright Vinod</h1>
-      // </div>
-
 const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
   const location = useLocation();
   const [status, setStatus] = useState();
@@ -81,7 +79,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile, imageProfile }) => {
       try {
         const userEmail = localStorage.getItem("loginEmail");
         const res = await Axios.get(
-          "http://localhost:8000/service/managenomineeaccess",
+          `${appURL}/service/managenomineeaccess`,
           { params: { userEmail } }
         );
         console.log(res.data[0][0].access, "rest.data");

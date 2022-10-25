@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import Axios from "axios";
 import {Link, useHistory} from 'react-router-dom';
+const appURL = process.env.REACT_APP_URL;
 
 
 const CreateLink = () => {
@@ -23,7 +24,7 @@ const CreateLink = () => {
         const fetchData = async () => {
             try {
                 localStorage.setItem("userEmail", email);
-                const res = await Axios.put('http://localhost:8000/service/createlink', { email, token});
+                const res = await Axios.put(`${appURL}/service/createlink`, { email, token});
                 if (res.data) {
                     console.log("Link token created:" + res.data);
                     setEmail("");
@@ -42,11 +43,11 @@ const CreateLink = () => {
         const fetchData = async () => {
             try {
                 const email = localStorage.getItem("userEmail");
-                const res = await Axios.post('http://localhost:8000/service/validatelink', { params: { email} });
+                const res = await Axios.post(`${appURL}/service/validatelink`, { params: { email} });
                 if (res.data) {
                     const validToken = res.data;
                     console.log("Get token :" + res.data);
-                    const nominationUrl = 'http://localhost:3000/nominate/'+validToken;
+                    const nominationUrl = `${appURL}:3000/nominate/`+validToken;
                     window.localStorage.setItem("tokenlink", nominationUrl);
                     if( (validToken !== null) || ( validToken !== undefined) || ( validToken !== "")){
                         history.push(`/nominate/${validToken}`);

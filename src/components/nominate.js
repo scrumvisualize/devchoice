@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import Axios from "axios";
 import { useHistory } from 'react-router-dom';
 
+const appURL = process.env.REACT_APP_URL;
 
 const Nominate = () => {
 
@@ -29,7 +30,7 @@ const Nominate = () => {
         reset(initialState);
         const fetchData = async () => {
             try {
-                const res = await Axios.post('http://localhost:8000/service/nominateperson', formRegister);
+                const res = await Axios.post(`${appURL}/service/nominateperson`, formRegister);
                 if (res.data) {
                     console.log("Link token created:" + res.data);
                     const successMessage = res.data.message;

@@ -14,6 +14,8 @@ import { toast } from "react-toastify";
 import { notify } from "../utils/helperFunctions/HelperFunctions";
 import "react-toastify/dist/ReactToastify.css";
 
+const appURL = process.env.REACT_APP_URL;
+
 const NominatePerson = (props) => {
   toast.configure();
   const [option, setOption] = useState([]);
@@ -115,7 +117,7 @@ const NominatePerson = (props) => {
       try {
         let res = [];
         res = await Axios.get(
-          "http://localhost:8000/service/submittednominations",
+          `${appURL}/service/submittednominations`,
             {params:{userEmail}}
         );
         const data1 = res.data;
@@ -138,7 +140,7 @@ const NominatePerson = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nomineeslist"
+          `${appURL}/service/nomineeslist`
         );
         console.log(res.data, "aaa");
         const data1 = res.data;
@@ -182,7 +184,7 @@ const NominatePerson = (props) => {
     const fetchData = async (nomRegister) => {
       try {
         const res = await Axios.post(
-          "http://localhost:8000/service/nominateperson",
+          `${appURL}/service/nominateperson`,
           { userEmail, nomRegister },
           headers
         );

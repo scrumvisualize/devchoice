@@ -5,6 +5,7 @@ import { Heart as HeartIcon } from "react-feather";
 import "animate.css";
 
 const moment = require("moment");
+const appURL = process.env.REACT_APP_URL;
 
 const NominationView = (props) => {
   const [nominationView, setNominationView] = useState([]);
@@ -22,7 +23,7 @@ const NominationView = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-            "http://localhost:8000/service/nominationlikes"
+            `${appURL}/service/nominationlikes`
         );
         if (isMounted.current) {
           setLikeCount(res.data);
@@ -39,7 +40,7 @@ const NominationView = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominations"
+          `${appURL}/service/nominations`
         );
         if (isMounted.current) {
           setNominationView(res.data);
@@ -59,8 +60,7 @@ const NominationView = (props) => {
       const userEmail = localStorage.getItem("loginEmail");
       const params = {useremail: userEmail, nomineeEmail: email, likes: likes};
       try {
-        const res = await Axios.put(
-            "http://localhost:8000/service/nominationviewsavelikes", params);
+        const res = await Axios.put(`${appURL}/service/nominationviewsavelikes`, params);
         if (isMounted.current) {
           console.log("Like status :" + res.data);
         }
@@ -122,23 +122,6 @@ const NominationView = (props) => {
                   </span>
                 </div>
               </div>
-
-            {/* <span className='likeButton' onClick={() => saveLikes(item.nomineeemail)}>*/}
-            {/*  <HeartIcon />*/}
-
-            {/*  {*/}
-            {/*    likeCount.map((likeCount) => (*/}
-            {/*    <span key={likeCount}>*/}
-            {/*      {*/}
-            {/*        item.nomineeemail === likeCount.nomineeemail ? likeCount.likes : (*/}
-            {/*            null*/}
-            {/*        )*/}
-            {/*      }*/}
-
-            {/*    </span>*/}
-            {/*    ))*/}
-            {/*  }*/}
-            {/*</span> */}
           </div>
         ))}
       </div>

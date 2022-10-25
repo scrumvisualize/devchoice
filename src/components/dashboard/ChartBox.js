@@ -16,6 +16,8 @@ import { Line } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import Axios from "axios";
 
+const appURL = process.env.REACT_APP_URL;
+
 const options = {
   scales: {
     yAxes: [
@@ -199,7 +201,7 @@ const ChartBox = (props) => {
     const fetchData = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nominationchartdata"
+          `${appURL}/service/nominationchartdata`
         );
         console.log(res.data, "Just throw the full data");
         setMonthlyCount([ res.data[0]]);

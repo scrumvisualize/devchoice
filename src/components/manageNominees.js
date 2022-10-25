@@ -33,6 +33,8 @@ import { notify } from "../utils/helperFunctions/HelperFunctions";
 import { toast } from "react-toastify";
 import { TextField, Icon } from "@material-ui/core";
 
+const appURL = process.env.REACT_APP_URL;
+
 const clockSVG = (
   <svg
     version='1.1'
@@ -142,7 +144,7 @@ const ManageNominees = () => {
       try {
         const userEmail = localStorage.getItem("loginEmail");
         const res = await Axios.get(
-          "http://localhost:8000/service/getActiveStatus",
+          `${appURL}/service/getActiveStatus`,
           { params: { userEmail } }
         );
         setNomStatus(res.data[0][0].status);
@@ -167,7 +169,7 @@ const ManageNominees = () => {
       // const email = localStorage.getItem("loginEmail");
       try {
         const res = await Axios.get(
-          "http://localhost:8000/service/nomineeslist"
+          `${appURL}/service/nomineeslist`
         );
         setManageNominees(res.data);
         console.log("Get the list of nominees :" + res.data);
@@ -190,7 +192,7 @@ const ManageNominees = () => {
       }
       formData.append("file", fileArr);
       const res = Axios.put(
-        "http://localhost:8000/service/managenominees",
+        `${appURL}/service/managenominees`,
         formData,
         {
           headers: {
@@ -218,7 +220,7 @@ const ManageNominees = () => {
       //   const userEmail = localStorage.getItem("loginEmail");
       //   try {
       //     const res = await Axios.put(
-      //       "http://localhost:8000/service/activeStatus",
+      //       `${appURL}/service/activeStatus`,
       //         {userEmail, status: 1 }
       //     );
       //     console.log(res.data);
@@ -234,7 +236,7 @@ const ManageNominees = () => {
       const fetchData = async () => {
         try {
           const res = await Axios.put(
-            "http://localhost:8000/service/activeStatus",
+            `${appURL}/service/activeStatus`,
             { userEmail, status: 0 }
           );
           console.log(res.data);
@@ -265,7 +267,7 @@ const ManageNominees = () => {
       const fetchData = async () => {
         try {
           const res = await Axios.post(
-            "http://localhost:8000/service/createnominationsession",
+            `${appURL}/service/createnominationsession`,
             { userEmail, selectedDateStart, selectedDateEnd, expanded }
           );
           console.log(res.data);
@@ -436,59 +438,6 @@ const ManageNominees = () => {
             </CardContent>
           </Collapse>
         </Card>
-        {/* <div className='toggleSwitch'>
-          <FormControl component='fieldset'>
-            <FormLabel component='legend'>Admin Activity</FormLabel>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={state.activateNomination}
-                    onChange={handleChange}
-                    name='activateNomination'
-                  />
-                }
-                label='Activate Nomination'
-              />
-            </FormGroup>
-          </FormControl>
-
-          <div className='row'>
-            {showCalender ? (
-              <>
-                <div className='column'>
-                  <Controller
-                    control={control}
-                    name='from-date'
-                    render={({ field }) => (
-                      <DatePicker
-                        placeholderText='Select date'
-                        onChange={(date) => field.onChange(date)}
-                        selected={field.value}
-                      />
-                    )}
-                  />
-                </div>
-                <div className='column'>
-                  <Controller
-                    control={control}
-                    name='to-date'
-                    render={({ field }) => (
-                      <DatePicker
-                        placeholderText='Select date'
-                        onChange={(date) => field.onChange(date)}
-                        selected={field.value}
-                      />
-                    )}
-                  />
-                </div>
-                <input type='button' value='Save' onClick={onSave} />
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
-        </div> */}
       </form>
     </div>
   );
