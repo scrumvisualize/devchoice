@@ -153,11 +153,20 @@ const NominatePerson = (props) => {
     fetchData();
   }, [maxOptions]);
 
+  const focusOnInput = () => {
+    setTimeout(() => {
+      // You can use a better selector (this is just a generic input selector)
+      document.querySelector("input").focus();
+    // Adding some delay to allow the component to re-mount
+    }, 10);
+  };
+
   const handleTypeSelect = (e, i) => {
     const copy = [...selectedOption];
     copy.push(e[3 - maxOptions]); //A.H-fix error: select one more record it still console log the pre selected one
     setSelectedOption(copy);
     setMaxOptions((prevState) => prevState - 1); //A.H-making maxOption dynamic
+    focusOnInput();
   };
 
   const handleTypeRemove = (e) => {
@@ -174,6 +183,7 @@ const NominatePerson = (props) => {
     //delete the specific array case depends on the id
     updateList.splice(index, 1);
     setNomRegister(updateList);
+    focusOnInput();
   };
 
   const sendNomination = () => {

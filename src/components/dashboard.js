@@ -221,17 +221,17 @@ const Dashboard = (props) => {
     fetchData();
   };
 
-  const {onLogoutSuccess} = (res) => {
-    localStorage.removeItem("loginEmail");
-    localStorage.removeItem("userImage");
-    localStorage.removeItem("authToken");
-    history.push("/");
-    console.log("Logged out successfully !");
-  };
+  // const {onLogoutSuccess} = (res) => {
+  //   localStorage.removeItem("loginEmail");
+  //   localStorage.removeItem("userImage");
+  //   localStorage.removeItem("authToken");
+  //   history.push("/");
+  //   console.log("Logged out successfully !");
+  // };
 
-  const onFailure = () => {
-    console.log("Handle failure cases !");
-  };
+  // const onFailure = () => {
+  //   console.log("Handle failure cases !");
+  // };
   // const { signOut } = GoogleLogout({
   //   clientId,
   //   onLogoutSuccess,
@@ -240,6 +240,7 @@ const Dashboard = (props) => {
 
 
   const signOut = () =>{
+    alert("Logout");
     const auth2 = gapi.auth2.getAuthInstance();
     if (auth2 != null) {
       auth2.signOut().then(

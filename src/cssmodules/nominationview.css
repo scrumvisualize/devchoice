@@ -1,5 +1,5 @@
 .nominationRecord{
-    width:500px;
+    width:90%;
     height:100px;
     background-color: #3f9eeb !important;
     color: #fff !important;
@@ -17,7 +17,7 @@
 
 @media only screen and (min-width: 1920px) {
     .nominationRecord{
-        width:600px;
+        width:90%;
         height:100px;
         background-color: #3f9eeb !important;
         color: #fff !important;
@@ -33,6 +33,19 @@
         margin-top: 20px;
         border-radius: 5px 5px;
     }
+
+    .datadate{
+        width:250px !important;
+        height: 100px;
+        margin-top: 30px;
+    }
+    .flex-left {
+        width: 300px;
+        height: 100px;
+        margin: 30px;
+        padding: 5px;
+    }
+
 }
 .emailhide{
     display: none;
@@ -57,19 +70,17 @@
     
  }
 
-.flex-container {
-    display: flex;
-    flex-direction: row;
-}
 
 .flex-left {
-    width: 100%;
+    width: 500px;
     height: 50vh;
     margin: 30px;
     padding: 5px;
 }
 
-.flex-right {
-    width: 100%;
-    margin: 30px;
+
+.datadate{
+    width:250px !important;
+    height: 100px;
+    margin: 30px 0px 0px 100px;
 }

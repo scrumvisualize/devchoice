@@ -7,7 +7,7 @@
     align-items: start;
     display: grid;
     grid-gap: 30px;
-    grid-template-columns: repeat(auto-fit, 400px);
+    grid-template-columns: repeat(auto-fit, 450px);
     justify-content: center;
     margin-top: 50px;
 }
@@ -35,4 +35,9 @@
 
 .footerLevel{
   margin-bottom: 100px !important;
+}
+
+.backersText{
+    margin:10px;
+    padding:5px;
 }

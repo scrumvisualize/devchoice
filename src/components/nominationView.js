@@ -113,15 +113,15 @@ const NominationView = (props) => {
                   <span key={item.reason} className='datareason'>
                     {item.reason.length <= 7
                   ? item.reason
-                  : `${item.reason.substr(0, 15)}...`}
-                  </span>
-                </div>
-                <div className="flex-right">
-                  <span className='datadate' key={item.createdAt}>
-                  {moment(item.createdAt).format("DD-MMM-YYYY")}
+                  : `${item.reason}`}
                   </span>
                 </div>
               </div>
+              <span className="datadate">
+              <span className='datadate' key={item.createdAt}>
+                  {moment(item.createdAt).format("DD-MMM-YYYY")}
+                  </span>
+              </span>
           </div>
         ))}
       </div>

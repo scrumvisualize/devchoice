@@ -12,9 +12,20 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
 import InputIcon from "@material-ui/icons/Input";
+import { Link, useHistory } from "react-router-dom";
+import { googleLogout } from '@react-oauth/google';
 
 const DashboardNavbar = ({ onMobileNavOpen, signOut, ...rest }) => {
   const [notifications] = useState([]);
+  const history = useHistory();
+
+  const letsLogout = () =>{
+    googleLogout();
+    localStorage.removeItem("loginEmail");
+    localStorage.removeItem("userImage");
+    history.push("/");
+    console.log("Logged out successfully !");
+  }
 
   return (
     <AppBar elevation={0} {...rest} style={{ background: "#1976D2" }}>
@@ -24,7 +35,7 @@ const DashboardNavbar = ({ onMobileNavOpen, signOut, ...rest }) => {
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden mdDown>
-          <IconButton color='inherit' onClick={signOut}>
+          <IconButton color='inherit' onClick={letsLogout}>
             <InputIcon />
           </IconButton>
         </Hidden>

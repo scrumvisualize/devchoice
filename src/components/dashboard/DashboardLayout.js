@@ -5,6 +5,7 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 //import { useGoogleLogout } from "react-google-login";
 import {gapi} from 'gapi-script';
+import { googleLogout } from '@react-oauth/google';
 
 import styled from "@emotion/styled";
 import DashboardNavbar from "./DashboardNavbar";
@@ -203,29 +204,31 @@ const DashboardLayout = () => {
     setOpen(false);
   };
 
-  const {onLogoutSuccess} = (res) => {
-    localStorage.removeItem("loginEmail");
-    localStorage.removeItem("userImage");
-    history.push("/");
-    console.log("Logged out successfully !");
-  };
+  // const {onLogoutSuccess} = (res) => {
+  //   alert("hello");
+  //   localStorage.removeItem("loginEmail");
+  //   localStorage.removeItem("userImage");
+  //   history.push("/");
+  //   console.log("Logged out successfully !");
+  // };
 
-  const onFailure = () => {
-    console.log("Handle failure cases !");
-  };
+  // const onFailure = () => {
+  //   console.log("Handle failure cases !");
+  // };
  
-  const {signOut} = () =>{
-  const auth2 = gapi.auth2.getAuthInstance();
-  if (auth2 != null) {
-    auth2.signOut().then(
-         auth2.disconnect().then(console.log('LOGOUT SUCCESSFUL')),
-         localStorage.removeItem("loginEmail"),
-         localStorage.removeItem("userImage"),
-         history.push("/"),
-         console.log("Logged out successfully !")
-     )
-    }
-  } 
+  // const {googleLogout} = () =>{
+  //   alert("hello");
+  // const auth2 = gapi.auth2.getAuthInstance();
+  // if (auth2 != null) {
+  //   auth2.signOut().then(
+  //        auth2.disconnect().then(console.log('LOGOUT SUCCESSFUL')),
+  //        localStorage.removeItem("loginEmail"),
+  //        localStorage.removeItem("userImage"),
+  //        history.push("/"),
+  //        console.log("Logged out successfully !")
+  //    )
+  //   }
+  // } 
 
   const teams = teamwiseNomination.reduce((teams, team) => {
     if (!teams[team.team]) teams[team.team] = [];
@@ -236,7 +239,6 @@ const DashboardLayout = () => {
   return (
     <DashboardLayoutRoot>
       <DashboardNavbar
-        onLogoutSuccess={signOut}
         onMobileNavOpen={() => setMobileNavOpen(true)}
       />
       <DashboardSidebar
